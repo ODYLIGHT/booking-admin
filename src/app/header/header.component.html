@@ -5,17 +5,21 @@
   </button>
     <a class="navbar-brand">French Faster Admin</a>
 
-    <div class="collapse navbar-collapse" id="navbarContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
+    <div class="collapse navbar-collapse" id="navbarContent" *ngIf="getMenusAsObservable$ | async as menues">
+        <ul class="navbar-nav ml-auto add-padding">
+            <ng-container *ngFor="let item of menues; let i = index;">
+                <li class="nav-item dropdown">
+                    <a href="href{{i}}" class="nav-link dropdown-toggle" id="dropdown-{{i}}" dropdown-toggle="dropdown"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ item.title }}
+                    </a>
+                    <div class="dropdown-menu">
+                        <ng-container *ngFor="let innerMenu of item.menues">
+                            <a class="dropdown-item" routerLink="{{innerMenu.link}}">{{ innerMenu.menu_title }}</a>
+                        </ng-container>
+                    </div>
+                </li>
+            </ng-container>
         </ul>
     </div>
 </nav>

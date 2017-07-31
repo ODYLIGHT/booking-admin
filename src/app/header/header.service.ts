@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
-import { TopMenuStore } from './top-menu.store';
+import { HeaderStore } from './header.store';
 import { MenuState } from '../store/types';
 
 @Injectable()
-export class TopMenuService {
+export class HeaderService {
     readonly apiInitUrl = 'api/config/menues';
 
     constructor(
         private http: Http,
-        private store: TopMenuStore
+        private store: HeaderStore
     ) { }
 
     public getInit(): void {
