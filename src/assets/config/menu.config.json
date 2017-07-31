@@ -4,11 +4,11 @@
         "menues": [
             {
                 "menu_title": "講師の登録・修正",
-                "link": "register-teachers"
+                "link": "/administrator/register-teachers"
             },
             {
                 "menu_title": "講師のスケジュール登録",
-                "link": "teacher-schedule"
+                "link": "/administrator/teacher-schedule"
             }
         ]
     },
@@ -17,15 +17,15 @@
         "menues": [
             {
                 "menu_title": "顧客予約管理",
-                "link": "register-booking"
+                "link": "/administrator/register-booking"
             },
             {
                 "menu_title": "予約の検索",
-                "link": "search-booking"
+                "link": "/administrator/search-booking"
             },
             {
                 "menu_title": "講師のスケジュール確認",
-                "link": "check-teachers-schedule"
+                "link": "/administrator/check-teachers-schedule"
             }
         ]
     },
@@ -34,7 +34,7 @@
         "menues": [
             {
                 "menu_title": "顧客の登録・修正",
-                "link": "student-information"
+                "link": "/administrator/student-information"
             }
         ]
     },
@@ -43,15 +43,15 @@
         "menues": [
             {
                 "menu_title": "学校概要",
-                "link": "schoole-information"
+                "link": "/administrator/school-information"
             },
             {
                 "menu_title": "管理者の登録・修正",
-                "link": "register-administrators"
+                "link": "/administrator/register-administrators"
             },
             {
                 "menu_title": "管理権限の設定",
-                "link": "setting-authority"
+                "link": "/administrator/setting-authority"
             }
         ]
     },
@@ -60,19 +60,19 @@
         "menues": [
             {
                 "menu_title": "選択肢の設定",
-                "link": "pull-down-menu"
+                "link": "/administrator/pull-down-menu"
             },
             {
                 "menu_title": "予約・取り消しの時間設定",
-                "link": "time-limit"
+                "link": "/administrator/time-limit"
             },
             {
                 "menu_title": "タイムゾーンの設定",
-                "link": "time-zone"
+                "link": "/administrator/time-zone"
             },
             {
                 "menu_title": "PAYPAL",
-                "link": "paypal"
+                "link": "/administrator/paypal"
             }
         ]
     }
