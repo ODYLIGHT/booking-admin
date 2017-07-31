@@ -6,8 +6,8 @@ import { paths } from '../modules/paths';
 const router: Router = Router();
 const fs: FsService = FsService.instance;
 
-router.get('/init', (req: Request, res: Response, next: NextFunction) => {
-    console.info(`request: GET from /api/top/init`);
+router.get('/menues', (req: Request, res: Response, next: NextFunction) => {
+    console.info(`request: GET from /api/config/menues`);
     fs.readFile(paths.menus)
         .then(result => { res.status(200).json(result) })
         .catch(err => { res.status(501).json(err) });

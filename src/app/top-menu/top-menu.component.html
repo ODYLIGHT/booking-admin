@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-10 offset-md-1" *ngIf="getMenusAsObservable$ | async as menues">
+        <div class="col-md-10 col-sm-10 offset-md-1 offset-sm-1" *ngIf="getMenusAsObservable$ | async as menues">
             <div class="row">
                 <ng-container *ngFor="let item of menues">
                     <div class="col-md-6 col-sm-6 contents-box">

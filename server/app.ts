@@ -11,7 +11,7 @@ const HOST = 'localhost';
 
 app.use(bodyParser.json());
 
-app.use('/api/top', router.top);
+app.use('/api/config', router.config);
 
 app.listen(PORT, HOST, () => {
     console.log(`express api server listening on ${PORT}`);
