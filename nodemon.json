@@ -1,0 +1,13 @@
+{
+    "verbose": true,
+    "legacyWatch": true,
+    "ext": "ts",
+    "ignore": [
+        ".git",
+        "./node_modules/*"
+    ],
+    "script": "server/dist/app.js",
+    "exec": "npm run webpack:server && node ./server/dist/api.server.bundle.js",
+    "watch": "server",
+    "delay": 1000
+}
