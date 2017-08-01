@@ -21,7 +21,9 @@ export class Store<T> {
      * Update State.
      */
     protected update(current: Readonly<T>, diff: Partial<T>): Readonly<T> {
-        return { ...current as object, ...diff as object } as Readonly<T>;
+        // これだと`current`と結合されるため削除などしたデータも残ってしまう
+        // return { ...current as object, ...diff as object } as Readonly<T>;
+        return { ...diff as object } as Readonly<T>;
     }
 
     public dispatch(action: Action<T>): void {
