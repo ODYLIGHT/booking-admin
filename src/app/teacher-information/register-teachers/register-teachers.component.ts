@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
+import { RegisterTeachersService } from './register-teachers.service';
+import { RegisterTeachersStore } from './register-teachers.store';
+import { TeacherState } from '../../store/types';
 
 @Component({
   selector: 'app-register-teachers',
@@ -10,7 +15,10 @@ export class RegisterTeachersComponent implements OnInit {
     public currentPage = 1;
     public itemPerPage = 10;
 
-  constructor() { }
+    constructor(
+        private service: RegisterTeachersService,
+        private router: Router
+    ) { }
 
   ngOnInit() {
   }
@@ -21,6 +29,7 @@ export class RegisterTeachersComponent implements OnInit {
 
     public onModify(id: number): void {
         console.info(`on click 'Modify' ${id}`);
+        this.router.navigate(['/administrator/register-teachers/edit', id]);
     }
 
     public onDelete(id: number): void {
@@ -34,6 +43,7 @@ export class RegisterTeachersComponent implements OnInit {
 
     public onAddTeacher(): void {
         console.info(`on click add new teacher`);
+        this.router.navigate(['/administrator/register-teachers/insert']);
     }
 
 }

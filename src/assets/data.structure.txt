@@ -1,0 +1,29 @@
+データベースの各テーブル構造を書き留める
+
+<講師情報テーブル>
+_id                         [int]: primary key, auto increment
+_priority_number             [int]:
+_name                       [string]:
+_name_jpn                   [string]:
+_customers_language         [number]:
+_status                     [boolean]:
+_details_teaches            [string]:
+_details_other_language     [string]:
+_details_education          [string]:
+_details_speciality         [string]:
+_details_career             [string]:
+_details_comment            [string]:
+_details_testimonial        [string]:
+_details_jpn_teaches        [string]:
+_details_jpn_other_language [string]:
+_details_jpn_education      [string]:
+_details_jpn_speciality     [string]:
+_details_jpn_career         [string]:
+_details_jpn_comment        [string]:
+_details_jpn_testimonial    [string]:
+_skype_name                 [string]:
+_email                      [string]:
+picture                     [string]:
+_user_id                    [string]:
+_password                   [string]:
+_authority                  [number]:

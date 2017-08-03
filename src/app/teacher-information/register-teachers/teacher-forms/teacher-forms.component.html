@@ -1,0 +1,190 @@
+<div class="page-header">
+    <h5 class="text-center">{{ pageHeadTitle }}</h5>
+</div>
+<div class="container">
+    <div class="row">
+        <form class="col-md-12 border-style" #teacherForm="ngForm" (submit)="onSubmit(teacherForm.value, teacher._id)"
+            *ngIf="getSelectTeacherAsObservable$ | async as teacher" novalidate>
+            <div class="form-column row">
+                <div class="form-cell col-md-2 table-warning">Number</div>
+                <div class="form-cell col-md-2">
+                    <input type="number" name="priority_number" class="form-control"
+                        #v_pNum="ngModel" [(ngModel)]="teacher._priority_number">
+                </div>
+                <div class="form-cell col-md-2 table-warning">Teacher Name</div>
+                <div class="form-cell col-md-2">
+                    <input type="text" name="name" class="form-control"
+                        #v_name="ngModel" [(ngModel)]="teacher._name">
+                </div>
+                <div class="form-cell col-md-2 table-warning">Name(JPN)</div>
+                <div class="form-cell col-md-2">
+                    <input type="text" name="name_jpn" class="form-control"
+                         #v_nameJpn="ngModel" [(ngModel)]="teacher._name_jpn">
+                </div>
+            </div>
+            <div class="form-column row">
+                <div class="form-cell col-md-2 table-warning">Customer's Language</div>
+                <div class="form-cell col-md-4">
+                    <select name="customers_language" class="form-control"
+                         #v_customers_language="ngModel" [(ngModel)]="teacher._customers_language">
+                        <option value="undefined">pleace select</option>
+                        <option *ngFor="let label of languages" [ngValue]="label.value">{{ label.title }}</option>
+                    </select>
+                </div>
+                <div class="form-cell col-md-2"></div>
+                <div class="form-cell col-md-2 table-warning">Status</div>
+                <div class="form-cell col-md-2">
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" name="status" [value]="true" class="form-check-input"
+                                #v_status="ngModel" [(ngModel)]="teacher._status"
+                                [checked]="teacher._status === true"> ON
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" name="status" [value]="false" class="form-check-input"
+                                #v_status="ngModel" [(ngModel)]="teacher._status"
+                                [checked]="teacher._status === false"> OFF
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-column row">
+                <div class="form-cell col-md-2 table-warning" style="height: auto;">Details</div>
+                <div class="form-cell col-md-10" style="height: 100%; padding-top: 0;">
+                    <div class="row">
+                        <div class="form-cell col-md-3 table-info">Teaches</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_teaches" class="form-control"
+                                 #v_details_teaches="ngModel" [(ngModel)]="teacher._details_teaches">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">Other Language(s)</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_other_language" class="form-control"
+                                #v_details_other_language="ngModel" [(ngModel)]="teacher._details_other_language">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">Education</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_education" class="form-control"
+                                #v_details_education="ngModel" [(ngModel)]="teacher._details_education">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">Speciality</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_speciality" class="form-control"
+                                #v_details_speciality="ngModel" [(ngModel)]="teacher._details_speciality">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">Career</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_career" class="form-control"
+                                #v_details_career="ngModel" [(ngModel)]="teacher._details_career">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">Comment</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_comment" class="form-control"
+                                #v_details_comment="ngModel" [(ngModel)]="teacher._details_comment">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">Testimonial</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_testimonial" class="form-control"
+                                #v_details_testimonial="ngModel" [(ngModel)]="teacher._details_testimonial">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-column row">
+                <div class="form-cell col-md-2 table-warning" style="height: auto;">Details(JPN)</div>
+                <div class="form-cell col-md-10" style="height: 100%; padding-top: 0;">
+                    <div class="row">
+                        <div class="form-cell col-md-3 table-info">対応レベル</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_jpn_teaches" class="form-control"
+                                #v_details_jpn_teaches="ngModel" [(ngModel)]="teacher._details_jpn_teaches">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">その他可能言語</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_jpn_other_language" class="form-control"
+                                #v_details_jpn_other_language="ngModel" [(ngModel)]="teacher._details_jpn_other_language">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">学歴</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_jpn_education" class="form-control"
+                                #v_details_jpn_education="ngModel" [(ngModel)]="teacher._details_jpn_education">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">得意内容</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_jpn_speciality" class="form-control"
+                                #v_details_jpn_speciality="ngModel" [(ngModel)]="teacher._details_jpn_speciality">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">経歴</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_jpn_career" class="form-control"
+                                #v_details_jpn_career="ngModel" [(ngModel)]="teacher._details_jpn_career">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">ひとこと</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_jpn_comment" class="form-control"
+                                #v_details_jpn_comment="ngModel" [(ngModel)]="teacher._details_jpn_comment">
+                        </div>
+                        <div class="form-cell col-md-3 table-info">お客様の声</div>
+                        <div class="form-cell col-md-9">
+                            <input type="text" name="details_jpn_testimonial" class="form-control"
+                                #v_details_jpn_testimonial="ngModel" [(ngModel)]="teacher._details_jpn_testimonial">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-column row">
+                <div class="form-cell col-md-2 table-warning">Skype Name(ID)</div>
+                <div class="form-cell col-md-4">
+                    <input type="text" name="skype_name" class="form-control"
+                        #v_skype_name="ngModel" [(ngModel)]="teacher._skype_name">
+                </div>
+                <div class="form-cell col-md-2 table-warning">Email address</div>
+                <div class="form-cell col-md-4">
+                    <input type="text" name="email" class="form-control"
+                        #v_email="ngModel" [(ngModel)]="teacher._email">
+                </div>
+            </div>
+            <div class="form-column row">
+                <div class="form-cell col-md-2 table-warning">Picture upload</div>
+                <div class="form-cell col-md-4">
+                    <!-- <input type="file" name="picture" class="form-control"
+                         #v_picture="ngModel" [(ngModel)]="teacher._picture">  -->
+                    <label for="picture">
+                        Select a file.<br>
+                        <small>(jpg, jpeg, png etc)</small>
+                    </label>
+                    <input type="file" name="picture" id="picture" accept=".jpg, .jpeg, .png" style="display: none;"
+                        (change)="onChange($event, teacher)">
+                    <input type="text" name="picture" class="form-control" readonly="readonly"
+                        #v_picture="ngModel" [(ngModel)]="teacher._picture">
+                </div>
+                <div class="form-cell col-md-6"></div>
+            </div>
+            <div class="form-column row">
+                <div class="form-cell col-md-2 table-warning">User ID</div>
+                <div class="form-cell col-md-2">
+                    <input type="text" name="user_id" class="form-control"
+                        #v_user_id="ngModel" [(ngModel)]="teacher._user_id">
+                </div>
+                <div class="form-cell col-md-2 table-warning">Password</div>
+                <div class="form-cell col-md-2">
+                    <input type="password" name="password" class="form-control"
+                        #v_password="ngModel" [(ngModel)]="teacher._password">
+                </div>
+                <div class="form-cell col-md-2 table-warning">Authority</div>
+                <div class="form-cell col-md-2">
+                    <select name="authority" class="form-control"
+                        #v_authority="ngModel" [(ngModel)]="teacher._authority">
+                        <option value="undefined">please select</option>
+                        <option *ngFor="let item of authoritys" [ngValue]="item.value">{{ item.title }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12 text-center" style="padding:15px 0;">
+                <button type="submit" class="btn">{{ btnText }}</button>
+            </div>
+        </form>
+    </div>
+</div>

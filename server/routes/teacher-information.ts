@@ -9,6 +9,7 @@ const fs: FsService = FsService.instance;
 // develop時のデータ格納変数
 let dataIfDevelop;
 
+// init - register-teachers
 router.get('/register-teachers', (req: Request, res: Response, next: NextFunction) => {
     console.info(`request: GET from register-teachers`);
     fs.readFile(paths.register_teachers)
@@ -21,6 +22,7 @@ router.get('/register-teachers', (req: Request, res: Response, next: NextFunctio
         .catch(err => { res.status(501).json(err) });
 });
 
+// delete - register-teachers delete button ckick.
 router.delete('/register-teachers/delete/:id', (req: Request, res: Response, next: NextFunction) => {
     console.info(`request: DELETE from register-teachers`);
     const target_id = +req.params.id;
@@ -42,6 +44,33 @@ router.delete('/register-teachers/delete/:id', (req: Request, res: Response, nex
     //         res.status(200).json(filterAry);
     //     })
     //     .catch(err => { res.status(501).json(err) });
+});
+
+// GET - teacher-forms when modify
+router.get('/register-teachers/get/:id', (req: Request, res: Response, next: NextFunction) => {
+    console.info(`request: get from teacher-froms with id`);
+    const target_id = +req.params.id;
+    Object.keys(dataIfDevelop).forEach(key => {
+        if (dataIfDevelop[key]['_id'] === target_id) res.json(dataIfDevelop[key]);
+    });
+});
+
+// POST - teacher-forms add new teacher
+router.post('/register-teachers/post', (req: Request, res: Response, next: NextFunction) => {
+    const params = req.body;
+    console.log(params);
+    res.json({
+        insert: true
+    });
+});
+
+// PUT teacher-forms edit teacher
+router.put('/register-teachers/put', (req: Request, res: Response, next: NextFunction) => {
+    const params = req.body;
+    console.log(params);
+    res.json({
+        put: true
+    });
 });
 
 module.exports = router;
