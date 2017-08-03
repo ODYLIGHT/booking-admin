@@ -1,73 +1,73 @@
 [
     {
-        "title": "講師情報",
+        "title": "Teacher information",
         "menues": [
             {
-                "menu_title": "講師の登録・修正",
+                "menu_title": "Register of Teachers",
                 "link": "/administrator/register-teachers"
             },
             {
-                "menu_title": "講師のスケジュール登録",
+                "menu_title": "Teacher schedule",
                 "link": "/administrator/teacher-schedule"
             }
         ]
     },
     {
-        "title": "予約情報",
+        "title": "Reservation",
         "menues": [
             {
-                "menu_title": "顧客予約管理",
+                "menu_title": "Register of booking",
                 "link": "/administrator/register-booking"
             },
             {
-                "menu_title": "予約の検索",
+                "menu_title": "Search of booking",
                 "link": "/administrator/search-booking"
             },
             {
-                "menu_title": "講師のスケジュール確認",
+                "menu_title": "Check Teachers schedule",
                 "link": "/administrator/check-teachers-schedule"
             }
         ]
     },
     {
-        "title": "顧客情報",
+        "title": "Student information",
         "menues": [
             {
-                "menu_title": "顧客の登録・修正",
+                "menu_title": "Student Information",
                 "link": "/administrator/student-information"
             }
         ]
     },
     {
-        "title": "各種管理",
+        "title": "Administration",
         "menues": [
             {
-                "menu_title": "学校概要",
+                "menu_title": "School Information",
                 "link": "/administrator/school-information"
             },
             {
-                "menu_title": "管理者の登録・修正",
+                "menu_title": "Register of Administrators",
                 "link": "/administrator/register-administrators"
             },
             {
-                "menu_title": "管理権限の設定",
+                "menu_title": "setting of Authority",
                 "link": "/administrator/setting-authority"
             }
         ]
     },
     {
-        "title": "システム設定",
+        "title": "System Setting",
         "menues": [
             {
-                "menu_title": "選択肢の設定",
+                "menu_title": "Pull-Down Menu",
                 "link": "/administrator/pull-down-menu"
             },
             {
-                "menu_title": "予約・取り消しの時間設定",
+                "menu_title": "Time Limit of Book or Cancel",
                 "link": "/administrator/time-limit"
             },
             {
-                "menu_title": "タイムゾーンの設定",
+                "menu_title": "Local Time Zone",
                 "link": "/administrator/time-zone"
             },
             {

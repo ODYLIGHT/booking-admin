@@ -25,6 +25,7 @@ import { TimeLimitComponent } from './system-setting/time-limit/time-limit.compo
 import { TimeZoneComponent } from './system-setting/time-zone/time-zone.component';
 import { PaypalComponent } from './system-setting/paypal/paypal.component';
 import { TeacherFormsComponent } from './teacher-information/register-teachers/teacher-forms/teacher-forms.component';
+import { ScheduleTableComponent } from './teacher-information/teacher-schedule/schedule-table/schedule-table.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { TeacherFormsComponent } from './teacher-information/register-teachers/t
         TimeLimitComponent,
         TimeZoneComponent,
         PaypalComponent,
-        TeacherFormsComponent
+        TeacherFormsComponent,
+        ScheduleTableComponent
     ],
     imports: [
         NgbModule.forRoot(),

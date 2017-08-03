@@ -6,9 +6,10 @@ import { RegisterTeachersStore } from './register-teachers.store';
 import { TeacherState } from '../../store/types';
 
 @Component({
-  selector: 'app-register-teachers',
   templateUrl: './register-teachers.component.html',
-  styleUrls: ['./register-teachers.component.scss']
+  styleUrls: ['./register-teachers.component.scss'],
+  providers: [RegisterTeachersService, RegisterTeachersStore],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterTeachersComponent implements OnInit {
     private window: Window;
@@ -20,8 +21,9 @@ export class RegisterTeachersComponent implements OnInit {
         private router: Router
     ) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() { this.service.getInit() }
+
+    public get getTeachersAsObservable$(): Observable<TeacherState[]> { return this.service.getItems$.map(s => s) }
 
     public selectItems(allData: TeacherState[]): TeacherState[] {
         return allData.slice((this.currentPage - 1) * this.itemPerPage, this.currentPage * this.itemPerPage)

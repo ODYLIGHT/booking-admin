@@ -36,3 +36,9 @@ export interface TeacherState {
     _password: string;
     _authority: number;
 }
+
+export interface ScheduleState {
+    _date: Date;
+    _can_reserve: boolean;
+    _reserved_user: number
+}

@@ -1,0 +1,35 @@
+<div class="row" *ngIf="schedules.length">
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm">
+
+            <thead>
+                <tr>
+                    <th class="table-warning">Date</th>
+                    <ng-container *ngFor="let date of showsWeeks">
+                        <th>
+                            <div [class.text-danger]="(date | date: 'EEE') === 'Sun'"
+                                 [class.text-primary]="(date | date: 'EEE') === 'Sat'">
+                                 {{ date | date: 'EEE' }}
+                            </div>
+                            <div>{{ date | date: 'd.MMM.yyyy' }}</div>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let left of rows">
+                    <td class="table-warning">{{ left }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td> 
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>

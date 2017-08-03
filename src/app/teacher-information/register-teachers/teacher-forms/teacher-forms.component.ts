@@ -12,7 +12,6 @@ interface OptionsState {
 }
 
 @Component({
-    selector: 'app-teacher-forms',
     templateUrl: './teacher-forms.component.html',
     styleUrls: ['./teacher-forms.component.scss'],
     providers: [TeacherFormsService, TeacherFormsStore],
