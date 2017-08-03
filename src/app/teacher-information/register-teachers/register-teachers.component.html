@@ -1,3 +1,62 @@
-<p>
-  register-teachers works!
-</p>
+<div class="page-header">
+    <h5 class="text-center">講師の登録・修正</h5>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-sm-10 offset-md-1 offset-sm-1" *ngIf="getTeachersAsObservable$ | async as teachers">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr class="table-warning">
+                                <th class="text-center">#</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Name(JPN)</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Modify</th>
+                                <th class="text-center">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let teacher of selectItems(teachers); let i = index;">
+                                <tr>
+                                    <td class="text-center">{{ i + 1 + ((currentPage - 1) * itemPerPage) }}</td>
+                                    <td>{{ teacher._name }}</td>
+                                    <td>{{ teacher._name_jpn }}</td>
+                                    <td class="text-center">{{ teacher._status === true ? 'ON' : 'OFF' }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm"
+                                            (click)="onModify(teacher._id)" aria-pressed="true">
+                                            Modify
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm"
+                                            (click)="onDelete(teacher._id)" aria-pressed="true">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                    <ngb-pagination
+                        [rotate]="true"
+                        [boundaryLinks]="true"
+                        [maxSize]="8"
+                        [collectionSize]="teachers.length"
+                        [(page)]="currentPage"
+                    ></ngb-pagination>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 offset-md-3 col-sm-6 offset-sm-3 text-center">
+                    <button type="button" class="btn" (click)="onAddTeacher()">
+                        講師の新規登録
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

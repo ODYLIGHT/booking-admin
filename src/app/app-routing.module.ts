@@ -15,6 +15,7 @@ import { PullDownMenuComponent } from './system-setting/pull-down-menu/pull-down
 import { TimeLimitComponent } from './system-setting/time-limit/time-limit.component';
 import { TimeZoneComponent } from './system-setting/time-zone/time-zone.component';
 import { PaypalComponent } from './system-setting/paypal/paypal.component';
+import { TeacherFormsComponent } from './teacher-information/register-teachers/teacher-forms/teacher-forms.component';
 
 // routing設定は開発時のアクセスを簡略化するため
 // リダイレクト設定をざるにしてます
@@ -25,7 +26,15 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'top', pathMatch: 'full' },
             { path: 'top', component: TopMenuComponent },
-            { path: 'register-teachers', component: RegisterTeachersComponent },
+            // { path: 'register-teachers', component: RegisterTeachersComponent }, // Children will be added
+            {
+                path: 'register-teachers',
+                children: [
+                    { path: '', component: RegisterTeachersComponent },
+                    { path: 'insert', component: TeacherFormsComponent },
+                    { path: 'edit/:id', component: TeacherFormsComponent }
+                ]
+            },
             { path: 'teacher-schedule', component: TeacherScheduleComponent },
             { path: 'register-booking', component: RegisterBookingComponent },
             { path: 'search-booking', component: SearchBookingComponent }, // Children will be added
