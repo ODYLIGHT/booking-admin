@@ -3,8 +3,14 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-sm-10 offset-md-1 offset-sm-1">
-            <app-schedule-table [schedules]="getScheduleAsObservable$ | async"></app-schedule-table>
+        <div class="col-md-10 col-sm-10 offset-md-1 offset-sm-1" *ngIf="getScheduleAsObservable$ | async as schedules">
+            <app-schedule-table
+                [schedules]="schedules"
+                [showsWeeks]="showsWeeks"
+                (switchWeek)="switchWeek($event)"
+                (copyPrev)="copyPrev($event)"
+                (post)="post($event)"
+            ></app-schedule-table>
         </div>
     </div>
 </div>

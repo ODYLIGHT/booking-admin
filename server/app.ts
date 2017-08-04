@@ -9,7 +9,8 @@ const app = express();
 const PORT: number = process.env.PORT || 4400;
 const HOST = 'localhost';
 
-app.use(bodyParser.json());
+// スケジュールのUPDATE時、requestデータサイズがデフォルト値（'100kb'）を大幅に超えているので上限値変更
+app.use(bodyParser.json({ limit: 10000000, extended: true }));
 
 app.use('/api/config', router.config);
 app.use('/api/teacher-information', router.teacher_info);

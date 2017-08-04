@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { ScheduleState } from '../../../store/types';
 
 @Component({
@@ -8,34 +8,54 @@ import { ScheduleState } from '../../../store/types';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScheduleTableComponent implements OnInit {
-    @Input() schedules: ScheduleState[];
-    public showsWeeks: Date[] = [];
-    public rows = [];
+    @Input() schedules: { title: string; value: ScheduleState[] }[];
+    @Input() showsWeeks: Date[];
+    @Output() switchWeek = new EventEmitter();
+    @Output() copyPrev = new EventEmitter();
+    @Output() post = new EventEmitter();
+    private rowBools: boolean[] = [];
+    private lineBools: boolean[] = [];
 
     constructor() { }
 
-    ngOnInit() {
-        this.setTheadTitles();
-        this.setRows();
+    ngOnInit() { }
+
+    public onClick(obj) { obj._can_reserve = !obj._can_reserve }
+
+    public onSelectAday(idx: number) {
+        this.schedules.forEach((obj, index, array) => {
+            obj.value[idx]._can_reserve = !!this.lineBools[idx];
+        });
+        this.lineBools[idx] = !this.lineBools[idx];
     }
 
-    /**
-     * 今日の日付の曜日整数（0~6）を取得
-     * 日曜日を起点にする今日が含まれる一週間の配列を作成
-     */
-    private setTheadTitles(): void {
-        const today: Date = new Date();
-        const weekNumberOfToday: number = today.getDay();
-        for (let i = 0; i < 7; i++) {
-            const d = new Date(today.getFullYear(), today.getMonth(), today.getDate() - (weekNumberOfToday - i));
-            this.showsWeeks.push(d);
-        }
+    public onSelectAhour(idx: number) {
+        this.schedules[idx].value.forEach((schedule, index, array) => {
+            schedule._can_reserve = !!this.rowBools[idx];
+        });
+        this.rowBools[idx] = !this.rowBools[idx];
     }
-    private setRows(): void {
-        for (let i = 0; i < 24; i++) {
-            this.rows.push(i < 10 ? `0${i}:00-0${i}:30` : `${i}:00-${i}:30`);
-            this.rows.push(i < 10 ? i === 9 ? `0${i}:30-${i + 1}:00` : `0${i}:30-0${i + 1}:00` : `${i}:30-${i + 1}:00`);
-        }
+
+    public onClickBtn(str: string): void {
+        this.schedules.forEach((obj, index, array) => {
+            obj.value.forEach((schedule, i, a) => {
+                schedule._can_reserve = (str === 'check') ? false : true;
+                this.lineBools[i] = (str === 'check') ? true : false;
+            });
+            this.rowBools[index] = (str === 'check') ? true : false;
+        });
+    }
+
+    public onClickCopyPrev(): void {
+        this.copyPrev.emit();
+    }
+
+    public onClickSwitchWeek(str: string): void {
+        this.switchWeek.emit(str === 'next' ? 7 : -7);
+    }
+
+    public onPost() {
+        this.post.emit();
     }
 
 }
