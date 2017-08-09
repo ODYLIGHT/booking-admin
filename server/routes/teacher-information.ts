@@ -73,4 +73,24 @@ router.put('/register-teachers/put', (req: Request, res: Response, next: NextFun
     });
 });
 
+// GET teacher-schedule init
+router.get('/teacher-schedule', (req: Request, res: Response, next: NextFunction) => {
+    console.info(`request: GET from teacher-schedule`);
+    fs.readFile(paths.schedule)
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => { res.status(501).json(err) });
+});
+
+// PUT teacher-schedule update
+router.put('/teacher-schedule/update', (req: Request, res: Response, next: NextFunction) => {
+    console.info(`request: PUT from teacher-schedule`);
+    const params = req.body;
+    console.log(params);
+    res.json({
+        put: true
+    });
+});
+
 module.exports = router;

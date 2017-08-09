@@ -1,3 +1,17 @@
-<p>
-  teacher-schedule works!
-</p>
+<div class="page-header">
+    <h5 class="text-center">Teacher schedule</h5>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-sm-10 offset-md-1 offset-sm-1" *ngIf="getScheduleAsObservable$ | async as schedules">
+            <app-schedule-table
+                [schedules]="schedules"
+                [showsWeeks]="showsWeeks"
+                (switchWeek)="switchWeek($event)"
+                (copyPrev)="copyPrev($event)"
+                (post)="post($event)"
+            ></app-schedule-table>
+        </div>
+    </div>
+</div>
+
