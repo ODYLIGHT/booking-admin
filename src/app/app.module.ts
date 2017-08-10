@@ -26,6 +26,7 @@ import { TimeZoneComponent } from './system-setting/time-zone/time-zone.componen
 import { PaypalComponent } from './system-setting/paypal/paypal.component';
 import { TeacherFormsComponent } from './teacher-information/register-teachers/teacher-forms/teacher-forms.component';
 import { ScheduleTableComponent } from './teacher-information/teacher-schedule/schedule-table/schedule-table.component';
+import { SearchCustomerComponent } from './reservation/register-booking/search-customer/search-customer.component';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { ScheduleTableComponent } from './teacher-information/teacher-schedule/s
         TimeZoneComponent,
         PaypalComponent,
         TeacherFormsComponent,
-        ScheduleTableComponent
+        ScheduleTableComponent,
+        SearchCustomerComponent
     ],
     imports: [
         NgbModule.forRoot(),

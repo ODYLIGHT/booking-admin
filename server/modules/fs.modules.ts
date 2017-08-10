@@ -11,7 +11,7 @@ export class FsService {
 
     private constructor() { }
 
-    public readFile(path: string): Promise<{}> {
+    public readFile(path: string): Promise<{} | any[]> {
         return new Promise((resolve, reject) => {
             try { resolve(JSON.parse(fs.readFileSync(path, 'utf8'))) }
             catch (e) { reject(e) }

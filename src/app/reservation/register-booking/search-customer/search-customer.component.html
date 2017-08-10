@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <div class="input-group-addon">Customer #</div>
+            <input type="text" class="form-control" [(ngModel)]="customerId" placeholder="insert ID...">
+        </div>
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <div class="input-group-addon">Customer name</div>
+            <input type="text" class="form-control" [value]="getNameAsObservable$ | async" readonly>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <button type="button" class="btn" (click)="onSearch()">search</button>
+    </div>
+
+</div>

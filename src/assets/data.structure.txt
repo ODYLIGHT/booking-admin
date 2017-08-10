@@ -1,8 +1,8 @@
 データベースの各テーブル構造を書き留める
 
 <講師情報テーブル>
-_id                         [int]: primary key, auto increment
-_priority_number             [int]:
+_id                         [number]: primary key, auto increment
+_priority_number            [number]:
 _name                       [string]:
 _name_jpn                   [string]:
 _customers_language         [number]:
@@ -27,3 +27,41 @@ picture                     [string]:
 _user_id                    [string]:
 _password                   [string]:
 _authority                  [number]:
+
+<講師スケジュールテーブル> ※個人別
+_date:          [Date]:
+_can_reserve:   [boolean]:
+_reserved_user: [number]:
+
+<顧客情報テーブル>
+_id:                     [number]: primary key, auto increment
+_name:                   [string]: 
+_nick_name:              [string]: 
+_gender:                 [string]: 
+_birthday:               [Date]:   
+_skype_name:             [string]: 
+_email:                  [string]: 
+_password:               [string]: 
+_french_level:           [number]: 
+_learning_experience:    [string]: 
+_learning_purpose:       [number]: 
+_mother_tongue:          [string]: 
+_how_finded:             [number]: 
+_other_language_1:       [string]: 
+_other_language_level_1: [number]: 
+_other_language_2:       [string]: 
+_other_language_level_2: [number]: 
+_program_code:           [number]: 
+_remark:                 [number]: 
+_client_code:            [number]:
+
+<予約情報テーブル> ※個人別
+_id [number]: primary key, auto increment
+_reserve_date [Date]: 予約した授業の日時
+_teacher_id [number]: 講師のID
+_status [string]: 予約状況(done, reserved, cancelled)
+
+<チケットテーブル>
+_id [number]: primary key, auto increment
+_purchase_date: [date]: 購入日付
+_customer_id: [number]: 購入した顧客ID

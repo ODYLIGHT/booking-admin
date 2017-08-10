@@ -58,7 +58,7 @@ router.get('/register-teachers/get/:id', (req: Request, res: Response, next: Nex
 // POST - teacher-forms add new teacher
 router.post('/register-teachers/post', (req: Request, res: Response, next: NextFunction) => {
     const params = req.body;
-    console.log(params);
+    // console.log(params);
     res.json({
         insert: true
     });
@@ -67,7 +67,7 @@ router.post('/register-teachers/post', (req: Request, res: Response, next: NextF
 // PUT teacher-forms edit teacher
 router.put('/register-teachers/put', (req: Request, res: Response, next: NextFunction) => {
     const params = req.body;
-    console.log(params);
+    // console.log(params);
     res.json({
         put: true
     });
@@ -87,7 +87,7 @@ router.get('/teacher-schedule', (req: Request, res: Response, next: NextFunction
 router.put('/teacher-schedule/update', (req: Request, res: Response, next: NextFunction) => {
     console.info(`request: PUT from teacher-schedule`);
     const params = req.body;
-    console.log(params);
+    // console.log(params);
     res.json({
         put: true
     });
