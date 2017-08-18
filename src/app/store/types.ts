@@ -75,7 +75,12 @@ export interface ReservationState {
 
 // ここまではDBのテーブル構造のまんま
 
+export interface RegisterBookingTeachersState {
+    _id: number;
+    _name: string;
+}
+
 export interface SearcherCustomerState {
     _name: string; // 顧客名(CustomerState._name)
-    _teachers: { _id: number, _name: string }[];
+    _teachers: RegisterBookingTeachersState[];
 }

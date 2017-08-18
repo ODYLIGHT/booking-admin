@@ -1,0 +1,15 @@
+<ng-container *ngIf="teachers.length !== 0">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <div class="input-group-addon">Teacher</div>
+                <select name="teacher" class="form-control">
+                    <option value="">select teacher</option>
+                    <option *ngFor="let item of teachers" [value]="item._id">{{ item._name }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-4"></div>
+    </div>
+</ng-container>

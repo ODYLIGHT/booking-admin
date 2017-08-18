@@ -27,6 +27,7 @@ import { PaypalComponent } from './system-setting/paypal/paypal.component';
 import { TeacherFormsComponent } from './teacher-information/register-teachers/teacher-forms/teacher-forms.component';
 import { ScheduleTableComponent } from './teacher-information/teacher-schedule/schedule-table/schedule-table.component';
 import { SearchCustomerComponent } from './reservation/register-booking/search-customer/search-customer.component';
+import { RegisterTableComponent } from './reservation/register-booking/register-table/register-table.component';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import { SearchCustomerComponent } from './reservation/register-booking/search-c
         PaypalComponent,
         TeacherFormsComponent,
         ScheduleTableComponent,
-        SearchCustomerComponent
+        SearchCustomerComponent,
+        RegisterTableComponent
     ],
     imports: [
         NgbModule.forRoot(),

@@ -25,12 +25,12 @@ export class SearchCustomerComponent implements OnInit {
 
     public onSearch(): void {
         // 全角数字を半角に変換処理を挟む
-        const customerId = this.customerId.replace(/[Ａ-Ｚａ-ｚ０-９]/g, (s) =>
+        this.customerId = this.customerId.replace(/[Ａ-Ｚａ-ｚ０-９]/g, (s) =>
             String.fromCharCode(s.charCodeAt(0) - 65248));
-        this.service.getCustomer(+customerId);
-        // this.search.emit(+customerId);
+        this.service.getCustomer(+this.customerId);
+        this.search.emit(+this.customerId);
     }
 
-    public get getNameAsObservable$(): Observable<string> { return this.service.getName$.map(s => s) }
+    public get getNameAsObservable$(): Observable<string> { return this.service.getName$.map(s => s || '') }
 
 }
