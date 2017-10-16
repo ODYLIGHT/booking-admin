@@ -14,6 +14,7 @@ import { SearcherCustomerState } from '../../../store/types';
 export class SearchCustomerComponent implements OnInit {
     public customerId: string;
     @Output() search = new EventEmitter();
+    @Output() post = new EventEmitter();
 
     constructor(
         private service: SearchCustomerService,
@@ -30,6 +31,8 @@ export class SearchCustomerComponent implements OnInit {
         this.service.getCustomer(+this.customerId);
         this.search.emit(+this.customerId);
     }
+
+    public onPost() { this.post.next() }
 
     public get getNameAsObservable$(): Observable<string> { return this.service.getName$.map(s => s || '') }
 

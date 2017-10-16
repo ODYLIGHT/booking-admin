@@ -18,6 +18,14 @@ router.get('/register-of-booking/init', (req: Request, res: Response, next: Next
         .catch(err => res.status(501).json(err));
 
 });
+
+router.get('/register-of-booking/schedule', (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    fs.readFile(paths.schedule)
+        .then(result => res.status(200).json(result))
+        .catch(err => res.status(501).json(err));
+});
+
 router.get('/register-of-booking/search-customer/:id', (req: Request, res: Response, next: NextFunction) => {
     console.info(`request: GET from search-customer`);
     const customerId = +req.params.id;
