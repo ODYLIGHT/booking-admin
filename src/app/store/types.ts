@@ -23,7 +23,7 @@ export interface TeacherState {
     _details_comment: string;
     _details_testimonial: string;
     _details_jpn_teaches: string;
-    _details_jpn_other_language: string ;
+    _details_jpn_other_language: string;
     _details_jpn_education: string;
     _details_jpn_speciality: string;
     _details_jpn_career: string;
@@ -40,5 +40,47 @@ export interface TeacherState {
 export interface ScheduleState {
     _date: Date;
     _can_reserve: boolean;
-    _reserved_user: number
+    _reserved_user: number;
+}
+
+export interface CustomerState {
+    _id: number;
+    _name: string;
+    _nick_name: string;
+    _gender: string; // M or F にするか数字で0 or 1 にするか
+    _birthday: Date; // 資料だと日・月・年が分かれてプルダウンになっているが・・・
+    _skype_name: string;
+    _email: string;
+    _password: string;
+    _french_level: number;
+    _learning_experience: string; // 学習経験
+    _learning_purpose: number;
+    _mother_tongue: string; // 母国語
+    _how_finded: number; // このサイトを知ったきっかけ
+    _other_language_1: string;
+    _other_language_level_1: number;
+    _other_language_2: string;
+    _other_language_level_2: number;
+    _program_code: number;
+    _remark: number;
+    _client_code: number;
+}
+
+export interface ReservationState {
+    _id: number;
+    _reserve_date: Date;
+    _teacher_id: number;
+    _status: string;
+}
+
+// ここまではDBのテーブル構造のまんま
+
+export interface RegisterBookingTeachersState {
+    _id: number;
+    _name: string;
+}
+
+export interface SearcherCustomerState {
+    _name: string; // 顧客名(CustomerState._name)
+    _teachers: RegisterBookingTeachersState[];
 }

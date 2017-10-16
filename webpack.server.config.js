@@ -25,8 +25,8 @@ module.exports = {
             {
                 test: /\.ts$/,
                 loader: 'ts-loader',
-                query: {
-                    configFileName: './tsconfig.server.json'
+                options: {
+                    configFile: 'tsconfig.server.json'
                 }
             }
         ]
