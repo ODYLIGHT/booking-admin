@@ -84,3 +84,12 @@ export interface SearcherCustomerState {
     _name: string; // 顧客名(CustomerState._name)
     _teachers: RegisterBookingTeachersState[];
 }
+
+export interface SearchBookingState {
+    customerId: number;
+    reservationId: string;
+    studentName: string;
+    date: string;
+    teacherName: string;
+    reserveBy: string;
+}

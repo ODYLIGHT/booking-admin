@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h4 class="modal-title">Cancellation of booking</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross clicked')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <ul>
+        <li>[Customer #] : {{ cancelReservation.customerId }}</li>
+        <li>[Reservation #] : {{ cancelReservation.reservationId }}</li>
+        <li>[Student name] : {{ cancelReservation.studentName }}</li>
+        <li>[Date] : {{ cancelReservation.date | date: 'd.MMM.yyyy.EEE' }}</li>
+        <li>[Start] : {{ cancelReservation.date | date: 'hh:mm' }}</li>
+        <li>[End] : {{ createEndTime(cancelReservation.date | date: 'hh:mm') }}</li>
+        <li>[Teacher] : {{ cancelReservation.teacherName }}</li>
+        <li>[By] : {{ cancelReservation.reserveBy }}</li>
+    </ul>
+</div>
+<div class="modal-footer justify-content-start">
+    <div class="form-inline">
+        <label for="issues" class="mr-2">Class Issue</label>
+        <select name="issue" id="issues" class="custom-select" [(ngModel)]="issue">
+            <!-- valueは仮　numberではなくstringにするかどうか -->
+            <option value="">None</option>
+            <option value="1">Customer Absent</option>
+            <option value="2">Teacher Absent</option>
+            <option value="3">Customer Internet Problem</option>
+            <option value="4">Teacher Internet Problem</option>
+            <option value="5">No Teacher</option>
+            <option value="6">Scheduling Issue</option>
+            <option value="7">Time Confusion</option>
+            <option value="8">Miscommunication</option>
+            <option value="9">Sickness/Lateness</option>
+            <option value="10">Other</option>
+        </select>
+    </div>
+    <button type="button" class="btn btn-outline-dark ml-auto" (click)="onCancel()">Cancel</button>
+</div>
