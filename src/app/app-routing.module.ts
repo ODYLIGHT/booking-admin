@@ -7,6 +7,7 @@ import { TeacherScheduleComponent } from './teacher-information/teacher-schedule
 import { StudentInformationComponent } from './student-information/student-information/student-information.component';
 import { RegisterBookingComponent } from './reservation/register-booking/register-booking.component';
 import { SearchBookingComponent } from './reservation/search-booking/search-booking.component';
+import { CancellationBookingComponent } from './reservation/search-booking/cancellation-booking/cancellation-booking.component';
 import { CheckTeacherScheduleComponent } from './reservation/check-teacher-schedule/check-teacher-schedule.component';
 import { SchoolInformationComponent } from './administration/school-information/school-information.component';
 import { RegisterAdministratorsComponent } from './administration/register-administrators/register-administrators.component';
@@ -26,7 +27,6 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'top', pathMatch: 'full' },
             { path: 'top', component: TopMenuComponent },
-            // { path: 'register-teachers', component: RegisterTeachersComponent }, // Children will be added
             {
                 path: 'register-teachers',
                 children: [
@@ -35,9 +35,16 @@ const routes: Routes = [
                     { path: 'edit/:id', component: TeacherFormsComponent }
                 ]
             },
-            { path: 'teacher-schedule', component: TeacherScheduleComponent },
+            {
+                path: 'teacher-schedule', component: TeacherScheduleComponent },
             { path: 'register-booking', component: RegisterBookingComponent },
-            { path: 'search-booking', component: SearchBookingComponent }, // Children will be added
+            {
+                path: 'search-booking',
+                children: [
+                    { path: '', component: SearchBookingComponent },
+                    { path: 'cancellation', component: CancellationBookingComponent }
+                ]
+            },
             { path: 'check-teachers-schedule', component: CheckTeacherScheduleComponent },
             { path: 'student-information', component: StudentInformationComponent }, // Children will be added
             { path: 'school-information', component: SchoolInformationComponent },

@@ -1,3 +1,11 @@
-<p>
-  search-booking works!
-</p>
+<div class="page-header">
+    <h5 class="text-center">Search of booking</h5>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <app-search-form (searchEvent)="search($event)"></app-search-form>
+            <app-search-table [bookings]="bookingAsObservable$" (canceller)="onCanceller($event)"></app-search-table>
+        </div>
+    </div>
+</div>

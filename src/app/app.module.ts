@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -28,6 +28,9 @@ import { TeacherFormsComponent } from './teacher-information/register-teachers/t
 import { ScheduleTableComponent } from './teacher-information/teacher-schedule/schedule-table/schedule-table.component';
 import { SearchCustomerComponent } from './reservation/register-booking/search-customer/search-customer.component';
 import { RegisterTableComponent } from './reservation/register-booking/register-table/register-table.component';
+import { SearchFormComponent } from './reservation/search-booking/search-form/search-form.component';
+import { SearchTableComponent } from './reservation/search-booking/search-table/search-table.component';
+import { CancellationBookingComponent } from './reservation/search-booking/cancellation-booking/cancellation-booking.component';
 
 @NgModule({
     declarations: [
@@ -50,13 +53,17 @@ import { RegisterTableComponent } from './reservation/register-booking/register-
         TeacherFormsComponent,
         ScheduleTableComponent,
         SearchCustomerComponent,
-        RegisterTableComponent
+        RegisterTableComponent,
+        SearchFormComponent,
+        SearchTableComponent,
+        CancellationBookingComponent
     ],
     imports: [
         NgbModule.forRoot(),
         BrowserModule,
         HttpModule,
         FormsModule,
+        ReactiveFormsModule,
         AppRoutingModule
     ],
     providers: [],
