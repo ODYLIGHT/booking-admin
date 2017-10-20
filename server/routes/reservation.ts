@@ -158,4 +158,38 @@ router.post('/search-booking/cancel', (req: Request, res: Response, next: NextFu
     res.status(200).json('cancel post success.');
 });
 
+router.get('/check-teacher-schedule/init-teacher', (req: Request, res: Response, next: NextFunction) => {
+    // Check Teacher schedule コンポーネントで、検索用教師情報を返す
+    console.info(`request: GET from check-teacher-schedule init`);
+    const dumy_teachersName = [
+        {
+            id: 1,
+            name: 'Chris'
+        },
+        {
+            id: 2,
+            name: 'Aurora'
+        },
+        {
+            id: 3,
+            name: 'Pollard'
+        },
+        {
+            id: 4,
+            name: 'Hernandez'
+        }, {
+            id: 5,
+            name: 'Young'
+        }
+    ];
+    res.status(200).json(dumy_teachersName);
+});
+
+router.post('/check-teacher-schedule/search-schedule', (req: Request, res: Response, next: NextFunction) => {
+    // １人の講師の一週間分のスケジュールを返す
+    const params = req.body; // {teacherId: number, year: number, month: number, day: number}
+    console.log(params);
+    res.status(200).json(`search post success`);
+});
+
 module.exports = router;

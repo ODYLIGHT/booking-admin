@@ -1,3 +1,14 @@
-<p>
-  check-teacher-schedule works!
-</p>
+<div class="page-header">
+    <h5 class="text-center">Check Teacher schedule</h5>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <app-check-schedule-search-form
+                [teachersName]="teachersAsObservable | async"
+                (searchEvent)="search($event)"
+            ></app-check-schedule-search-form>
+            <app-check-table></app-check-table>
+        </div>
+    </div>
+</div>
