@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-export interface TeachersNameState {
-    id: number;
-    name: string;
-}
+import {
+    CheckTeacherScheduleStore, TeachersNameState
+} from './check-teacher-schedule.store';
+import { CheckTeacherScheduleState } from '../../store/types';
 
 @Injectable()
 export class CheckTeacherScheduleService {
@@ -16,7 +16,8 @@ export class CheckTeacherScheduleService {
     private options = new RequestOptions({ headers: this.headers });
 
     constructor(
-        private　http: Http
+        private http: Http,
+        private store: CheckTeacherScheduleStore
     ) { }
 
     public getTeachers(): Observable<TeachersNameState[]> {
@@ -26,7 +27,9 @@ export class CheckTeacherScheduleService {
     public getSchedule(params): void {
         this.http.post(this.apiSearchScheduleUrl, params, this.options)
             .map(s => s.json())
-            .subscribe(items => console.log(items));
+            .subscribe(res => this.store.changeState(res));
     }
+
+    public get getSchedules$(): Observable<CheckTeacherScheduleState> { return this.store.data$.map(s => s) }
 
 }

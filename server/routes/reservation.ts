@@ -187,9 +187,35 @@ router.get('/check-teacher-schedule/init-teacher', (req: Request, res: Response,
 
 router.post('/check-teacher-schedule/search-schedule', (req: Request, res: Response, next: NextFunction) => {
     // １人の講師の一週間分のスケジュールを返す
-    const params = req.body; // {teacherId: number, year: number, month: number, day: number}
-    console.log(params);
-    res.status(200).json(`search post success`);
+    // スケジュール・予約状況
+    const params = req.body; // {teacherId: number, year: number, month: number, day: number} monthは0~11
+    const paramsTimeStamp = new Date(`${params.year}-${++params.month}-${params.day} 00:00:00`).getTime();
+    const results = { schedules: [], reservations: [] };
+    // console.log(params);
+    fs.readFile(paths.schedule)
+        .then((schedules: any[]) => {
+            // 全てのスケジュールから検索日時の１週間分だけ抽出する
+            const betweenOneWeekSchedule = schedules.filter(s => {
+                const differenceTimeStamp = new Date(s._date).getTime() - paramsTimeStamp;
+                return differenceTimeStamp >= 0 && differenceTimeStamp < 1000 * 60 * 60 * 24 * 7;
+            });
+            results.schedules = betweenOneWeekSchedule;
+
+            fs.readFile(paths.reservation)
+                .then((reservations: any[]) => {
+                    // 全ての予約状況から検索講師分のみ取得
+                    const selectTeacherReservations = reservations.filter(s => {
+                        const differenceTimeStamp = new Date(s._reserve_date).getTime() - paramsTimeStamp;
+                        const isWithinRangeDate = differenceTimeStamp >= 0 && differenceTimeStamp < 1000 * 60 * 60 * 24 * 7;
+                        return isWithinRangeDate && s._teacher_id === parseInt(params.teacherId, 10);
+                    });
+                    results.reservations = selectTeacherReservations;
+                    res.status(200).json(results);
+                })
+                .catch(err => res.status(501).json(err));
+        })
+        .catch(err => res.status(501).json(err));
+
 });
 
 module.exports = router;

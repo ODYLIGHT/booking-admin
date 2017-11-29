@@ -93,3 +93,17 @@ export interface SearchBookingState {
     teacherName: string;
     reserveBy: string;
 }
+
+export interface CheckTeacherScheduleState {
+    schedules?: {
+        _date: Date;
+        _can_reserve: boolean;
+        _reserved_user: number;
+    }[];
+    reservations?: {
+        _id: number;
+        _reserve_date: Date;
+        _teacher_id: number;
+        _status: string;
+    }[];
+}

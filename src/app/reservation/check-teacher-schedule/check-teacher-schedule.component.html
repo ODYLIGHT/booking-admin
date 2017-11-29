@@ -5,10 +5,14 @@
     <div class="row">
         <div class="col-md-12">
             <app-check-schedule-search-form
-                [teachersName]="teachersAsObservable | async"
+                [teachersName]="teachersAsObservable$ | async"
                 (searchEvent)="search($event)"
             ></app-check-schedule-search-form>
-            <app-check-table></app-check-table>
+            <ng-container *ngIf="getScheduleAsObservable$ | async as schedules">
+                <app-check-table
+                    [schedules]="schedules"
+                ></app-check-table>
+            </ng-container>
         </div>
     </div>
 </div>

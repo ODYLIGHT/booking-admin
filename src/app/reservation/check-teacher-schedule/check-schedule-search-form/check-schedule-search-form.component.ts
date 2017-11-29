@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { TeachersNameState } from '../check-teacher-schedule.service';
+import { TeachersNameState } from '../check-teacher-schedule.store';
 import { NgForm, FormControl, FormGroup } from '@angular/forms';
 
 @Component({

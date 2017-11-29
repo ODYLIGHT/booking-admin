@@ -1,3 +1,25 @@
-<p>
-  check-table works!
-</p>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th class="bg-info">Mauritius</th>
+                    <th *ngFor="let date of createThead(schedules)">
+                        <div
+                            [class.text-danger]="(date | date: 'EEE') === 'Sun'"
+                            [class.text-primary]="(date | date: 'EEE') === 'Sat'">
+                            {{ date | date: 'EEE' }}
+                        </div>
+                        <div>{{ date | date: 'd.MMM.yyyy' }}</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let obj of convertSchedules(schedules)">
+                    <td class="bg-info">{{ obj.title }}</td>
+                    <td *ngFor="let val of obj.values">{{ getThisSchedule(val) }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
