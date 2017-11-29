@@ -31,6 +31,8 @@ import { RegisterTableComponent } from './reservation/register-booking/register-
 import { SearchFormComponent } from './reservation/search-booking/search-form/search-form.component';
 import { SearchTableComponent } from './reservation/search-booking/search-table/search-table.component';
 import { CancellationBookingComponent } from './reservation/search-booking/cancellation-booking/cancellation-booking.component';
+import { CheckTableComponent } from './reservation/check-teacher-schedule/check-table/check-table.component';
+import { CheckScheduleSearchFormComponent } from './reservation/check-teacher-schedule/check-schedule-search-form/check-schedule-search-form.component';
 
 @NgModule({
     declarations: [
@@ -56,7 +58,9 @@ import { CancellationBookingComponent } from './reservation/search-booking/cance
         RegisterTableComponent,
         SearchFormComponent,
         SearchTableComponent,
-        CancellationBookingComponent
+        CancellationBookingComponent,
+        CheckTableComponent,
+        CheckScheduleSearchFormComponent
     ],
     imports: [
         NgbModule.forRoot(),
