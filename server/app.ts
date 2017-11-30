@@ -13,8 +13,9 @@ const HOST = 'localhost';
 app.use(bodyParser.json({ limit: 10000000, extended: true }));
 
 app.use('/api/config', router.config);
-app.use('/api/teacher-information', router.teacher_info);
 app.use('/api/reservation', router.reservation);
+app.use('/api/student-information', router.student_info);
+app.use('/api/teacher-information', router.teacher_info);
 
 app.listen(PORT, HOST, () => {
     console.log(`express api server listening on ${PORT}`);

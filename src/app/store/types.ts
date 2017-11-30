@@ -107,3 +107,12 @@ export interface CheckTeacherScheduleState {
         _status: string;
     }[];
 }
+
+export interface SearchedStudentInformationState {
+    _id: number;
+    _name: string;
+    _gender: string;
+    _country: string; // タイムゾーン　どこで定義するのか不明・・・
+    _skype_name: string;
+    _email: string;
+}
