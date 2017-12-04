@@ -5,6 +5,7 @@ import { TopMenuComponent } from './top-menu/top-menu.component';
 import { RegisterTeachersComponent } from './teacher-information/register-teachers/register-teachers.component';
 import { TeacherScheduleComponent } from './teacher-information/teacher-schedule/teacher-schedule.component';
 import { StudentInformationComponent } from './student-information/student-information/student-information.component';
+import { OverviewComponent } from './student-information/overview/overview.component';
 import { RegisterBookingComponent } from './reservation/register-booking/register-booking.component';
 import { SearchBookingComponent } from './reservation/search-booking/search-booking.component';
 import { CancellationBookingComponent } from './reservation/search-booking/cancellation-booking/cancellation-booking.component';
@@ -46,7 +47,13 @@ const routes: Routes = [
                 ]
             },
             { path: 'check-teachers-schedule', component: CheckTeacherScheduleComponent },
-            { path: 'student-information', component: StudentInformationComponent }, // Children will be added
+            {
+                path: 'student-information',
+                children: [
+                    { path: '', component: StudentInformationComponent },
+                    { path: 'overview/:id', component: OverviewComponent }
+                ]
+            }, // Children will be added
             { path: 'school-information', component: SchoolInformationComponent },
             { path: 'register-administrators', component: RegisterAdministratorsComponent },
             { path: 'setting-authority', component: SettingAuthorityComponent },

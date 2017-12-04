@@ -35,6 +35,7 @@ import { CheckTableComponent } from './reservation/check-teacher-schedule/check-
 import { CheckScheduleSearchFormComponent } from './reservation/check-teacher-schedule/check-schedule-search-form/check-schedule-search-form.component';
 import { InformationSearchFormComponent } from './student-information/student-information/information-search-form/information-search-form.component';
 import { InformationTableComponent } from './student-information/student-information/information-table/information-table.component';
+import { OverviewComponent } from './student-information/overview/overview.component';
 
 @NgModule({
     declarations: [
@@ -64,7 +65,8 @@ import { InformationTableComponent } from './student-information/student-informa
         CheckTableComponent,
         CheckScheduleSearchFormComponent,
         InformationSearchFormComponent,
-        InformationTableComponent
+        InformationTableComponent,
+        OverviewComponent
     ],
     imports: [
         NgbModule.forRoot(),

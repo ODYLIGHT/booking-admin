@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 import { StudentInformationService } from './student-information.service';
@@ -14,10 +15,14 @@ import { SearchedStudentInformationState } from '../../store/types';
 })
 export class StudentInformationComponent implements OnInit {
 
-    constructor( private service: StudentInformationService ) { }
+    constructor(
+        private service: StudentInformationService,
+        private router: Router
+    ) { }
 
-    ngOnInit() {
-    }
+    ngOnInit() { }
+
+    public onClickAdd() { this.router.navigate(['/administrator/student-information/overview', 'new']) }
 
     public search(event): void { this.service.getSearchStudent(event) }
 

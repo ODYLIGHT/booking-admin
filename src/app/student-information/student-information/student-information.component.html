@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <p>
                 1. Register New Student Information.
-                <button type="button" class="btn btn-sm btn-default">Add New Student</button>
+                <button type="button" class="btn btn-sm btn-default" (click)="onClickAdd()">Add New Student</button>
             </p>
             <p>2. Search Student Information.</p>
             <app-information-search-form (searchEvent)="search($event)"></app-information-search-form>
