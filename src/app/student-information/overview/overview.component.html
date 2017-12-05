@@ -1,9 +1,9 @@
 <div class="page-header">
     <h5 class="text-center">{{ pageHeaderTitle }}</h5> 
 </div>
-<div class="container">
+<div class="container" *ngIf="pullDownMenus | async as menus">
     <div class="row">
-        <form class="col-md-12 border-style" #studentForm="ngForm" (submit)="onSubmit(formCtrls)" novalidate>
+        <form class="col-md-12 border-style" [formGroup]="formCtrls" (submit)="onSubmit(formCtrls)" novalidate>
             <!-- 各label,valueに表示される項目名は、日本語・英語で切り替えが必要になる -->
 
             <div class="form-column row">
@@ -17,7 +17,7 @@
                         <!-- <p class="text-danger">例）YAMADA Taro/p> -->
                     </div>
                     <div class="col-8 pl-0">
-                        <input type="text" name="customerName" class="form-control" [formControl]="formCtrls.controls.customerName">
+                        <input type="text" name="customerName" class="form-control" formControlName="customerName">
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                         <p class="text-danger">e.g smith</p>
                     </div>
                     <div class="col-8 pl-0">
-                        <input type="text" name="nickName" class="form-control" [formControl]="formCtrls.controls.nickName">
+                        <input type="text" name="nickName" class="form-control" formControlName="nickName">
                     </div>
                 </div>
             </div>
@@ -44,37 +44,36 @@
                         <p class="text-danger">例）山田 太郎</p>
                     </div>
                     <div class="col-8 pl-0">
-                        <input type="text" name="jpName" class="form-control" [formControl]="formCtrls.controls.jpName">
+                        <input type="text" name="jpName" class="form-control" formControlName="jpName">
                     </div>
                 </div>
             </div>
             <div class="form-column row">
                 <div class="col-2 form-label table-info">
-                    性別 <span class="text-danger">&lowast;</span>
+                    Gender <span class="text-danger">&lowast;</span>
                 </div>
                 <div class="col-3 form-value flex-box">
                     <div class="form-check form-check-inline">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="gender" id="male" value="male" [formControl]="formCtrls.controls.gender"> 男性
+                            <input class="form-check-input" type="radio" name="gender" id="male" value="male" formControlName="gender"> Male
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="gender" id="female" value="female" [formControl]="formCtrls.controls.gender"> 女性
+                            <input class="form-check-input" type="radio" name="gender" id="female" value="female" formControlName="gender"> Female
                         </label>
                     </div>
                 </div>
                 <div class="col-2 form-label table-info bl-1">
-                    生年月日 <span class="text-danger">&lowast;</span>
+                    Date of birth <span class="text-danger">&lowast;</span>
                 </div>
-                <div class="col-5 form-value">
+                <div class="col-5 form-value" formGroupName="birth">
                     <div class="container">
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group mb-0">
-                                    <label class="mb-0">日</label>
-                                    <select class="form-control" size="1" [formControl]="formCtrls.controls.birthDay">
-                                        <option value=""></option>
+                                    <label class="mb-0">Day</label>
+                                    <select class="form-control" size="1" formControlName="day">
                                         <ng-container *ngFor="let d of returnMatchOfDays">
                                             <option [value]="d">{{ d }}</option>
                                         </ng-container>
@@ -83,9 +82,8 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group mb-0">
-                                    <label class="mb-0">月</label>
-                                    <select class="form-control" size="1" [formControl]="formCtrls.controls.birthMonth">
-                                        <option value=""></option>
+                                    <label class="mb-0">Month</label>
+                                    <select class="form-control" size="1" formControlName="month">
                                         <ng-container *ngFor="let m of itemOfMonth">
                                             <option [value]="m.value">{{ m.label }}</option>
                                         </ng-container>
@@ -94,16 +92,15 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-group mb-0">
-                                    <label class="mb-0">年</label>
-                                    <select class="form-control" size="1" [formControl]="formCtrls.controls.birthYear">
-                                        <option value=""></option>
+                                    <label class="mb-0">Year</label>
+                                    <select class="form-control" size="1" formControlName="year">
                                         <ng-container *ngFor="let y of itemOfYear">
                                             <option [value]="y">{{ y }}</option>
                                         </ng-container>
                                     </select>
                                 </div>
                             </div>
-                            <small>パスワードを忘れたときに必要になります。</small>
+                            <small>Its need when you forget a password.</small>
                         </div>
                     </div>
                 </div>
@@ -117,7 +114,7 @@
                         Only letters, numbers and the following punctuation marks.<br>
                         *full stop(.) comma(,) dash(-) underscore(_). <span class="text-danger">NO Space.</span>
                     </p>
-                    <input type="text" name="skypeName" class="col-5 form-control" [formControl]="formCtrls.controls.skypeName">
+                    <input type="text" name="skypeName" class="col-5 form-control" formControlName="skypeName">
                 </div>
             </div>
             <div class="form-column row">
@@ -133,7 +130,7 @@
                             <p>This email address will be your user ID.</p>
                         </div>
                     </div>
-                    <input type="text" name="mailAddress" class="col-7 form-control" [formControl]="formCtrls.controls.mailAddress">
+                    <input type="text" name="mailAddress" class="col-7 form-control" formControlName="mailAddress">
                 </div>
             </div>
             <div class="form-column row">
@@ -144,7 +141,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <p>Between 6-12 characters in length.</p>
-                            <input type="text" name="password" class="form-control" [formControl]="formCtrls.controls.password">
+                            <input type="text" name="password" class="form-control" formControlName="password">
                         </div>
                         <div class="col-md-6">
                             <p>Please re-enter your Password.</p>
@@ -163,8 +160,10 @@
                     </div>
                 </div>
                 <div class="col-10 form-value flex-box">
-                    <select size="1" name="frenchLevel" class="form-control col-6" [formControl]="formCtrls.controls.frenchLevel">
-                        <option value="">hogehoge</option>
+                    <select size="1" name="frenchLevel" class="form-control col-6" formControlName="frenchLevel">
+                        <ng-container *ngFor="let item of menus.current_french_lebel">
+                            <option [value]="item.value">{{ item.label }}</option>
+                        </ng-container>
                     </select>
                 </div>
             </div>
@@ -176,7 +175,7 @@
                     </div>
                 </div>
                 <div class="col-10 form-value">
-                    <textarea name="leaningExperience" rows="3" class="form-control" style="resize: none;" [formControl]="formCtrls.controls.learningExperience"></textarea>
+                    <textarea name="leaningExperience" rows="3" class="form-control" style="resize: none;" formControlName="learningExperience"></textarea>
                 </div>
             </div>
             <div class="form-column row">
@@ -184,8 +183,10 @@
                     <small>Learning purpose <span class="text-danger">&lowast;</span></small>
                 </div>
                 <div class="col-10 form-value flex-box">
-                    <select name="purpose" size="1" class="form-control col-6" [formControl]="formCtrls.controls.purpose">
-                        <option value="">hogehoge</option>
+                    <select name="purpose" size="1" class="form-control col-6" formControlName="purpose">
+                        <ng-container *ngFor="let item of menus.purpose">
+                            <option [value]="item.value">{{ item.label }}</option>
+                        </ng-container>
                     </select>
                 </div>
             </div>
@@ -194,7 +195,7 @@
                     Mother Tongue <span class="text-danger">&lowast;</span>
                 </div>
                 <div class="col-4 form-value flex-box">
-                    <input name="motherTongue" type="text" class="form-control" [formControl]="formCtrls.controls.motherTongue">
+                    <input name="motherTongue" type="text" class="form-control" formControlName="motherTongue">
                 </div>
                 <div class="col-2 form-label table-info bl-1">
                     <div>
@@ -203,8 +204,10 @@
                     </div>
                 </div>
                 <div class="col-4 form-value flex-box">
-                    <select name="howFinded" size="1" class="form-control" [formControl]="formCtrls.controls.howFinded">
-                        <option value="">hogehoge</option>
+                    <select name="howFined" size="1" class="form-control" formControlName="howFined">
+                        <ng-container *ngFor="let item of menus.fined_tools">
+                            <option [value]="item.value">{{ item.label }}</option>
+                        </ng-container>
                     </select>
                 </div>
             </div>
@@ -212,27 +215,30 @@
                 <div class="col-2 form-label table-info">
                     <small>Other Languages 1</small>
                 </div>
-                <div class="col-4 form-value flex-box">
+                <div class="col-4 form-value flex-box" formGroupName="otherLanguage1">
                     <div class="row">
                         <div class="col-md-12">
-                            <input name="otherLang1" type="text" class="form-control" [formControl]="formCtrls.controls.otherLang1">
+                            <input name="otherLang1" type="text" class="form-control" formControlName="language">
                         </div>
                         <div class="col-md-12">
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="other_lang_1" id="level1" value="0">
+                                    <input class="form-check-input" type="radio" name="level" value="0"
+                                        formControlName="level">
                                     <small> Beginner</small>
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="other_lang_1" id="level2" value="1">
+                                    <input class="form-check-input" type="radio" name="level" value="1"
+                                        formControlName="level">
                                     <small> Intermediate</small>
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="other_lang_1" id="level3" value="2">
+                                    <input class="form-check-input" type="radio" name="level" value="2"
+                                        formControlName="level">
                                     <small> Advanced</small>
                                 </label>
                             </div>
@@ -242,27 +248,30 @@
                 <div class="col-2 form-label table-info bl-1">
                     <small>Other Languages 2</small>
                 </div>
-                <div class="col-4 form-value flex-box">
+                <div class="col-4 form-value flex-box" formGroupName="otherLanguage2">
                     <div class="row">
                         <div class="col-md-12">
-                            <input name="otherLang2" type="text" class="form-control" [formControl]="formCtrls.controls.otherLang2">
+                            <input name="otherLang2" type="text" class="form-control" formControlName="language">
                         </div>
                         <div class="col-md-12">
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="other_lang_2" id="level1" value="0">
+                                    <input class="form-check-input" type="radio" name="level" value="0"
+                                        formControlName="level">
                                     <small> Beginner</small>
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="other_lang_2" id="level2" value="1">
+                                    <input class="form-check-input" type="radio" name="level" value="1"
+                                        formControlName="level">
                                     <small> Intermediate</small>
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="other_lang_2" id="level3" value="2">
+                                    <input class="form-check-input" type="radio" name="level" value="2"
+                                        formControlName="level">
                                     <small> Advanced</small>
                                 </label>
                             </div>
@@ -270,11 +279,46 @@
                     </div>
                 </div>
             </div>
+            <div class="form-column row">
+                <div class="col-2 form-label table-info">
+                    Program Code
+                </div>
+                <div class="col-2 form-value flex-box">
+                    <select name="programCode" size="1" class="form-control" formControlName="programCode">
+                        <ng-container *ngFor="let item of menus.program_code">
+                            <option [value]="item.value">{{ item.label }}</option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="col-2 form-label table-info bl-1">
+                    Remark
+                </div>
+                <div class="col-2 form-value flex-box">
+                    <select name="remark" size="1" class="form-control" formControlName="remark">
+                        <ng-container *ngFor="let item of menus.remark">
+                            <option [value]="item.value">{{ item.label }}</option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="col-2 form-label table-info bl-1">
+                    Client Code
+                </div>
+                <div class="col-2 form-value flex-box">
+                    <select name="clientCode" size="1" class="form-control" formControlName="clientCode">
+                        <ng-container *ngFor="let item of menus.client_code">
+                            <option [value]="item.value">{{ item.label }}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
 
             <div class="col-12 text-center mt-5 mb-5">
                 <button type="submit" class="btn btn-default">Register</button>
+                <!-- <button type="submit" class="btn btn-default" [disabled]="isDisabled">Register</button> -->
             </div>
  
+            <p>{{ formCtrls.value | json }}</p>
+            <p>{{ formCtrls.status | json }}</p>
         </form>
     </div>
 </div>

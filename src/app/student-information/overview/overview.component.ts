@@ -1,88 +1,77 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { NgForm, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgForm, FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import { OverviewService } from './overview.service';
+import { StudentForm, OtherLang, PullDownMenusState, OverviewStore } from './overview.store';
 
 @Component({
     selector: 'app-overview',
     templateUrl: './overview.component.html',
     styleUrls: ['./overview.component.scss'],
+    providers: [OverviewService, OverviewStore],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OverviewComponent implements OnInit {
+    /**
+     * サンプルデータは`student.json`になります
+     * ※`customers.json`ではありません！
+     */
     public pageHeaderTitle: string;
     public itemOfYear: number[] = [];
     public itemOfMonth: { label: string, value: number }[];
-
-    private customerNameCtrl: FormControl;
-    private nickNameCtrl: FormControl;
-    private jpNameCtrl: FormControl;
-    private genderCtrl: FormControl;
-    private birthYearCtrl: FormControl;
-    private birthMonthCtrl: FormControl;
-    private birthDayCtrl: FormControl;
-    private skypeNameCtrl: FormControl;
-    private mailAddressCtrl: FormControl;
-    private passwordCtrl: FormControl;
-    private frenchLevelCtrl: FormControl;
-    private learningExprerienceCtrl: FormControl; // フランス語修学の経験
-    private purposeCtrl: FormControl; // 学習の目的
-    private motherTongueCtrl: FormControl; // 母国語
-    private howFindedCtrl: FormControl;
-    private otherLang1Ctrl: FormControl;
-    private otherLang2Ctrl: FormControl;
+    public pullDownMenus: BehaviorSubject<PullDownMenusState> = new BehaviorSubject(null);
     public formCtrls: FormGroup;
 
     constructor(
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private service: OverviewService,
+        private fb: FormBuilder
     ) { }
 
     ngOnInit() {
         this.createWeeksItems();
+        this.createForm();
+        this.service.getPullDownMenusApi.subscribe(s => this.pullDownMenus.next(s));
         this.route.paramMap
             .subscribe((params: ParamMap) => {
                 const isAddNew = params.get('id') !== 'new' ? false : true;
                 this.pageHeaderTitle = isAddNew ? 'Add New Student' : 'Overview of Student Information';
-                this.formInit();
+                if (isAddNew) {
+                    // 新規登録だった場合のフォーム初期化処理
+                } else {
+                    // 修正登録だった場合のフォーム初期化処理
+                }
             });
     }
 
-    private formInit(): void {
-        this.customerNameCtrl = new FormControl('', [Validators.required]);
-        this.nickNameCtrl = new FormControl('');
-        this.jpNameCtrl = new FormControl('', [Validators.required]);
-        this.genderCtrl = new FormControl('', [Validators.required]);
-        this.skypeNameCtrl = new FormControl('', [Validators.required]);
-        this.mailAddressCtrl = new FormControl('', [Validators.required]);
-        this.passwordCtrl = new FormControl('', [Validators.required]);
-        this.frenchLevelCtrl = new FormControl('', [Validators.required]);
-        this.learningExprerienceCtrl = new FormControl('');
-        this.purposeCtrl = new FormControl('', [Validators.required]);
-        this.motherTongueCtrl = new FormControl('', [Validators.required]);
-        this.howFindedCtrl = new FormControl('', [Validators.required]);
-        this.otherLang1Ctrl = new FormControl('');
-        this.otherLang2Ctrl = new FormControl('');
-        this.birthYearCtrl = new FormControl('', [Validators.required]);
-        this.birthMonthCtrl = new FormControl('', [Validators.required]);
-        this.birthDayCtrl = new FormControl('', [Validators.required]);
-        this.formCtrls = new FormGroup({
-            customerName: this.customerNameCtrl,
-            nickName: this.nickNameCtrl,
-            jpName: this.jpNameCtrl,
-            gender: this.genderCtrl,
-            birthYear: this.birthYearCtrl,
-            birthMonth: this.birthMonthCtrl,
-            birthDay: this.birthDayCtrl,
-            skypeName: this.skypeNameCtrl,
-            mailAddress: this.mailAddressCtrl,
-            password: this.passwordCtrl,
-            frenchLevel: this.frenchLevelCtrl,
-            learningExperience: this.learningExprerienceCtrl,
-            purpose: this.purposeCtrl,
-            motherTongue: this.motherTongueCtrl,
-            howFinded: this.howFindedCtrl,
-            otherLang1: this.otherLang1Ctrl,
-            otherLang2: this.otherLang2Ctrl
-        });
+    private createForm(): void {
+        this.formCtrls = this.fb.group({
+            customerName: [ '', Validators.required ],
+            nickName: '',
+            jpName: [ '', Validators.required ],
+            gender: [ '', Validators.required ],
+            birth: this.fb.group({
+                day: [ '', Validators.required ],
+                month: [ '', Validators.required ],
+                year: [ '', Validators.required ]
+            }),
+            skypeName: [ '', Validators.required ],
+            mailAddress: [ '', Validators.required ],
+            password: [ '', Validators.required ],
+            frenchLevel: [ '', Validators.required ],
+            learningExperience: '',
+            purpose: [ '', Validators.required ],
+            motherTongue: [ '', Validators.required ],
+            howFined: [ '', Validators.required ],
+            otherLanguage1: this.fb.group( new OtherLang() ),
+            otherLanguage2: this.fb.group( new OtherLang() ),
+            programCode: '',
+            remark: '',
+            clientCode: ''
+        })
     }
 
     private createWeeksItems(): void {
@@ -94,8 +83,8 @@ export class OverviewComponent implements OnInit {
 
     public get returnMatchOfDays(): number[] {
         let loopIndex: number;
-        const _y = +this.formCtrls.controls['birthYear'].value;
-        const _m = +this.formCtrls.controls['birthMonth'].value + 1;
+        const _y = +this.formCtrls.value.year
+        const _m = +this.formCtrls.value.month + 1;
 
         if ((_m < 8 && _m % 2 !== 0) || (_m >= 8 && _m % 2 === 0)) loopIndex = 31;
         else if (_m === 2) {
@@ -109,8 +98,17 @@ export class OverviewComponent implements OnInit {
 
     }
 
+    public get isDisabled() {
+        for (const key in this.formCtrls.controls) {
+            if (this.formCtrls.controls.hasOwnProperty(key)) {
+                const _errors = this.formCtrls.controls[key].hasError('required');
+                if (_errors && !!!this.formCtrls.controls[key].value) return true;
+            }
+        }
+    }
+
     public onSubmit(items) {
-        console.log(items);
+        console.log(items.value);
     }
 
 }

@@ -1,0 +1,25 @@
+[
+    {
+        "id": 123456789,
+        "customerName": "YMADA Taro",
+        "nickName": "yamachan",
+        "jpName": "山田　太郎",
+        "gender": "male",
+        "birth": "1985/07/31",
+        "skypeName": "yama_taro",
+        "mailAddress": "yamada0731@gmail.com",
+        "password": "hoge123456",
+        "frenchLevel": "B2",
+        "learningExperience": "高校の選択授業",
+        "purpose": "travelAbroad",
+        "motherTongue": "Japanese",
+        "howFined": "FB",
+        "otherLanguage1": "english",
+        "otherLanguage1_level": 2,
+        "otherLanguage2": "",
+        "otherLanguage2_level": null,
+        "programCode": "TCF",
+        "remark": "T2",
+        "clientCode": "FFJP"
+    }
+]

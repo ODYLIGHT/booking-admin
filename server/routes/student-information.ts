@@ -6,6 +6,13 @@ import { paths } from '../modules/paths';
 const router: Router = Router();
 const fs: FsService = FsService.instance;
 
+router.get('/get/pull-down-menus', (req: Request, res: Response, next: NextFunction) => {
+    console.log(`request[get]: pull down menus...`);
+    fs.readFile(paths.setting)
+        .then(result => res.status(200).json(result))
+        .catch(err => res.status(501).json(err));
+});
+
 router.post('/search', (req: Request, res: Response, next: NextFunction) => {
     // params には値が無いオブジェクトが渡されることもある
     // その場合は全顧客情報を返す
