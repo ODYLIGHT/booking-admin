@@ -5,7 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { OverviewService } from './overview.service';
-import { StudentForm, OtherLang, PullDownMenusState, OverviewStore } from './overview.store';
+import { StudentForm, OtherLang1, OtherLang2, PullDownMenusState, OverviewStore } from './overview.store';
+import { CustomerState } from '../../store/types';
 
 @Component({
     selector: 'app-overview',
@@ -15,10 +16,6 @@ import { StudentForm, OtherLang, PullDownMenusState, OverviewStore } from './ove
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OverviewComponent implements OnInit {
-    /**
-     * サンプルデータは`student.json`になります
-     * ※`customers.json`ではありません！
-     */
     public pageHeaderTitle: string;
     public itemOfYear: number[] = [];
     public itemOfMonth: { label: string, value: number }[];
@@ -27,28 +24,30 @@ export class OverviewComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private service: OverviewService,
         private fb: FormBuilder
-    ) { }
+    ) { this.createForm() }
 
     ngOnInit() {
         this.createWeeksItems();
-        this.createForm();
         this.service.getPullDownMenusApi.subscribe(s => this.pullDownMenus.next(s));
         this.route.paramMap
             .subscribe((params: ParamMap) => {
                 const isAddNew = params.get('id') !== 'new' ? false : true;
                 this.pageHeaderTitle = isAddNew ? 'Add New Student' : 'Overview of Student Information';
-                if (isAddNew) {
-                    // 新規登録だった場合のフォーム初期化処理
-                } else {
+                if (!!!isAddNew) {
                     // 修正登録だった場合のフォーム初期化処理
+                    const id = +params.get('id');
+                    this.service.getCustomer(id);
+                    this.service.customer$.subscribe(s => this.setForm(s[0]));
                 }
             });
     }
 
     private createForm(): void {
         this.formCtrls = this.fb.group({
+            id: [''],
             customerName: [ '', Validators.required ],
             nickName: '',
             jpName: [ '', Validators.required ],
@@ -65,14 +64,45 @@ export class OverviewComponent implements OnInit {
             learningExperience: '',
             purpose: [ '', Validators.required ],
             motherTongue: [ '', Validators.required ],
-            howFined: [ '', Validators.required ],
-            otherLanguage1: this.fb.group( new OtherLang() ),
-            otherLanguage2: this.fb.group( new OtherLang() ),
+            howFinded: [ '', Validators.required ],
+            otherLanguage1: this.fb.group( new OtherLang1() ),
+            otherLanguage2: this.fb.group( new OtherLang2() ),
             programCode: '',
             remark: '',
             clientCode: ''
-        })
+        });
     }
+
+    private setForm(obj: CustomerState): void {
+        if (!!!obj) return;
+        this.formCtrls.reset({
+            id: obj.id || '',
+            customerName: obj.customerName,
+            nickName: obj.nickName,
+            jpName: obj.jpName,
+            gender: obj.gender,
+            birth: {
+                day: new Date(obj.birth).getDate(),
+                month: new Date(obj.birth).getMonth(),
+                year: new Date(obj.birth).getFullYear()
+            } || { day: null, month: null, year: null },
+            skypeName: obj.skypeName,
+            mailAddress: obj.mailAddress,
+            password: obj.password,
+            frenchLevel: obj.frenchLevel,
+            learningExperience: obj.learningExperience,
+            purpose: obj.purpose,
+            motherTongue: obj.motherTongue,
+            howFinded: obj.howFinded,
+            otherLanguage1: { language: obj.otherLanguage1, lang1_level: `${obj.otherLanguage1_level}` } || new OtherLang1(),
+            otherLanguage2: { language: obj.otherLanguage2, lang2_level: `${obj.otherLanguage2_level}` } || new OtherLang2(),
+            programCode: obj.programCode,
+            remark: obj.remark,
+            clientCode: obj.clientCode
+        });
+    }
+
+    public get getId(): Observable<number> { return this.service.customer$.map(s => s[0] ? s[0].id : null) }
 
     private createWeeksItems(): void {
         const currentYear = new Date().getFullYear();
@@ -108,7 +138,35 @@ export class OverviewComponent implements OnInit {
     }
 
     public onSubmit(items) {
-        console.log(items.value);
+        // フォームモデルをデータモデルに戻しています
+        // もっといいやり方ないでしょうかね・・・
+        const params = Object.assign({}, items.value);
+        params.birth = [
+            items.value.birth.year,
+            `0${+items.value.birth.month + 1}`.slice(-2),
+            `0${items.value.birth.day}`.slice(-2)
+        ].join('/'); // YYYY/MM/dd
+        params.otherLanguage1 = items.value.otherLanguage1.language;
+        params.otherLanguage1_level = items.value.otherLanguage1.lang1_level;
+        params.otherLanguage2 = items.value.otherLanguage2.language;
+        params.otherLanguage2_level = items.value.otherLanguage2.lang2_level;
+        console.log(params);
+
+        let api;
+        if (!!!params.id) api = this.service.insertCustomer(params);
+        else api = this.service.updateCustomer(params);
+        api.subscribe(state => {
+            window.alert(`Request API is ${state}`);
+            // this.router.navigate(['/administrator/student-information']);
+        });
+    }
+
+    public onDelete(): void {
+        if (window.confirm(`Delete ${this.formCtrls.value.customerName}?`)) {
+            console.log(`deleting...`);
+        } else {
+            console.log(`canceled.`);
+        }
     }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { SearchedStudentInformationState } from '../../../store/types';
 
@@ -11,9 +12,10 @@ import { SearchedStudentInformationState } from '../../../store/types';
 export class InformationTableComponent implements OnInit {
     @Input() studentsAsObservable: Observable<SearchedStudentInformationState[]>;
 
-    constructor() { }
+    constructor( private router: Router ) { }
 
-    ngOnInit() {
-    }
+    ngOnInit() { }
+
+    public onClick(id: number) { this.router.navigate(['/administrator/student-information/overview', id]) }
 
 }

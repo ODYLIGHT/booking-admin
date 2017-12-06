@@ -199,13 +199,13 @@
                 </div>
                 <div class="col-2 form-label table-info bl-1">
                     <div>
-                        <p class="w-100 mb-0"><small>How did you fined</small></p>
+                        <p class="w-100 mb-0"><small>How did you finded</small></p>
                         <p class="w-100 mb-0"><small>out about us <span class="text-danger">&lowast;</span></small></p>
                     </div>
                 </div>
                 <div class="col-4 form-value flex-box">
-                    <select name="howFined" size="1" class="form-control" formControlName="howFined">
-                        <ng-container *ngFor="let item of menus.fined_tools">
+                    <select name="howFinded" size="1" class="form-control" formControlName="howFinded">
+                        <ng-container *ngFor="let item of menus.finded_tools">
                             <option [value]="item.value">{{ item.label }}</option>
                         </ng-container>
                     </select>
@@ -223,22 +223,22 @@
                         <div class="col-md-12">
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="level" value="0"
-                                        formControlName="level">
+                                    <input class="form-check-input" type="radio" name="lang1_level" value="0"
+                                        formControlName="lang1_level">
                                     <small> Beginner</small>
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="level" value="1"
-                                        formControlName="level">
+                                    <input class="form-check-input" type="radio" name="lang1_level" value="1"
+                                        formControlName="lang1_level">
                                     <small> Intermediate</small>
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="level" value="2"
-                                        formControlName="level">
+                                    <input class="form-check-input" type="radio" name="lang1_level" value="2"
+                                        formControlName="lang1_level">
                                     <small> Advanced</small>
                                 </label>
                             </div>
@@ -256,22 +256,22 @@
                         <div class="col-md-12">
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="level" value="0"
-                                        formControlName="level">
+                                    <input class="form-check-input" type="radio" name="lang2_level" value="0"
+                                        formControlName="lang2_level">
                                     <small> Beginner</small>
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="level" value="1"
-                                        formControlName="level">
+                                    <input class="form-check-input" type="radio" name="lang2_level" value="1"
+                                        formControlName="lang2_level">
                                     <small> Intermediate</small>
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="level" value="2"
-                                        formControlName="level">
+                                    <input class="form-check-input" type="radio" name="lang2_level" value="2"
+                                        formControlName="lang2_level">
                                     <small> Advanced</small>
                                 </label>
                             </div>
@@ -313,8 +313,9 @@
             </div>
 
             <div class="col-12 text-center mt-5 mb-5">
-                <button type="submit" class="btn btn-default">Register</button>
-                <!-- <button type="submit" class="btn btn-default" [disabled]="isDisabled">Register</button> -->
+                <!-- <button type="submit" class="btn btn-default">Register</button> -->
+                <button type="button" class="btn btn-default" *ngIf="getId | async" (click)="onDelete()">Delete</button>
+                <button type="submit" class="btn btn-default" [disabled]="isDisabled">Register</button>
             </div>
  
             <p>{{ formCtrls.value | json }}</p>

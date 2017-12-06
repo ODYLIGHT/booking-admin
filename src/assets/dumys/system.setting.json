@@ -10,7 +10,7 @@
         { "label": "C1 - Lower Advanced", "value": "C1" },
         { "label": "C2 - Upper Advanced", "value": "C2" }
     ],
-    "fined_tools": [
+    "finded_tools": [
         { "label": "Google", "value": "Google" },
         { "label": "Yahoo", "value": "Yahoo" },
         { "label": "Other internet search", "value": "otherWebSite" },

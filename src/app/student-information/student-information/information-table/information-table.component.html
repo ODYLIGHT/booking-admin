@@ -6,7 +6,7 @@
                     <th class="text-center">Customer #</th>
                     <th class="text-center">Name</th>
                     <th class="text-center">Gender</th>
-                    <th class="text-center">Country</th>
+                    <!-- <th class="text-center">Country</th> -->
                     <th class="text-center">Skype Name</th>
                     <th class="text-center">email</th>
                     <th class="text-center">Overview</th>
@@ -15,13 +15,13 @@
             </thead>
             <tbody>
                 <tr *ngFor="let student of students">
-                    <td class="text-center">{{ student._id }}</td>
-                    <td><a href="#">{{ student._name }}</a></td>
-                    <td class="text-center">{{ student._gender }}</td>
-                    <td>{{ student._country }}</td>
-                    <td>{{ student._skype_name }}</td>
-                    <td>{{ student._email }}</td>
-                    <td><button type="button" class="btn btn-sm btn-default w-100">Overview</button></td>
+                    <td class="text-center">{{ student.id }}</td>
+                    <td><a href="#">{{ student.customerName }}</a></td>
+                    <td class="text-center">{{ student.gender }}</td>
+                    <!-- <td>{{ student.country }}</td> -->
+                    <td>{{ student.skypeName }}</td>
+                    <td>{{ student.mailAddress }}</td>
+                    <td><button type="button" class="btn btn-sm btn-default w-100" (click)="onClick(student.id)">Overview</button></td>
                     <td><button type="button" class="btn btn-sm btn-default w-100">History</button></td>
                 </tr>
             </tbody>
