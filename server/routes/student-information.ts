@@ -60,4 +60,22 @@ router.put('/update', (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json(true);
 });
 
+router.get('/credit/get', (req: Request, res: Response, next: NextFunction) => {
+    console.log(`request [get] /creadit/get`);
+    const params = req.query;
+
+    Promise.all([ fs.readFile(paths.customers), fs.readFile(paths.credit) ])
+        .then((results: any[]) => {
+            const requestCustomer = results[0].filter(o => o.id === +params.id);
+            const requestCredit = results[1].filter(o => o.customerId === +params.id);
+
+            res.status(200).json({
+                customer: requestCustomer[0],
+                credits: requestCredit
+            });
+        })
+        .catch(err => res.status(501).json(err));
+
+});
+
 module.exports = router;

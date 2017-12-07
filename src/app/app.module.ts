@@ -40,6 +40,7 @@ import {
 } from './student-information/student-information/information-search-form/information-search-form.component';
 import { InformationTableComponent } from './student-information/student-information/information-table/information-table.component';
 import { OverviewComponent } from './student-information/overview/overview.component';
+import { CreditInformationComponent } from './student-information/credit-information/credit-information.component';
 
 @NgModule({
     declarations: [
@@ -70,7 +71,8 @@ import { OverviewComponent } from './student-information/overview/overview.compo
         CheckScheduleSearchFormComponent,
         InformationSearchFormComponent,
         InformationTableComponent,
-        OverviewComponent
+        OverviewComponent,
+        CreditInformationComponent
     ],
     imports: [
         NgbModule.forRoot(),

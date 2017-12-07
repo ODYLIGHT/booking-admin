@@ -18,6 +18,7 @@ import { TimeLimitComponent } from './system-setting/time-limit/time-limit.compo
 import { TimeZoneComponent } from './system-setting/time-zone/time-zone.component';
 import { PaypalComponent } from './system-setting/paypal/paypal.component';
 import { TeacherFormsComponent } from './teacher-information/register-teachers/teacher-forms/teacher-forms.component';
+import { CreditInformationComponent } from './student-information/credit-information/credit-information.component';
 
 // routing設定は開発時のアクセスを簡略化するため
 // リダイレクト設定をざるにしてます
@@ -51,7 +52,8 @@ const routes: Routes = [
                 path: 'student-information',
                 children: [
                     { path: '', component: StudentInformationComponent },
-                    { path: 'overview/:id', component: OverviewComponent }
+                    { path: 'overview/:id', component: OverviewComponent },
+                    { path: 'credit-information', component: CreditInformationComponent }
                 ]
             }, // Children will be added
             { path: 'school-information', component: SchoolInformationComponent },

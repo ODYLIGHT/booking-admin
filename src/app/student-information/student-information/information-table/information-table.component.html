@@ -16,7 +16,11 @@
             <tbody>
                 <tr *ngFor="let student of students">
                     <td class="text-center">{{ student.id }}</td>
-                    <td><a href="#">{{ student.customerName }}</a></td>
+                    <td>
+                        <a routerLink="credit-information" [queryParams]="{ id: student.id }">
+                            {{ student.customerName }}
+                        </a>
+                    </td>
                     <td class="text-center">{{ student.gender }}</td>
                     <!-- <td>{{ student.country }}</td> -->
                     <td>{{ student.skypeName }}</td>
