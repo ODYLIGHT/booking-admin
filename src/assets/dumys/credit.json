@@ -1,0 +1,127 @@
+[
+    {
+        "customerId": 1,
+        "add": 0,
+        "subtract": -1,
+        "accumulation": 18,
+        "paid": false,
+        "remark": "By Administrator",
+        "inserted_at": "2017/12/02"
+    },
+    {
+        "customerId": 1,
+        "add": 1,
+        "subtract": 0,
+        "accumulation": 19,
+        "paid": false,
+        "remark": "Cancel by Customer",
+        "inserted_at": "2017/11/30"
+    },
+    {
+        "customerId": 1,
+        "add": 0,
+        "subtract": -1,
+        "accumulation": 18,
+        "paid": false,
+        "remark": "Regular booking",
+        "inserted_at": "2017/11/28"
+    },{
+        "customerId": 1,
+        "add": 0,
+        "subtract": -1,
+        "accumulation": 19,
+        "paid": false,
+        "remark": "Regular booking",
+        "inserted_at": "2017/11/26"
+    },
+    {
+        "customerId": 1,
+        "add": 1,
+        "subtract": 0,
+        "accumulation": 20,
+        "paid": false,
+        "remark": "Teacher Absent",
+        "inserted_at": "2017/11/26"
+    },
+    {
+        "customerId": 1,
+        "add": 0,
+        "subtract": -1,
+        "accumulation": 19,
+        "paid": false,
+        "remark": "Regular booking",
+        "inserted_at": "2017/11/26"
+    },
+    {
+        "customerId": 1,
+        "add": 0,
+        "subtract": -1,
+        "accumulation": 20,
+        "paid": false,
+        "remark": "Regular booking",
+        "inserted_at": "2017/11/24"
+    },
+    {
+        "customerId": 1,
+        "add": 20,
+        "subtract": 0,
+        "accumulation": 21,
+        "paid": false,
+        "remark": "10h Lesson / Bank transfer",
+        "inserted_at": "2017/11/22"
+    },
+    {
+        "customerId": 1,
+        "add": 0,
+        "subtract": -1,
+        "accumulation": 1,
+        "paid": false,
+        "remark": "Regular booking",
+        "inserted_at": "2017/11/20"
+    },
+    {
+        "customerId": 1,
+        "add": 0,
+        "subtract": -1,
+        "accumulation": 2,
+        "paid": false,
+        "remark": "Regular booking",
+        "inserted_at": "2017/11/19"
+    },
+    {
+        "customerId": 1,
+        "add": 0,
+        "subtract": -1,
+        "accumulation": 3,
+        "paid": false,
+        "remark": "Regular booking",
+        "inserted_at": "2017/11/18"
+    },
+    {
+        "customerId": 1,
+        "add": 4,
+        "subtract": 0,
+        "accumulation": 4,
+        "paid": false,
+        "remark": "2h Lesson / Bank transfer",
+        "inserted_at": "2017/11/15"
+    },
+    {
+        "customerId": 1,
+        "add": 0,
+        "subtract": -1,
+        "accumulation": 0,
+        "paid": false,
+        "remark": "Regular booking",
+        "inserted_at": "2017/11/13"
+    },
+    {
+        "customerId": 1,
+        "add": 1,
+        "subtract": 0,
+        "accumulation": 1,
+        "paid": false,
+        "remark": "Trial",
+        "inserted_at": "2017/11/11"
+    }
+]

@@ -44,26 +44,27 @@ export interface ScheduleState {
 }
 
 export interface CustomerState {
-    _id: number;
-    _name: string;
-    _nick_name: string;
-    _gender: string; // M or F にするか数字で0 or 1 にするか
-    _birthday: Date; // 資料だと日・月・年が分かれてプルダウンになっているが・・・
-    _skype_name: string;
-    _email: string;
-    _password: string;
-    _french_level: number;
-    _learning_experience: string; // 学習経験
-    _learning_purpose: number;
-    _mother_tongue: string; // 母国語
-    _how_finded: number; // このサイトを知ったきっかけ
-    _other_language_1: string;
-    _other_language_level_1: number;
-    _other_language_2: string;
-    _other_language_level_2: number;
-    _program_code: number;
-    _remark: number;
-    _client_code: number;
+    id: number;
+    customerName: string;
+    nickName: string;
+    jpName: string;
+    gender: string; // male or female
+    birth: Date; // データ格納時はDate型にして、利用時に別途分解する
+    skypeName: string;
+    mailAddress: string;
+    password: string;
+    frenchLevel: string;
+    learningExperience: string; // 学習経験
+    purpose: string;
+    motherTongue: string; // 母国語
+    howFinded: string; // このサイトを知ったきっかけ
+    otherLanguage1: string;
+    otherLanguage1_level: number;
+    otherLanguage2: string;
+    otherLanguage2_level: number;
+    programCode: string;
+    remark: string;
+    clientCode: string;
 }
 
 export interface ReservationState {
@@ -81,7 +82,7 @@ export interface RegisterBookingTeachersState {
 }
 
 export interface SearcherCustomerState {
-    _name: string; // 顧客名(CustomerState._name)
+    _name: string; // 顧客名(CustomerState.customerName)
     _teachers: RegisterBookingTeachersState[];
 }
 
@@ -106,4 +107,13 @@ export interface CheckTeacherScheduleState {
         _teacher_id: number;
         _status: string;
     }[];
+}
+
+export interface SearchedStudentInformationState {
+    id: number;
+    customerName: string;
+    gender: string;
+    // _country: string; // タイムゾーン　どこで定義するのか不明・・・
+    skypeName: string;
+    mailAddress: string;
 }

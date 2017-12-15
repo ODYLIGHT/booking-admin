@@ -1,9 +1,11 @@
 form.border-style {
     border-top: 1px solid #eceeef;
-    border-left: 1px solid #eceeef;
     .table-warning {
         word-break: break-all;
         overflow: hidden;
+    }
+    .form-column {
+        border-left: 1px solid #eceeef;
     }
     .form-column:nth-of-type(6) {
         .form-cell {

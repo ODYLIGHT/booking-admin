@@ -5,6 +5,7 @@ import { TopMenuComponent } from './top-menu/top-menu.component';
 import { RegisterTeachersComponent } from './teacher-information/register-teachers/register-teachers.component';
 import { TeacherScheduleComponent } from './teacher-information/teacher-schedule/teacher-schedule.component';
 import { StudentInformationComponent } from './student-information/student-information/student-information.component';
+import { OverviewComponent } from './student-information/overview/overview.component';
 import { RegisterBookingComponent } from './reservation/register-booking/register-booking.component';
 import { SearchBookingComponent } from './reservation/search-booking/search-booking.component';
 import { CancellationBookingComponent } from './reservation/search-booking/cancellation-booking/cancellation-booking.component';
@@ -17,6 +18,7 @@ import { TimeLimitComponent } from './system-setting/time-limit/time-limit.compo
 import { TimeZoneComponent } from './system-setting/time-zone/time-zone.component';
 import { PaypalComponent } from './system-setting/paypal/paypal.component';
 import { TeacherFormsComponent } from './teacher-information/register-teachers/teacher-forms/teacher-forms.component';
+import { CreditInformationComponent } from './student-information/credit-information/credit-information.component';
 
 // routing設定は開発時のアクセスを簡略化するため
 // リダイレクト設定をざるにしてます
@@ -46,7 +48,14 @@ const routes: Routes = [
                 ]
             },
             { path: 'check-teachers-schedule', component: CheckTeacherScheduleComponent },
-            { path: 'student-information', component: StudentInformationComponent }, // Children will be added
+            {
+                path: 'student-information',
+                children: [
+                    { path: '', component: StudentInformationComponent },
+                    { path: 'overview/:id', component: OverviewComponent },
+                    { path: 'credit-information', component: CreditInformationComponent }
+                ]
+            }, // Children will be added
             { path: 'school-information', component: SchoolInformationComponent },
             { path: 'register-administrators', component: RegisterAdministratorsComponent },
             { path: 'setting-authority', component: SettingAuthorityComponent },
