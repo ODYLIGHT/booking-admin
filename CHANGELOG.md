@@ -7,3 +7,12 @@
 
 ## [ unreleased ]
 - `student information`の`overview`における入力値バリデーション
+- スケジュールテーブルを変更する  
+スケジュール管理テーブルを廃止して日付はビュー側で管理する
+
+<!-- ## [ データテーブルの構造メモ ]
+### 講師のテーブル(`teachers` table)  
+| Field      | Type        | Null         | Key          | Default      | Extra        | Comment      |
+|:-----------|:------------|:-------------|:-------------|:-------------|:-------------|:-------------|
+| id         | number      | NO           | primary key  |              | auto increment| 講師のID     | -->
+

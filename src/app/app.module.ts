@@ -1,11 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+import { HttpModule } from '@angular/http'; // 削除予定
+// HttpClientModuleに移行して行く
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // global import for Observable.map
 import 'rxjs/add/operator/map';
+
+import { MomentService } from './services/moment.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -77,12 +81,15 @@ import { CreditInformationComponent } from './student-information/credit-informa
     imports: [
         NgbModule.forRoot(),
         BrowserModule,
-        HttpModule,
+        HttpModule, // 削除予定
+        HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
         AppRoutingModule
     ],
-    providers: [],
+    providers: [
+        MomentService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

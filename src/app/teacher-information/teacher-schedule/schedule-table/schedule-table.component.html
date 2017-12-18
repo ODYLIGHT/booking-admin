@@ -1,5 +1,44 @@
 <div class="row">
     <div class="col-md-12">
+        <h2 class="text-center">{{ timeZone }}</h2>
+
+        <table class="table table-bordered table-sm">
+
+            <thead>
+                <tr>
+                    <th class="table-warning">Date</th>
+                    <ng-container *ngFor="let d of getDayOfWeek">
+                        <th style="cursor: pointer;">
+                            <div [class.text-danger]="(d | date: 'EEE') === 'Sun'"
+                                 [class.text-primary]="(d | date: 'EEE') === 'Sat'">
+                                 {{ d | date: 'EEE' }}
+                            </div>
+                            <div>{{ d | date: 'd.MMM.yyyy' }}</div>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let times of getTimeTableElements">
+                    <td>{{ times }}</td>
+                    <ng-container *ngFor="let d of getDayOfWeek">
+                        <td style="cursor: pointer;" (click)="onClick(createCheckValue(d, times))">
+                            <!-- <i class="fa fa-check" aria-hidden="true"></i> -->
+                        </td>
+                        <!-- <td>
+                            {{ createCheckValue(d, times) | date: 'yyyy/MM/dd HH:mm zzzz' : '+0000' }}
+                        </td> -->
+                    </ng-container>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+<!-- <div class="row">
+    <div class="col-md-12">
         <div class="col-md-12 text-center">
             <div class="btn-area">
                 <button type="button" class="btn btn-warning" (click)="onClickCopyPrev()">
@@ -61,4 +100,4 @@
 
         </table>
     </div>
-</div>
+</div> -->

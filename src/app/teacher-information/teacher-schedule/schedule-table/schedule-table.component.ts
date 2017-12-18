@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { ScheduleState } from '../../../store/types';
+import { MomentService } from '../../../services/moment.service';
 
 @Component({
     selector: 'app-schedule-table',
@@ -8,54 +9,77 @@ import { ScheduleState } from '../../../store/types';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScheduleTableComponent implements OnInit {
-    @Input() schedules: { title: string; value: ScheduleState[] }[];
-    @Input() showsWeeks: Date[];
-    @Output() switchWeek = new EventEmitter();
-    @Output() copyPrev = new EventEmitter();
-    @Output() post = new EventEmitter();
-    private rowBools: boolean[] = [];
-    private lineBools: boolean[] = [];
+    private selectedDates: string[] = [];
 
-    constructor() { }
+    constructor(private moment: MomentService) { }
 
-    ngOnInit() { }
+    ngOnInit() { this.initMoment() }
 
-    public onClick(obj) { obj._can_reserve = !obj._can_reserve }
+    private initMoment() { this.moment.init('Asia/Tokyo') }
 
-    public onSelectAday(idx: number) {
-        this.schedules.forEach((obj, index, array) => {
-            obj.value[idx]._can_reserve = !!this.lineBools[idx];
-        });
-        this.lineBools[idx] = !this.lineBools[idx];
+    get getDayOfWeek() { return this.moment.getDays }
+
+    get getTimeTableElements() { return this.moment.getTimeTables }
+
+    get timeZone() { return this.moment.getTimeZone }
+
+    public createCheckValue(date, time) {
+        return this.moment.convertedDate(date, time);
     }
 
-    public onSelectAhour(idx: number) {
-        this.schedules[idx].value.forEach((schedule, index, array) => {
-            schedule._can_reserve = !!this.rowBools[idx];
-        });
-        this.rowBools[idx] = !this.rowBools[idx];
+    public onClick(date: string) {
+        this.selectedDates.push(date);
+        console.log(this.selectedDates);
     }
 
-    public onClickBtn(str: string): void {
-        this.schedules.forEach((obj, index, array) => {
-            obj.value.forEach((schedule, i, a) => {
-                schedule._can_reserve = (str === 'check') ? false : true;
-                this.lineBools[i] = (str === 'check') ? true : false;
-            });
-            this.rowBools[index] = (str === 'check') ? true : false;
-        });
-    }
+    // @Input() schedules: { title: string; value: ScheduleState[] }[];
+    // @Input() showsWeeks: Date[];
+    // @Output() switchWeek = new EventEmitter();
+    // @Output() copyPrev = new EventEmitter();
+    // @Output() post = new EventEmitter();
+    // private rowBools: boolean[] = [];
+    // private lineBools: boolean[] = [];
 
-    public onClickCopyPrev(): void {
-        this.copyPrev.emit();
-    }
+    // constructor() { }
 
-    public onClickSwitchWeek(str: string): void {
-        this.switchWeek.emit(str === 'next' ? 7 : -7);
-    }
+    // ngOnInit() { }
 
-    public onPost() {
-        this.post.emit();
-    }
+    // public onClick(obj) { obj._can_reserve = !obj._can_reserve }
+
+    // public onSelectAday(idx: number) {
+    //     this.schedules.forEach((obj, index, array) => {
+    //         obj.value[idx]._can_reserve = !!this.lineBools[idx];
+    //     });
+    //     this.lineBools[idx] = !this.lineBools[idx];
+    // }
+
+    // public onSelectAhour(idx: number) {
+    //     this.schedules[idx].value.forEach((schedule, index, array) => {
+    //         schedule._can_reserve = !!this.rowBools[idx];
+    //     });
+    //     this.rowBools[idx] = !this.rowBools[idx];
+    // }
+
+    // public onClickBtn(str: string): void {
+    //     this.schedules.forEach((obj, index, array) => {
+    //         obj.value.forEach((schedule, i, a) => {
+    //             schedule._can_reserve = (str === 'check') ? false : true;
+    //             this.lineBools[i] = (str === 'check') ? true : false;
+    //         });
+    //         this.rowBools[index] = (str === 'check') ? true : false;
+    //     });
+    // }
+
+    // public onClickCopyPrev(): void {
+    //     this.copyPrev.emit();
+    // }
+
+    // public onClickSwitchWeek(str: string): void {
+    //     this.switchWeek.emit(str === 'next' ? 7 : -7);
+    // }
+
+    // public onPost() {
+    //     this.post.emit();
+    // }
 
 }

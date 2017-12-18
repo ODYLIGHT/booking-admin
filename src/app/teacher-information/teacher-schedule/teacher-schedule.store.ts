@@ -5,8 +5,8 @@ import { ScheduleState } from '../../store/types';
 @Injectable()
 export class TeacherScheduleStore extends Store<ScheduleState[]> {
     constructor() { super(<ScheduleState[]>{}) }
-    private _changeData(items: ScheduleState[]) {
+    private _changeState(items: ScheduleState[]) {
         return (c: Readonly<ScheduleState[]>): Partial<ScheduleState[]> => items;
     }
-    public changeState(items: ScheduleState[]): void { this.dispatch(this._changeData(items)) }
+    public changeState(items: ScheduleState[]): void { this.dispatch(this._changeState(items)) }
 }
