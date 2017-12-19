@@ -9,27 +9,46 @@ import { MomentService } from '../../../services/moment.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScheduleTableComponent implements OnInit {
-    private selectedDates: string[] = [];
+    private schedules: string[] = [];
 
     constructor(private moment: MomentService) { }
 
     ngOnInit() { this.initMoment() }
 
-    private initMoment() { this.moment.init('Asia/Tokyo') }
-
-    get getDayOfWeek() { return this.moment.getDays }
-
-    get getTimeTableElements() { return this.moment.getTimeTables }
-
-    get timeZone() { return this.moment.getTimeZone }
-
-    public createCheckValue(date, time) {
-        return this.moment.convertedDate(date, time);
+    private initMoment(): void {
+        // Feature: Get User's TimeZone from backend.
+        this.moment.init('Asia/Tokyo');
     }
 
-    public onClick(date: string) {
-        this.selectedDates.push(date);
-        console.log(this.selectedDates);
+    get _dayOfWeek() { return this.moment._dayOfWeek }
+
+    get _leftLine() { return this.moment._leftLine }
+
+    get _timeZone() { return this.moment._timeZone }
+
+    /**
+     * `date`に`time`を結合した時間文字列(UTC)を返す ex:'YYYY-MM-ddTHH:mm:ssZ'
+     * @param date Date
+     * @param time　string
+     */
+    public dateConverter(date: Date, time: string): string { return this.moment.convertedDate(date, time) }
+
+    /**
+     * テーブル１列目の時間範囲を作る
+     *
+     * 与えられた時間文字列の３０分後表示文字列を返す
+     *
+     * ex: '07:00'が来たら'07:30'、'15:30'なら'16:00'
+     */
+    public combineTime(timeAry: string[], idx: number): string { return !!!timeAry[idx + 1] ? '24:00' : timeAry[idx + 1] }
+
+    /**
+     * 選択した時間文字列を配列に格納する
+     * @param date UTC時間文字列
+     */
+    public changeSchedule(date: string): void {
+        this.schedules = this.moment.setSchedules(date, this.schedules);
+        console.log(this.schedules);
     }
 
     // @Input() schedules: { title: string; value: ScheduleState[] }[];

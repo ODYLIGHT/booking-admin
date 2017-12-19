@@ -1,17 +1,16 @@
 <div class="row">
     <div class="col-md-12">
-        <h2 class="text-center">{{ timeZone }}</h2>
+        <h2 class="text-center">{{ _timeZone }}</h2>
 
         <table class="table table-bordered table-sm">
 
             <thead>
                 <tr>
                     <th class="table-warning">Date</th>
-                    <ng-container *ngFor="let d of getDayOfWeek">
+                    <ng-container *ngFor="let d of _dayOfWeek">
                         <th style="cursor: pointer;">
-                            <div [class.text-danger]="(d | date: 'EEE') === 'Sun'"
-                                 [class.text-primary]="(d | date: 'EEE') === 'Sat'">
-                                 {{ d | date: 'EEE' }}
+                            <div [class.text-danger]="(d | date: 'EEE') === 'Sun'" [class.text-primary]="(d | date: 'EEE') === 'Sat'">
+                                {{ d | date: 'EEE' }}
                             </div>
                             <div>{{ d | date: 'd.MMM.yyyy' }}</div>
                         </th>
@@ -20,15 +19,12 @@
             </thead>
 
             <tbody>
-                <tr *ngFor="let times of getTimeTableElements">
-                    <td>{{ times }}</td>
-                    <ng-container *ngFor="let d of getDayOfWeek">
-                        <td style="cursor: pointer;" (click)="onClick(createCheckValue(d, times))">
+                <tr *ngFor="let time of _leftLine as ary; let i = index">
+                    <td>{{ time }} - {{ combineTime(ary, i) }}</td>
+                    <ng-container *ngFor="let d of _dayOfWeek">
+                        <td style="cursor: pointer;" (click)="changeSchedule(dateConverter(d, time))">
                             <!-- <i class="fa fa-check" aria-hidden="true"></i> -->
                         </td>
-                        <!-- <td>
-                            {{ createCheckValue(d, times) | date: 'yyyy/MM/dd HH:mm zzzz' : '+0000' }}
-                        </td> -->
                     </ng-container>
                 </tr>
             </tbody>

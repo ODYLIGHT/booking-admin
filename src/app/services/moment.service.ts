@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-// import { moment } from 'moment-timezone';
 import * as moment from 'moment';
 import 'moment-timezone';
 
 @Injectable()
 export class MomentService {
-    private WeekStartAsUTC: moment.Moment = moment.utc().startOf('week'); // UTC時間における今週の最初の日付（日曜）
-    private WeekEndAsUTC: moment.Moment = moment.utc().endOf('week'); // UTC時間における今週の最後の日付（土曜）
-    private daysArray: moment.Moment[];
-    private timesArray: string[]; // ['00:00', '00:30', ...]
+    protected moment = moment;
+    private WeekStartAsUTC: moment.Moment = this.moment.utc().startOf('week'); // UTC時間における今週の最初の日付（日曜）
+    private WeekEndAsUTC: moment.Moment = this.moment.utc().endOf('week'); // UTC時間における今週の最後の日付（土曜）
+    private oneWeekAsMoment: moment.Moment[];
+    private leftLineValues: string[]; // ['00:00', '00:30', ...]
     private timeZone: string;
 
     constructor() {
@@ -16,24 +16,35 @@ export class MomentService {
         // console.log(moment.utc().utcOffset('+10:00'));
     }
 
-    public init(timeZoneName: string) {
+    /**
+     * MomentService initialize method.
+     * @param timeZoneName User's TimeZone name
+     */
+    public init(timeZoneName: string): void {
         this.timeZone = timeZoneName;
-        this.daysArray = this.getOneWeekUTCDates(timeZoneName);
-        this.timesArray = this.getTimeTableElements;
+        this.oneWeekAsMoment = this.oneWeekReflectedTimeZone(timeZoneName);
+        this.leftLineValues = this.setLeftLineValues();
     }
 
-    private getOneWeekUTCDates(timeZoneName: string) {
-        const daysArray = [];
-        let startDay = moment.tz(new Date(), timeZoneName).startOf('week');
-        const lastDay = moment.tz(new Date(), timeZoneName).endOf('week');
+    /**
+     * テーブルヘッダー部分に表示したい一週間のmoment時間配列を返す
+     * @param timeZoneName 選択した講師のタイムゾーン
+     */
+    private oneWeekReflectedTimeZone(timeZoneName: string): moment.Moment[] {
+        const oneWeekAsMoment = [];
+        let startDay = this.moment.tz(new Date(), timeZoneName).startOf('week');
+        const lastDay = this.moment.tz(new Date(), timeZoneName).endOf('week');
         while (startDay <= lastDay) {
-            daysArray.push(startDay.utc().toDate());
+            oneWeekAsMoment.push(startDay.utc().toDate());
             startDay = startDay.clone().add(1, 'd');
         }
-        return daysArray;
+        return oneWeekAsMoment;
     }
 
-    private get getTimeTableElements() {
+    /**
+     * テーブル１列目の時間タイトルに使う文字列配列を返す
+     */
+    private setLeftLineValues(): string[] {
         const timesAry = []; // ['00:00', '00:30', ...]
         for (
             const target = this.WeekStartAsUTC.clone();
@@ -42,23 +53,44 @@ export class MomentService {
         ) {
             timesAry.push(target.format('HH:mm'));
         }
-        // console.log(timesAry);
         return timesAry;
     }
 
-    public get getDays() { return this.daysArray }
-
-    public get getTimeTables() { return this.timesArray }
-
-    public get getTimeZone() { return `${this.timeZone} ${moment.tz(this.timeZone).format('Z')}` }
-
-    public convertedDate(date: Date, time: string) {
+    /**
+     * `date`をUTC時間に変更したうえで`time`のミリ秒を加算した時間文字列を返す
+     * @param date ローカル時間
+     * @param time '00:00'や'00:30'
+     */
+    public convertedDate(date: Date, time: string): string {
         const ms = (() => {
             const _t = time.split(':');
             return (parseInt(_t[0], 10) * 60 * 60 * 1000) + (parseInt(_t[1], 10) * 60 * 1000);
         })();
-        // console.log(moment(date).utc().add(ms, 'ms').format());
-        return moment(date).utc().add(ms, 'ms').toISOString();
+        return this.moment(date).utc().add(ms, 'ms').toISOString();
     }
+
+    public setSchedules(date: string, schedules: string[]): string[] {
+        if (schedules.length === 0 || schedules.findIndex(elm => this.moment(date).isSame(this.moment(elm).format())) < 0) {
+            schedules.push(date);
+        } else {
+            schedules = schedules.filter(elm => !!!this.moment(date).isSame(this.moment(elm).format()));
+        }
+        return schedules;
+    }
+
+    public isIncluded(date: string, ary: string[]): boolean {
+        const bool = ary.filter(v => this.moment(date).isSame(this.moment(v).format()));
+        return !!bool.length ? true : false;
+    }
+
+    public deleteDateFromSelected(date: string, ary: string[]): string[] {
+        return ary.filter(v => !!!this.moment(date).isSame(this.moment(v).format()));
+    }
+
+    //////////////////////////////////////////////////////// Getters ////////////////////////////////////////////////////////
+    get _dayOfWeek() { return this.oneWeekAsMoment }
+    get _leftLine() { return this.leftLineValues }
+    get _timeZone() { return `${this.timeZone} ${this.moment.tz(this.timeZone).format('Z')}` }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
