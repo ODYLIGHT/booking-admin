@@ -8,3 +8,7 @@ export const paths = {
     schedule: './src/assets/dumys/schedule.json',
     setting: './src/assets/dumys/system.setting.json'
 }
+
+export const jsons = {
+    teachers: './src/assets/samples/teachers.json'
+}

@@ -1,30 +1,40 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TeacherScheduleService } from './teacher-schedule.service';
-import { TeacherScheduleStore } from './teacher-schedule.store';
+import {
+    OperationsStore, OptionItemsState,
+    TeacherScheduleStore
+} from './teacher-schedule.store';
 import { ScheduleState } from '../../store/types';
-import * as moment from 'moment';
-import 'moment/locale/ja';
 
 @Component({
     templateUrl: './teacher-schedule.component.html',
     styleUrls: ['./teacher-schedule.component.scss'],
-    providers: [TeacherScheduleService, TeacherScheduleStore],
+    providers: [TeacherScheduleService, OperationsStore, TeacherScheduleStore],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TeacherScheduleComponent implements OnInit {
+    public teacher = new BehaviorSubject(null);
 
     constructor(
         private service: TeacherScheduleService,
-        private store: TeacherScheduleStore
+        private operationsStore: OperationsStore,
+        private scheduleStore: TeacherScheduleStore
     ) { }
 
-    ngOnInit() {}
+    ngOnInit() { this.service.initComponentItems() }
+
+    public onSelect(value: OptionItemsState) {
+        this.teacher.next(value);
+    }
+
+    public get optionsAsObservable$(): Observable<OptionItemsState[]> { return this.service.getOperationsItems$ }
 
     // public showsWeeks: Date[];
     // public rows = [];
     // private allSchedule: ScheduleState[];
-    // public mainSchedule: { title: string; value: ScheduleState[] }[] = []; // convert schedules.
+    // public mainSchedule: { title: string; JSON.parse(value): ScheduleState[] }[] = []; // convert schedules.
     // public lengthOfOneDay = 48; // スケジュール1日のデータ数
     // private moment: moment.Moment = moment();
 

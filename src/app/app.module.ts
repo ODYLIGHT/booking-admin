@@ -17,6 +17,7 @@ import { HeaderComponent } from './header/header.component';
 import { TopMenuComponent } from './top-menu/top-menu.component';
 import { RegisterTeachersComponent } from './teacher-information/register-teachers/register-teachers.component';
 import { TeacherScheduleComponent } from './teacher-information/teacher-schedule/teacher-schedule.component';
+import { OperationsComponent } from './teacher-information/teacher-schedule/operations/operations.component';
 import { StudentInformationComponent } from './student-information/student-information/student-information.component';
 import { RegisterBookingComponent } from './reservation/register-booking/register-booking.component';
 import { SearchBookingComponent } from './reservation/search-booking/search-booking.component';
@@ -53,6 +54,7 @@ import { CreditInformationComponent } from './student-information/credit-informa
         TopMenuComponent,
         RegisterTeachersComponent,
         TeacherScheduleComponent,
+        OperationsComponent,
         StudentInformationComponent,
         RegisterBookingComponent,
         SearchBookingComponent,

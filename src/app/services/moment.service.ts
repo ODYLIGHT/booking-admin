@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
 import 'moment-timezone';
 
@@ -7,24 +9,24 @@ export class MomentService {
     protected moment = moment;
     private WeekStartAsUTC: moment.Moment = this.moment.utc().startOf('week'); // UTC時間における今週の最初の日付（日曜）
     private WeekEndAsUTC: moment.Moment = this.moment.utc().endOf('week'); // UTC時間における今週の最後の日付（土曜）
-    private oneWeekAsMoment: moment.Moment[];
+    private oneWeekAsMoment: BehaviorSubject<moment.Moment[]> = new BehaviorSubject([]);
+    private timeZone: BehaviorSubject<string> = new BehaviorSubject('');
+    // private oneWeekAsMoment: moment.Moment[];
+    // private timeZone: string;
     private leftLineValues: string[]; // ['00:00', '00:30', ...]
-    private timeZone: string;
 
-    constructor() {
-        // console.log(moment.tz.names())
-        // console.log(moment.utc().utcOffset('+10:00'));
-    }
+    constructor() { this.leftLineValues = this.setLeftLineValues() }
 
     /**
      * MomentService initialize method.
      * @param timeZoneName User's TimeZone name
      */
     public init(timeZoneName: string): void {
-        this.timeZone = timeZoneName;
-        this.oneWeekAsMoment = this.oneWeekReflectedTimeZone(timeZoneName);
-        this.leftLineValues = this.setLeftLineValues();
+        this.timeZone.next(this.setTimeZone(timeZoneName));
+        this.oneWeekAsMoment.next(this.oneWeekReflectedTimeZone(timeZoneName));
     }
+
+    private setTimeZone(tz: string): string { return `${tz} ${this.moment.tz(tz).format('Z')}` }
 
     /**
      * テーブルヘッダー部分に表示したい一週間のmoment時間配列を返す
@@ -90,7 +92,7 @@ export class MomentService {
     //////////////////////////////////////////////////////// Getters ////////////////////////////////////////////////////////
     get _dayOfWeek() { return this.oneWeekAsMoment }
     get _leftLine() { return this.leftLineValues }
-    get _timeZone() { return `${this.timeZone} ${this.moment.tz(this.timeZone).format('Z')}` }
+    get _timeZone() { return this.timeZone }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }

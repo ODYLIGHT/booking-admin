@@ -1,7 +1,8 @@
 'use strict';
 import { Router, Response, Request, NextFunction } from 'express';
 import { FsService } from '../modules/fs.modules';
-import { paths } from '../modules/paths';
+// jsonsに新しいテストデータを作っていきます（2017/12以降）
+import { paths, jsons } from '../modules/paths';
 
 const router: Router = Router();
 const fs: FsService = FsService.instance;
@@ -73,14 +74,17 @@ router.put('/register-teachers/put', (req: Request, res: Response, next: NextFun
     });
 });
 
-// GET teacher-schedule init
-router.get('/teacher-schedule', (req: Request, res: Response, next: NextFunction) => {
-    console.info(`request: GET from teacher-schedule`);
-    fs.readFile(paths.schedule)
-        .then(result => {
-            res.status(200).json(result);
-        })
-        .catch(err => { res.status(501).json(err) });
+// Teacher Scheduleコンポーネントのオペレーション部分で使う、講師とそのタイムゾーンを初期化処理時に返す
+router.get('/teacher-schedule/operations-init', (req: Request, res: Response, next: NextFunction) => {
+    console.info(`[ ${req.method} ]: ${req.url}`);
+    fs.readFile(jsons.teachers)
+        .then(result => res.status(200).json(result))
+        .catch(err => res.status(501).json(err));
+    // fs.readFile(paths.schedule)
+    //     .then(result => {
+    //         res.status(200).json(result);
+    //     })
+    //     .catch(err => { res.status(501).json(err) });
 });
 
 // PUT teacher-schedule update

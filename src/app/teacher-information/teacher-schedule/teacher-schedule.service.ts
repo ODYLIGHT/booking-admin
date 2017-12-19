@@ -2,20 +2,32 @@ import { Injectable } from '@angular/core';
 // import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
-import { TeacherScheduleStore } from './teacher-schedule.store';
+import {
+    OperationsStore, OptionItemsState,
+    TeacherScheduleStore
+} from './teacher-schedule.store';
 import { ScheduleState } from '../../store/types';
 
 @Injectable()
 export class TeacherScheduleService {
-    readonly apiInitUrl = 'api/teacher-information/teacher-schedule';
-    readonly apiPutUrl = 'api/teacher-information/teacher-schedule/update';
+    readonly apiInitUrl = 'api/teacher-information/teacher-schedule/operations-init';
     private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    // readonly apiPutUrl = 'api/teacher-information/teacher-schedule/update';
 
     constructor(
         private http: HttpClient,
-        private store: TeacherScheduleStore
+        private operationsStore: OperationsStore
     ) { }
+
+    public initComponentItems(): void {
+        this.http.get(this.apiInitUrl, { headers: this.headers }).pipe(
+            map(s => Object.values(s) as OptionItemsState[])
+        ).subscribe(res => this.operationsStore.changeState(res))
+    }
+
+    public get getOperationsItems$(): Observable<OptionItemsState[]> { return this.operationsStore.data$.pipe(map(s => Object.values(s))) }
 
     // public getInit(): void {
     //     this.http.get(this.apiInitUrl, this.options)

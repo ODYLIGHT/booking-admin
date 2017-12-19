@@ -1,13 +1,13 @@
 <div class="row">
     <div class="col-md-12">
-        <h2 class="text-center">{{ _timeZone }}</h2>
+        <h4 *ngIf="teacher | async as t">Teacher: {{ t.name }} <small>[ Time Zone: {{ _timeZone | async }} ]</small></h4>
 
-        <table class="table table-bordered table-sm">
+        <table class="table table-bordered table-sm" *ngIf="_dayOfWeek | async as dayOfWeek">
 
             <thead>
                 <tr>
                     <th class="table-warning">Date</th>
-                    <ng-container *ngFor="let d of _dayOfWeek">
+                    <ng-container *ngFor="let d of dayOfWeek">
                         <th style="cursor: pointer;">
                             <div [class.text-danger]="(d | date: 'EEE') === 'Sun'" [class.text-primary]="(d | date: 'EEE') === 'Sat'">
                                 {{ d | date: 'EEE' }}
@@ -21,7 +21,7 @@
             <tbody>
                 <tr *ngFor="let time of _leftLine as ary; let i = index">
                     <td>{{ time }} - {{ combineTime(ary, i) }}</td>
-                    <ng-container *ngFor="let d of _dayOfWeek">
+                    <ng-container *ngFor="let d of dayOfWeek">
                         <td style="cursor: pointer;" (click)="changeSchedule(dateConverter(d, time))">
                             <!-- <i class="fa fa-check" aria-hidden="true"></i> -->
                         </td>

@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "Cardenas",
+        "time_zone": "Europe/Berlin"
+    },
+    {
+        "id": 2,
+        "name": "Leach",
+        "time_zone": "Europe/Paris"
+    },
+    {
+        "id": 3,
+        "name": "Noel",
+        "time_zone": "America/New_York"
+    },
+    {
+        "id": 4,
+        "name": "Rivas",
+        "time_zone": "Pacific/Honolulu"
+    },
+    {
+        "id": 5,
+        "name": "Mccall",
+        "time_zone": "America/Los_Angeles"
+    },
+    {
+        "id": 6,
+        "name": "Sato",
+        "time_zone": "Asia/Tokyo"
+    }
+]
