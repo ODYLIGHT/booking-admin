@@ -25,9 +25,7 @@ export class TeacherScheduleComponent implements OnInit {
 
     ngOnInit() { this.service.initComponentItems() }
 
-    public onSelect(value: OptionItemsState) {
-        this.teacher.next(value);
-    }
+    public onSelect(value: OptionItemsState) { this.teacher.next(value) }
 
     public get optionsAsObservable$(): Observable<OptionItemsState[]> { return this.service.getOperationsItems$ }
 

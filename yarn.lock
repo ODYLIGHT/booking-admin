@@ -33,6 +33,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/cdk@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/cdk/-/cdk-5.0.2.tgz#9d2505e5736a14a6b59d226280a7600559e6d707"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/cli@1.6.0":
   version "1.6.0"
   resolved "https://registry.npmjs.org/@angular/cli/-/cli-1.6.0.tgz#eba521f6a8e4c2db628300baddbc4da13ca96998"
@@ -139,6 +145,12 @@
 "@angular/language-service@^5.0.0":
   version "5.1.1"
   resolved "https://registry.npmjs.org/@angular/language-service/-/language-service-5.1.1.tgz#731533a3b6ee4c8facda862a836db1930a011f07"
+
+"@angular/material@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/material/-/material-5.0.2.tgz#99b758fed20cb4a715aee2a65cf98301dcd521df"
+  dependencies:
+    tslib "^1.7.1"
 
 "@angular/platform-browser-dynamic@^5.0.0":
   version "5.1.1"

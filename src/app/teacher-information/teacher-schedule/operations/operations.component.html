@@ -1,11 +1,13 @@
 <div class="row">
     <div class="col-12">
-        <div class="form-group">
-            <label class="col-form-label">Select the instructor name to check</label>
-            <select name="teacher" class="form-control form-control-sm col-4" (change)="onChange($event)">
-                <option value="">Blank</option>
-                <option *ngFor="let teacher of options; let i = index" [value]="i">{{ teacher.name }}</option>
-            </select>
+        <div class="form-group row">
+            <div class="col-md-5">
+                <label class="col-form-label col-form-label-sm">Select the instructor name to check</label>
+                <select name="teacher" class="form-control form-control-sm" (change)="onChange($event)">
+                    <option value="">Blank</option>
+                    <option *ngFor="let teacher of options; let i = index" [value]="i">{{ teacher.name }}</option>
+                </select>
+            </div>
         </div>
     </div>
 </div>

@@ -2,7 +2,9 @@ import { Component, OnInit, Output, Input, EventEmitter, ChangeDetectionStrategy
 import { OptionItemsState } from '../teacher-schedule.store';
 import { ScheduleState } from '../../../store/types';
 import { MomentService } from '../../../services/moment.service';
+import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { map } from 'rxjs/operators';
 import { Moment } from 'moment-timezone';
 
 @Component({
@@ -26,11 +28,11 @@ export class ScheduleTableComponent implements OnInit {
         });
     }
 
-    get _dayOfWeek(): BehaviorSubject<Moment[]> { return this.moment._dayOfWeek }
+    get _dayOfWeek(): Observable<Date[]> { return this.moment._dayOfWeek }
 
     get _leftLine(): string[] { return this.moment._leftLine }
 
-    get _timeZone(): BehaviorSubject<string> { return this.moment._timeZone }
+    get _timeZone(): Observable<string> { return this.moment._timeZone }
 
     /**
      * `date`に`time`を結合した時間文字列(UTC)を返す ex:'YYYY-MM-ddTHH:mm:ssZ'
@@ -49,6 +51,33 @@ export class ScheduleTableComponent implements OnInit {
     public combineTime(timeAry: string[], idx: number): string { return !!!timeAry[idx + 1] ? '24:00' : timeAry[idx + 1] }
 
     /**
+     * 講師の選択が行われた場合、格納されていたスケジュールを初期化する
+     */
+    private resetSchedule(): void { this.schedules = [] }
+
+    /**
+     * 画面上段の期間を表す文字列を返す
+     * @param week day of a week
+     */
+    public getSelectedWeek(week: Moment[]): string { return this.moment.getSelectWeekStr(week) }
+
+    /**
+     * 引数`utc`に該当する時間が、スケジュールとして選択されているかの判定
+     * @param utc 時間文字列
+     */
+    public selectedChecker(utc: string): boolean { return this.moment.isScheduleExists(utc, this.schedules) }
+
+    /**
+     * go to next week.
+     */
+    public next(): void { this.moment.setWeek(1) }
+
+    /**
+     * back to previous week.
+     */
+    public prev(): void { this.moment.setWeek(-1) }
+
+    /**
      * 選択した時間文字列を配列に格納する
      * @param date UTC時間文字列
      */
@@ -60,10 +89,23 @@ export class ScheduleTableComponent implements OnInit {
     }
 
     /**
-     * 講師の選択が行われた場合、格納されていたスケジュールを初期化する
+     * 1日の全てのスケジュールを追加・削除する
+     * @param date 選択日付
      */
-    private resetSchedule(): void { this.schedules = [] }
+    public onClickThead(date: Date) {
+        const momentDate = this.moment.exchangeDateToMoment(date, true);
+        this.schedules = this.moment.setOneDaySchedules(momentDate, this.schedules);
+    }
 
+    /**
+     * 選択した時間帯の一週間分をスケジュールに追加・削除する
+     * @param timeStr 時間文字列　'HH:mm'
+     * @param week 現在表示中の一週間分のDate配列
+     */
+    public onClickLeftLine(timeStr: string, week: Date[]) {
+        const d = week.map(date => this.dateConverter(date, timeStr));
+        this.schedules = this.moment.setOneTimeSchedules(d, this.schedules);
+    }
 
 
     // @Input() schedules: { title: string; value: ScheduleState[] }[];

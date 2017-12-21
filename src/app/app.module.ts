@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MaterialModule } from './material.module';
 
 // global import for Observable.map
 import 'rxjs/add/operator/map';
@@ -87,7 +88,8 @@ import { CreditInformationComponent } from './student-information/credit-informa
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MaterialModule
     ],
     providers: [
         MomentService
