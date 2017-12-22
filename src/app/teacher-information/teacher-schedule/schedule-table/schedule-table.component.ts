@@ -1,32 +1,46 @@
 import { Component, OnInit, Output, Input, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { OptionItemsState } from '../teacher-schedule.store';
-import { ScheduleState } from '../../../store/types';
-import { MomentService } from '../../../services/moment.service';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { map } from 'rxjs/operators';
 import { Moment } from 'moment-timezone';
 
+// import { ScheduleState } from '../../../store/types';
+import { MomentService } from '../../../services/moment.service';
+import {
+    OptionItemsState, TeacherSchedulesState, TeacherScheduleStore
+} from '../teacher-schedule.store';
+import { ScheduleTableService } from './schedule-table.service';
+
 @Component({
     selector: 'app-schedule-table',
     templateUrl: './schedule-table.component.html',
     styleUrls: ['./schedule-table.component.scss'],
+    providers: [ScheduleTableService, TeacherScheduleStore ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScheduleTableComponent implements OnInit {
     @Input() teacher: BehaviorSubject<OptionItemsState>;
     private schedules: string[] = [];
 
-    constructor(private moment: MomentService) { }
+    constructor(
+        private moment: MomentService,
+        private service: ScheduleTableService,
+        private store: TeacherScheduleStore
+    ) { }
 
     ngOnInit() { this.initMoment() }
 
     private initMoment(): void {
         this.teacher.subscribe(teacher => {
             this.resetSchedule();
-            if (!!teacher) this.moment.init(teacher.time_zone);
+            if (!!teacher) {
+                this.service.changedTeacherOfState(teacher);
+                this.moment.init(teacher.time_zone);
+            }
         });
     }
+
+    get _teacher(): Observable<Readonly<TeacherSchedulesState>> { return this.service.getTeacherSchedule$ }
 
     get _dayOfWeek(): Observable<Date[]> { return this.moment._dayOfWeek }
 
