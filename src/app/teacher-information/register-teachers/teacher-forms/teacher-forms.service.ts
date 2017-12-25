@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-// import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
@@ -17,8 +18,10 @@ export class TeacherFormsService {
 
     constructor(
         private http: HttpClient,
+        private router: Router,
         private store: TeacherFormsStore,
-        private moment: MomentService
+        private moment: MomentService,
+        private snackBar: MatSnackBar
     ) { }
 
     public get getItems$(): Observable<TeacherState> { return this.store.data$.pipe(map(s => s)) }
@@ -30,22 +33,22 @@ export class TeacherFormsService {
 
     public get getTimeZones(): string[] { return this.moment.getTimeZones }
 
-    // public insertTeacher(params: TeacherState): void {
-    //     this.http.post(this.apiPostUrl, params, { headers: this.headers })
-    //         .map(s => s.json())
-    //         .subscribe(res => {
-    //             console.info(`insert success`);
-    //             console.log(res);
-    //         });
-    // }
+    public add(params: TeacherState): void {
+        this.http.post(this.apiPostUrl, params, { headers: this.headers })
+            .subscribe(res => {
+                this.snackBar.open('Successfully Interted', null, { duration: 1000 }).afterDismissed().subscribe(() => {
+                    this.router.navigate(['/administrator/register-teachers']);
+                });
+            });
+    }
 
-    // public putTeacher(params: TeacherState): void {
-    //     this.http.put(this.apiPutUrl, params, { headers: this.headers })
-    //         .map(s => s.json())
-    //         .subscribe(res => {
-    //             console.info(`update success`);
-    //             console.log(res);
-    //         });
-    // }
+    public put(params: TeacherState): void {
+        this.http.put(this.apiPutUrl, params, { headers: this.headers })
+            .subscribe(res => {
+                this.snackBar.open('Successfully Updated', null, { duration: 1000 }).afterDismissed().subscribe(() => {
+                    this.router.navigate(['/administrator/register-teachers']);
+                });
+            });
+    }
 
 }

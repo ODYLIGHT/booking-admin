@@ -26,14 +26,14 @@ const initialFormState: TeacherState = {
     user_id: '',
     password: '',
     authority: null,
-    details_teaches: '',
+    details_teaches: null,
     details_other_language: '',
     details_education: '',
     details_speciality: '',
     details_career: '',
     details_comment: '',
     details_testimonial: '',
-    details_jp_teaches: '',
+    details_jp_teaches: null,
     details_jp_other_language: '',
     details_jp_education: '',
     details_jp_speciality: '',
@@ -57,6 +57,12 @@ export class TeacherFormsComponent implements OnInit, AfterViewInit {
     public languages: OptionsState[] = [
         { title: 'ALL', value: 0 },
         { title: 'English only', value: 1 }
+    ];
+    // teaches, 対応レベルのオブジェクト配列
+    public teaches = [
+        { value: 0, title: { en: 'Beginner', jp: '初心者' } },
+        { value: 1, title: { en: 'Beginner - Intermediate', jp: '初心者 - 中級' } },
+        { value: 2, title: { en: 'Beginner - Intermediate - Advanced', jp: '初心者 - 中級 - 上級' } }
     ];
     // authorityのオブジェクト配列
     public authoritys: OptionsState[] = [
@@ -85,7 +91,9 @@ export class TeacherFormsComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        // this.service.getItems$.subscribe(s => this.createForm(s));
+        this.service.getItems$.subscribe(s => {
+            if (Object.keys(s).length) this.profileForm.reset(s);
+        });
     }
 
     /**
@@ -97,24 +105,11 @@ export class TeacherFormsComponent implements OnInit, AfterViewInit {
     public get getSelectTeacherAsObservable$(): Observable<TeacherState> { return this.service.getItems$ }
 
     public onSubmit(form: FormGroup) {
-        console.log(form.value);
+        const params: TeacherState = form.value;
+        const confirmMessage = params.id ? `${params.name}の情報を更新しますか？` : '新しい講師を登録しますか？';
+        if (window.confirm(confirmMessage)) {
+            params.id ? this.service.put(params) : this.service.add(params);
+        }
     }
-
-    // public onChange(event, obj) {
-    //     const fileName = event.srcElement.files[0].name;
-    //     obj._picture = fileName;
-    //     console.log(fileName);
-    //     console.log(obj);
-    // }
-
-    // public onSubmit(data: TeacherState, id: number): void {
-    //     if (!!!id) {
-    //         console.info(`insert teacher`);
-    //         this.service.insertTeacher(data);
-    //     } else {
-    //         console.info(`update id: ${id}`);
-    //         this.service.putTeacher(Object.assign({}, { id }, data));
-    //     }
-    // }
 
 }

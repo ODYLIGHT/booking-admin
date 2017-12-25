@@ -58,13 +58,11 @@ router.get('/register-teachers/get/:id', (req: Request, res: Response, next: Nex
             })
             .catch(err => res.status(501).json(err));
     }
-    // Object.keys(dataIfDevelop).forEach(key => {
-    //     if (dataIfDevelop[key]['_id'] === target_id) res.json(dataIfDevelop[key]);
-    // });
 });
 
 // POST - teacher-forms add new teacher
 router.post('/register-teachers/post', (req: Request, res: Response, next: NextFunction) => {
+    debug('[ POST ] from teacher-froms for added new teacher');
     const params = req.body;
     // console.log(params);
     res.json({
@@ -74,6 +72,7 @@ router.post('/register-teachers/post', (req: Request, res: Response, next: NextF
 
 // PUT teacher-forms edit teacher
 router.put('/register-teachers/put', (req: Request, res: Response, next: NextFunction) => {
+    debug('[ PUT ] from teacher-froms for puted teacher');
     const params = req.body;
     // console.log(params);
     res.json({

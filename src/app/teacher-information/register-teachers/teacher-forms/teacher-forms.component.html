@@ -92,7 +92,11 @@
                     <div class="col-md-6">
                         <label>Details</label>
                         <mat-form-field class="w-100">
-                            <input matInput type="text" placeholder="Teaches" formControlName="details_teaches">
+                            <mat-select placeholder="Teaches" formControlName="details_teaches">
+                                <mat-option *ngFor="let teach of teaches" [value]="teach.value">
+                                    {{ teach.title.en }}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                         <mat-form-field class="w-100">
                             <input matInput type="text" placeholder="Other Language(s)" formControlName="details_other_language">
@@ -116,7 +120,11 @@
                     <div class="col-md-6">
                         <label>Details(JPN)</label>
                         <mat-form-field class="w-100">
-                            <input matInput type="text" placeholder="対応レベル" formControlName="details_jp_teaches">
+                            <mat-select placeholder="対応レベル" formControlName="details_jp_teaches">
+                                <mat-option *ngFor="let teach of teaches" [value]="teach.value">
+                                    {{ teach.title.jp }}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                         <mat-form-field class="w-100">
                             <input matInput type="text" placeholder="その他可能言語" formControlName="details_jp_other_language">

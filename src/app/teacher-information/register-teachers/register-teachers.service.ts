@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-// import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';

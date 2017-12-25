@@ -4,44 +4,46 @@
 
 <div class="container" *ngIf="getTeachersAsObservable$ | async as teachers">
     <div class="col-md-10 offset-md-1">
-        <table class="table table-bordered table-sm">
-            <thead>
-                <tr class="table-warning row m-0">
-                    <th class="text-center d-inline-block col-1">#</th>
-                    <th class="text-center d-inline-block col-3">Name</th>
-                    <th class="text-center d-inline-block col-3">Name(JPN)</th>
-                    <th class="text-center d-inline-block col-1">Status</th>
-                    <th class="text-center d-inline-block col-2">Modify</th>
-                    <th class="text-center d-inline-block col-2">Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngFor="let teacher of selectItems(teachers)">
+        <mat-card>
+            <table class="table table-sm">
+                <thead>
                     <tr class="row m-0">
-                        <td class="text-center d-inline-block col-1">{{ teacher.id }}</td>
-                        <td class=" d-inline-block col-3">{{ teacher.name }}</td>
-                        <td class=" d-inline-block col-3">{{ teacher.name_jp }}</td>
-                        <td class="text-center d-inline-block col-1">{{ teacher.state === true ? 'ON' : 'OFF' }}</td>
-                        <td class="text-center d-inline-block col-2">
-                            <button mat-raised-button color="primary" (click)="onModify(teacher.id)">Modify</button>
-                        </td>
-                        <td class="text-center d-inline-block col-2">
-                            <button mat-raised-button color="warn" (click)="onDelete(teacher.id)">Delete</button>
-                        </td>
+                        <th class="text-center d-inline-block col-1">#</th>
+                        <th class="text-center d-inline-block col-3">Name</th>
+                        <th class="text-center d-inline-block col-3">Name(JPN)</th>
+                        <th class="text-center d-inline-block col-1">Status</th>
+                        <th class="text-center d-inline-block col-2">Modify</th>
+                        <th class="text-center d-inline-block col-2">Delete</th>
                     </tr>
-                </ng-container>
-            </tbody>
-        </table>
-        <ngb-pagination
-            [rotate]="true"
-            [boundaryLinks]="true"
-            [maxSize]="8"
-            [collectionSize]="teachers.length"
-            [(page)]="currentPage"
-        ></ngb-pagination>
-        <div class="text-center">
-            <button mat-raised-button (click)="onAddTeacher()">Add New Teacher</button>
-        </div>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let teacher of selectItems(teachers)">
+                        <tr class="row m-0">
+                            <td class="text-center d-inline-block col-1">{{ teacher.id }}</td>
+                            <td class=" d-inline-block col-3">{{ teacher.name }}</td>
+                            <td class=" d-inline-block col-3">{{ teacher.name_jp }}</td>
+                            <td class="text-center d-inline-block col-1">{{ teacher.state === true ? 'ON' : 'OFF' }}</td>
+                            <td class="text-center d-inline-block col-2">
+                                <button mat-raised-button color="primary" (click)="onModify(teacher.id)">Modify</button>
+                            </td>
+                            <td class="text-center d-inline-block col-2">
+                                <button mat-raised-button color="warn" (click)="onDelete(teacher.id)">Delete</button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+            <ngb-pagination
+                [rotate]="true"
+                [boundaryLinks]="true"
+                [maxSize]="8"
+                [collectionSize]="teachers.length"
+                [(page)]="currentPage"
+            ></ngb-pagination>
+            <div class="text-center">
+                <button mat-raised-button (click)="onAddTeacher()">Add New Teacher</button>
+            </div>
+        </mat-card>
     </div>
 </div>
 

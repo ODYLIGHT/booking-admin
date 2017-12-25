@@ -50,14 +50,14 @@ export interface TeacherState {
     user_id?: string;
     password?: string;
     authority?: number;
-    details_teaches?: string;
+    details_teaches?: number;
     details_other_language?: string;
     details_education?: string;
     details_speciality?: string;
     details_career?: string;
     details_comment?: string;
     details_testimonial?: string;
-    details_jp_teaches?: string;
+    details_jp_teaches?: number;
     details_jp_other_language?: string;
     details_jp_education?: string;
     details_jp_speciality?: string;

@@ -30,20 +30,22 @@ export class RegisterTeachersComponent implements OnInit {
         return allData.slice((this.currentPage - 1) * this.itemPerPage, this.currentPage * this.itemPerPage)
     }
 
-    public onModify(id: number): void {
-        console.info(`on click 'Modify' ${id}`);
-        this.router.navigate(['/administrator/register-teachers/edit', id]);
-    }
+    /**
+     * 講師の新規登録ページへ移行させる
+     */
+    public onAddTeacher(): void { this.router.navigate(['/administrator/register-teachers/insert']) }
+
+    /**
+     * 特定の講師情報変更のため、IDをURLパラメータに追加してページを移行させる
+     * 移行先のページは新規追加と同じ
+     * @param id 講師のID
+     */
+    public onModify(id: number): void { this.router.navigate(['/administrator/register-teachers/edit', id]) }
 
     public onDelete(id: number): void {
         const confirmMessage = 'Are you sure you want to delete All information of this teacher?';
         if (window.confirm(confirmMessage)) this.service.deleteTeacher(id);
         else window.alert(`confirm false, not delete.`);
     }
-
-    /**
-     * 講師の新規登録ページへ移行させる
-     */
-    public onAddTeacher(): void { this.router.navigate(['/administrator/register-teachers/insert']) }
 
 }
