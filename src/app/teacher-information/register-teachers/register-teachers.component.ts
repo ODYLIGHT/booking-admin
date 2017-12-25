@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../../environments/environment';
 import { RegisterTeachersService } from './register-teachers.service';
 import { RegisterTeachersStore } from './register-teachers.store';
 import { TeacherState } from '../../store/types';
@@ -40,9 +41,9 @@ export class RegisterTeachersComponent implements OnInit {
         else window.alert(`confirm false, not delete.`);
     }
 
-    public onAddTeacher(): void {
-        console.info(`on click add new teacher`);
-        this.router.navigate(['/administrator/register-teachers/insert']);
-    }
+    /**
+     * 講師の新規登録ページへ移行させる
+     */
+    public onAddTeacher(): void { this.router.navigate(['/administrator/register-teachers/insert']) }
 
 }

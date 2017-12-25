@@ -10,14 +10,12 @@ const router: Router = Router();
 const fs: FsService = FsService.instance;
 const debug = Debug('debug:teacher-info');
 const isDebug = debug.enabled;
-// develop時のデータ格納変数
-let dataIfDevelop;
 
 // init - register-teachers
 router.get('/register-teachers', (req: Request, res: Response, next: NextFunction) => {
     // このリクエストは、講師情報の`id`, `name`, `name_jp`, `state`を要求します
+    debug(`[ GET ] from register-teachers`);
     if (isDebug) {
-        debug(`[ GET ] from register-teachers`);
         fs.readFile(jsons.teachers)
             .then((result: TeacherState[]) => {
                 const dataAsRequestFormat = result.map(item => {
@@ -48,11 +46,21 @@ router.delete('/register-teachers/delete/:id', (req: Request, res: Response, nex
 
 // GET - teacher-forms when modify
 router.get('/register-teachers/get/:id', (req: Request, res: Response, next: NextFunction) => {
+    // このリクエストでは、講師情報の修正のためにIDから該当講師の全情報を取得します
     debug(`[ GET ] from teacher-froms with id`);
     const target_id = +req.params.id;
-    Object.keys(dataIfDevelop).forEach(key => {
-        if (dataIfDevelop[key]['_id'] === target_id) res.json(dataIfDevelop[key]);
-    });
+
+    if (isDebug) {
+        fs.readFile(jsons.teachers)
+            .then((result: TeacherState[]) => {
+                const selectedTeacherState = result.filter(state => state.id === target_id);
+                res.status(200).json(selectedTeacherState[0]);
+            })
+            .catch(err => res.status(501).json(err));
+    }
+    // Object.keys(dataIfDevelop).forEach(key => {
+    //     if (dataIfDevelop[key]['_id'] === target_id) res.json(dataIfDevelop[key]);
+    // });
 });
 
 // POST - teacher-forms add new teacher

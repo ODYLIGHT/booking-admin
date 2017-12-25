@@ -40,8 +40,30 @@ export interface TeacherState {
     id: number;
     name: string;
     name_jp: string;
-    state: boolean;
+    state: number;
     time_zone: string;
+    customers_language?: number;
+    priority_number?: number;
+    skype_name?: string;
+    email?: string;
+    picture?: string;
+    user_id?: string;
+    password?: string;
+    authority?: number;
+    details_teaches?: string;
+    details_other_language?: string;
+    details_education?: string;
+    details_speciality?: string;
+    details_career?: string;
+    details_comment?: string;
+    details_testimonial?: string;
+    details_jp_teaches?: string;
+    details_jp_other_language?: string;
+    details_jp_education?: string;
+    details_jp_speciality?: string;
+    details_jp_career?: string;
+    details_jp_comment?: string;
+    details_jp_testimonial?: string;
 }
 
 export interface ScheduleState {

@@ -26,6 +26,10 @@ export class MomentService {
 
     private setTimeZone(tz: string): string { return `${tz} ${this.moment.tz(tz).format('Z')}` }
 
+    public get getTimeZones(): string[] {
+        return this.moment.tz.names();
+    }
+
     public exchangeDateToMoment(date: Date | string | number, utc?: boolean, timeZome?: string): Moment {
         return utc
             ? timeZome ? this.moment(date).utc().tz(timeZome) : this.moment(date).utc()

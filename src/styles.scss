@@ -8,6 +8,13 @@ button {
         outline: none;
     }
 }
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .page-header {
     margin: 15px 0;
     padding: 15px 0;

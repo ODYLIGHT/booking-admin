@@ -1,53 +1,53 @@
-form.border-style {
-    border-top: 1px solid #eceeef;
-    .table-warning {
-        word-break: break-all;
-        overflow: hidden;
-    }
-    .form-column {
-        border-left: 1px solid #eceeef;
-    }
-    .form-column:nth-of-type(6) {
-        .form-cell {
-            height: 50px;
-            input[readonly=readonly] {
-                display: inline-block;
-                width: 50%;
-            }
-        }
-    }
-    .form-cell {
-        border-right: 1px solid #eceeef;
-        border-bottom: 1px solid #eceeef;
-        height: 30px;
-        padding-top: 1px;
-        .form-cell:nth-of-type(even) {
-            border-right: none;
-        }
-        .form-cell:nth-last-of-type(1),
-        .form-cell:nth-last-of-type(2) {
-            border-bottom: none;
-        }
-        input[type=text], input[type=number], input[type=file],
-        input[type=password], select {
-            height: 26px;
-            padding: 0 .75rem;
-            margin: 0;
-        }
-        input[type=file] {
-            font-size: .9rem;
-            padding: 2px;
-            border: none;
-        }
-        label[for=picture] {
-            font-size: .8rem;
-            text-align: center;
-            margin-bottom: 0;
-            padding: 3px;
-            border: 1px solid #eceeef;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-    }
+// form.border-style {
+//     border-top: 1px solid #eceeef;
+//     .table-warning {
+//         word-break: break-all;
+//         overflow: hidden;
+//     }
+//     .form-column {
+//         border-left: 1px solid #eceeef;
+//     }
+//     .form-column:nth-of-type(6) {
+//         .form-cell {
+//             height: 50px;
+//             input[readonly=readonly] {
+//                 display: inline-block;
+//                 width: 50%;
+//             }
+//         }
+//     }
+//     .form-cell {
+//         border-right: 1px solid #eceeef;
+//         border-bottom: 1px solid #eceeef;
+//         height: 30px;
+//         padding-top: 1px;
+//         .form-cell:nth-of-type(even) {
+//             border-right: none;
+//         }
+//         .form-cell:nth-last-of-type(1),
+//         .form-cell:nth-last-of-type(2) {
+//             border-bottom: none;
+//         }
+//         input[type=text], input[type=number], input[type=file],
+//         input[type=password], select {
+//             height: 26px;
+//             padding: 0 .75rem;
+//             margin: 0;
+//         }
+//         input[type=file] {
+//             font-size: .9rem;
+//             padding: 2px;
+//             border: none;
+//         }
+//         label[for=picture] {
+//             font-size: .8rem;
+//             text-align: center;
+//             margin-bottom: 0;
+//             padding: 3px;
+//             border: 1px solid #eceeef;
+//             border-radius: 3px;
+//             cursor: pointer;
+//         }
+//     }
 
-}
+// }
