@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { RegisterTeachersService } from './register-teachers.service';
 import { RegisterTeachersStore } from './register-teachers.store';
 import { TeacherState } from '../../store/types';
@@ -36,11 +36,8 @@ export class RegisterTeachersComponent implements OnInit {
 
     public onDelete(id: number): void {
         const confirmMessage = 'Are you sure you want to delete All information of this teacher?';
-        if (window.confirm(confirmMessage)) {
-            this.service.deleteTeacher(id);
-        } else {
-            console.info(`confirm false, not delete.`);
-        }
+        if (window.confirm(confirmMessage)) this.service.deleteTeacher(id);
+        else window.alert(`confirm false, not delete.`);
     }
 
     public onAddTeacher(): void {

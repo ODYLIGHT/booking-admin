@@ -13,23 +13,34 @@ export class Store<T> {
         this.data$ = this._data.asObservable();
     }
 
+    /**
+     * 現在のStateを返す
+     */
     protected current(): Readonly<T> { return this._data.getValue(); }
 
+    /**
+     * 更新されたデータのストリームを流す
+     * @param data 管理しているデータ
+     */
     protected next(data: Readonly<T>): void { this._data.next(data) };
 
     /**
      * Update State.
      */
-    protected update(current: Readonly<T>, diff: Partial<T>): Readonly<T> {
+    protected update(diff: Partial<T>): Readonly<T> {
         // これだと`current`と結合されるため削除などしたデータも残ってしまう
         // return { ...current as object, ...diff as object } as Readonly<T>;
         return { ...diff as object } as Readonly<T>;
     }
 
+    /**
+     * 各コンポーネントのサービスから、データの更新を受け取り処理する
+     * @param action データの型をReadonlyからPartialに変換したものを返す関数
+     */
     public dispatch(action: Action<T>): void {
         const current = this.current();
         const diff = action(current);
-        const result = this.update(current, diff);
+        const result = this.update(diff);
         this.next(result);
     }
 

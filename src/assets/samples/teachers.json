@@ -2,31 +2,78 @@
     {
         "id": 1,
         "name": "Cardenas",
+        "name_jp": "カルデナス",
+        "state": true,
         "time_zone": "Europe/Berlin"
     },
     {
         "id": 2,
         "name": "Leach",
+        "name_jp": "リーチ",
+        "state": true,
         "time_zone": "Europe/Paris"
     },
     {
         "id": 3,
         "name": "Noel",
+        "name_jp": "ノエル",
+        "state": true,
         "time_zone": "America/New_York"
     },
     {
         "id": 4,
         "name": "Rivas",
+        "name_jp": "リーバス",
+        "state": false,
         "time_zone": "Pacific/Honolulu"
     },
     {
         "id": 5,
         "name": "Mccall",
+        "name_jp": "マッコール",
+        "state": true,
         "time_zone": "America/Los_Angeles"
     },
     {
         "id": 6,
         "name": "Sato",
+        "name_jp": "サトウ",
+        "state": true,
         "time_zone": "Asia/Tokyo"
+    },
+    {
+        "id": 7,
+        "name": "White",
+        "name_jp": "ホワイト",
+        "state": true,
+        "time_zone": "Europe/London"
+    },
+    {
+        "id": 8,
+        "name": "Velasquez",
+        "name_jp": "ベラスケス",
+        "state": true,
+        "time_zone": "Europe/Minsk"
+    },
+    {
+        "id": 9,
+        "name": "Daphne",
+        "name_jp": "ダフネ",
+        "state": false,
+        "time_zone": "Australia/Brisbane"
+    },
+    {
+        "id": 10,
+        "name": "Ellen",
+        "name_jp": "エレン",
+        "state": true,
+        "time_zone": "America/Juneau"
+    },
+    {
+        "id": 11,
+        "name": "Wright",
+        "name_jp": "ライト",
+        "state": true,
+        "time_zone": "Europe/Madrid"
     }
 ]

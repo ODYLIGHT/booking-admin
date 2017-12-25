@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http'; // 削除予定
 // HttpClientModuleに移行して行く
 import { HttpClientModule } from '@angular/common/http';
@@ -84,6 +85,7 @@ import { CreditInformationComponent } from './student-information/credit-informa
     imports: [
         NgbModule.forRoot(),
         BrowserModule,
+        BrowserAnimationsModule,
         HttpModule, // 削除予定
         HttpClientModule,
         FormsModule,

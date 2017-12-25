@@ -5,12 +5,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4300 --proxy-config proxy.config.json",
+    "start:express": "set NODE_ENV=development&& set DEBUG=debug:*&& nodemon --config nodemon.json",
+    "webpack:server": "webpack --config webpack.server.config.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "start:express": "set NODE_ENV=development&& nodemon --config nodemon.json",
-    "webpack:server": "webpack --config webpack.server.config.js"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -28,6 +28,7 @@
     "@angular/router": "^5.0.0",
     "@ng-bootstrap/ng-bootstrap": "~1.0.0-beta.7",
     "@types/body-parser": "^1.16.8",
+    "@types/debug": "^0.0.30",
     "@types/moment-timezone": "^0.5.2",
     "body-parser": "^1.17.2",
     "core-js": "^2.4.1",

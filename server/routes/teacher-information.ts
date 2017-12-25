@@ -1,55 +1,54 @@
 'use strict';
 import { Router, Response, Request, NextFunction } from 'express';
 import { FsService } from '../modules/fs.modules';
+import * as Debug from 'debug';
 // jsonsに新しいテストデータを作っていきます（2017/12以降）
 import { paths, jsons } from '../modules/paths';
+import { TeacherState } from '../../src/app/store/types';
 
 const router: Router = Router();
 const fs: FsService = FsService.instance;
-
+const debug = Debug('debug:teacher-info');
+const isDebug = debug.enabled;
 // develop時のデータ格納変数
 let dataIfDevelop;
 
 // init - register-teachers
 router.get('/register-teachers', (req: Request, res: Response, next: NextFunction) => {
-    console.info(`request: GET from register-teachers`);
-    fs.readFile(paths.register_teachers)
-        .then(result => {
-            // develop
-            dataIfDevelop = result;
-
-            res.status(200).json(result);
-        })
-        .catch(err => { res.status(501).json(err) });
+    // このリクエストは、講師情報の`id`, `name`, `name_jp`, `state`を要求します
+    if (isDebug) {
+        debug(`[ GET ] from register-teachers`);
+        fs.readFile(jsons.teachers)
+            .then((result: TeacherState[]) => {
+                const dataAsRequestFormat = result.map(item => {
+                    const { id, name, name_jp, state } = item;
+                    return { id, name, name_jp, state };
+                });
+                res.status(200).json(dataAsRequestFormat);
+            })
+            .catch(err => { res.status(501).json(err) });
+    }
 });
 
 // delete - register-teachers delete button ckick.
 router.delete('/register-teachers/delete/:id', (req: Request, res: Response, next: NextFunction) => {
-    console.info(`request: DELETE from register-teachers`);
+    // このリクエストは、講師の削除をID指定で行います
+    // 注意点として、該当講師に予約が入っている場合は削除を取り消すようにしてください
+    // その場合のレスポンスの対応はまだ未定です
+    debug(`[ DELETE ] from register-teachers. target Id = ${+req.params.id}`);
     const target_id = +req.params.id;
 
-    // develop
-    const filterAry = [];
-    Object.keys(dataIfDevelop).forEach(key => {
-        if (dataIfDevelop[key]['_id'] !== target_id) filterAry.push(dataIfDevelop[key]);
-    });
-    dataIfDevelop = filterAry;
-
-    res.status(200).json(dataIfDevelop);
-    // fs.readFile(paths.register_teachers)
-    //     .then(result => {
-    //         const filterAry = [];
-    //         Object.keys(result).forEach(key => {
-    //             if (result[key]['_id'] !== target_id) filterAry.push(result[key]);
-    //         });
-    //         res.status(200).json(filterAry);
-    //     })
-    //     .catch(err => { res.status(501).json(err) });
+    if (isDebug) {
+        // 70%で成功　30%でリクエストエラーを発生させる
+        const randumNum = Math.random();
+        if (randumNum <= 0.7) res.status(200).json({ isSuccess: true });
+        else res.status(501).json({ isSuccess: false });
+    }
 });
 
 // GET - teacher-forms when modify
 router.get('/register-teachers/get/:id', (req: Request, res: Response, next: NextFunction) => {
-    console.info(`request: get from teacher-froms with id`);
+    debug(`[ GET ] from teacher-froms with id`);
     const target_id = +req.params.id;
     Object.keys(dataIfDevelop).forEach(key => {
         if (dataIfDevelop[key]['_id'] === target_id) res.json(dataIfDevelop[key]);
@@ -76,7 +75,7 @@ router.put('/register-teachers/put', (req: Request, res: Response, next: NextFun
 
 // Teacher Scheduleコンポーネントのオペレーション部分で使う、講師とそのタイムゾーンを初期化処理時に返す
 router.get('/teacher-schedule/operations-init', (req: Request, res: Response, next: NextFunction) => {
-    console.info(`[ ${req.method} ]: ${req.url}`);
+    debug(`[ ${req.method} ]: ${req.url}`);
     fs.readFile(jsons.teachers)
         .then(result => res.status(200).json(result))
         .catch(err => res.status(501).json(err));
@@ -89,7 +88,7 @@ router.get('/teacher-schedule/operations-init', (req: Request, res: Response, ne
 
 // PUT teacher-schedule update
 router.put('/teacher-schedule/update', (req: Request, res: Response, next: NextFunction) => {
-    console.info(`request: PUT from teacher-schedule`);
+    debug(`[ PUT ] from teacher-schedule`);
     const params = req.body;
     // console.log(params);
     res.json({
