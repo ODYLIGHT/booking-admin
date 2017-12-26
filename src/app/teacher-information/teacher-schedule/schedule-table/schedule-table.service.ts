@@ -19,8 +19,4 @@ export class ScheduleTableService {
         private store: TeacherScheduleStore
     ) { }
 
-    public changedTeacherOfState(teacher: OptionItemsState) { this.store.changeState({ teacher }) }
-
-    public get getTeacherSchedule$(): Observable<Readonly<TeacherSchedulesState>> { return this.store.data$.pipe(map(s => s)) }
-
 }

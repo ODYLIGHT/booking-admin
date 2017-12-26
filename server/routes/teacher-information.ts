@@ -4,7 +4,7 @@ import { FsService } from '../modules/fs.modules';
 import * as Debug from 'debug';
 // jsonsに新しいテストデータを作っていきます（2017/12以降）
 import { paths, jsons } from '../modules/paths';
-import { TeacherState } from '../../src/app/store/types';
+import { TeacherState, ScheduleState } from '../../src/app/store/types';
 
 const router: Router = Router();
 const fs: FsService = FsService.instance;
@@ -93,6 +93,20 @@ router.get('/teacher-schedule/operations-init', (req: Request, res: Response, ne
                     const { id, name, time_zone } = item;
                     return { id, name, time_zone };
                 });
+                res.status(200).json(dataAsRequestFormat);
+            })
+            .catch(err => res.status(501).json(err));
+    }
+});
+
+router.get('/teacher-schedule/get-schedule', (req: Request, res: Response, next: NextFunction) => {
+    // このリクエストは講師を選択した際、既に登録されているスケジュールを要求します
+    const teacherId = +req.query.id;
+    debug(`[ GET ] request schedule from teacher-schedule with id`);
+    if (isDebug) {
+        fs.readFile(jsons.schedules)
+            .then((result: ScheduleState[]) => {
+                const dataAsRequestFormat = result.filter(obj => obj.teacher_id === teacherId).map(item => item.schedule_date);
                 res.status(200).json(dataAsRequestFormat);
             })
             .catch(err => res.status(501).json(err));

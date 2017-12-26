@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TeacherScheduleService } from './teacher-schedule.service';
 import {
     OperationsStore, OptionItemsState,
-    TeacherScheduleStore
+    TeacherScheduleStore, TeacherSchedulesState
 } from './teacher-schedule.store';
 import { ScheduleState } from '../../store/types';
 
@@ -15,7 +15,8 @@ import { ScheduleState } from '../../store/types';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TeacherScheduleComponent implements OnInit {
-    public teacher = new BehaviorSubject(null);
+    // public teacher = new BehaviorSubject(null);
+    protected teacher: OptionItemsState;
 
     constructor(
         private service: TeacherScheduleService,
@@ -25,9 +26,14 @@ export class TeacherScheduleComponent implements OnInit {
 
     ngOnInit() { this.service.initComponentItems() }
 
-    public onSelect(value: OptionItemsState) { this.teacher.next(value) }
+    public onSelect(value: OptionItemsState) {
+        this.service.getScheduleApi(value);
+        this.teacher = value;
+    }
 
     public get optionsAsObservable$(): Observable<OptionItemsState[]> { return this.service.getOperationsItems$ }
+
+    public get scheduleAsObsevable$(): Observable<TeacherSchedulesState> { return this.service.getSchedules$ }
 
     // public showsWeeks: Date[];
     // public rows = [];

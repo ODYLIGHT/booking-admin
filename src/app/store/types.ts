@@ -44,9 +44,8 @@ export interface TeacherState {
 }
 
 export interface ScheduleState {
-    _date: Date;
-    _can_reserve: boolean;
-    _reserved_user: number;
+    teacher_id: number;
+    schedule_date: Date;
 }
 
 export interface CustomerState {

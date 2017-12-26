@@ -9,10 +9,9 @@ export interface OptionItemsState {
 }
 
 export interface TeacherSchedulesState {
-    teacher: OptionItemsState;
-    tHeadColumns: Date[] | string[];
-    tLeftColumns: string[];
-    schedules: { insert: string[], update: string[] };
+    currentSchedules: string[];
+    insertSchedules: string[];
+    deleteSchedules: string[];
 }
 
 export const initOptionsState: OptionItemsState = {
@@ -22,10 +21,9 @@ export const initOptionsState: OptionItemsState = {
 };
 
 export const initScheduleState: TeacherSchedulesState = {
-    teacher: initOptionsState,
-    tHeadColumns: [],
-    tLeftColumns: [],
-    schedules: { insert: [], update: [] }
+    currentSchedules: [],
+    insertSchedules: [],
+    deleteSchedules: []
 };
 
 @Injectable()
@@ -35,20 +33,13 @@ export class OperationsStore extends Store<OptionItemsState[]> {
     public changeState(items: OptionItemsState[]): void { this.dispatch(this._changeState(items)) }
 }
 
-// @Injectable()
-// export class TeacherScheduleStore extends Store<ScheduleState[]> {
-//     constructor() { super(<ScheduleState[]>{}) }
-//     private _changeState(items: ScheduleState[]) {
-//         return (c: Readonly<ScheduleState[]>): Partial<ScheduleState[]> => items;
-//     }
-//     public changeState(items: ScheduleState[]): void { this.dispatch(this._changeState(items)) }
-// }
-
 @Injectable()
 export class TeacherScheduleStore extends Store<TeacherSchedulesState> {
-    constructor() { super(initScheduleState) }
+    constructor() { super(<TeacherSchedulesState>null) }
     private _changeState(items: Partial<TeacherSchedulesState>) {
         return (c: Readonly<TeacherSchedulesState>): Partial<TeacherSchedulesState> => items;
     }
     public changeState(items: Partial<TeacherSchedulesState>): void { this.dispatch(this._changeState(items)) }
+
+    public get getCurrent(): Readonly<TeacherSchedulesState> { return this.current() }
 }
