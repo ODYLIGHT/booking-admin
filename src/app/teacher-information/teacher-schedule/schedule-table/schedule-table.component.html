@@ -1,5 +1,58 @@
 <div class="row">
     <div class="col-md-12">
+
+        <pre>{{_teacher | async | json}}</pre>
+
+        <div class="form-group align-items-center text-center">
+            <div class="row">
+                <div class="col-md">
+                    <button class="btn btn-sm btn-warning" (click)="prev()">Previous week</button>
+                </div>
+                <div class="col-md">
+                    <h5 class="text-center">{{ getSelectedWeek(_dayOfWeek | async) }}</h5>
+                </div>
+                <div class="col-md">
+                    <button class="btn btn-sm btn-warning" (click)="next()">Next week</button>
+                </div>
+            </div>
+        </div>
+
+        <h5 *ngIf="teacher | async as t">Teacher: {{ t.name }} <small>[ Time Zone: {{ _timeZone | async }} ]</small></h5>
+
+        <table class="table table-bordered table-sm" *ngIf="_dayOfWeek | async as dayOfWeek">
+
+            <thead>
+                <tr>
+                    <th class="table-warning">Date</th>
+                    <ng-container *ngFor="let d of dayOfWeek">
+                        <th style="cursor: pointer;" (click)="onClickThead(d)">
+                            <div [class.text-danger]="(d | date: 'EEE') === 'Sun'" [class.text-primary]="(d | date: 'EEE') === 'Sat'">
+                                {{ d | date: 'EEE' }}
+                            </div>
+                            <div>{{ d | date: 'd.MMM.yyyy' }}</div>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let time of _leftLine as ary; let i = index">
+                    <th style="cursor: pointer;" (click)="onClickLeftLine(time, dayOfWeek)">{{ time }} - {{ combineTime(ary, i) }}</th>
+                    <ng-container *ngFor="let d of dayOfWeek">
+                        <td style="cursor: pointer;" (click)="changeSchedule(dateConverter(d, time))">
+                            <!-- <mat-checkbox></mat-checkbox> -->
+                            <i class="fa fa-check" aria-hidden="true" *ngIf="selectedChecker(dateConverter(d, time))"></i>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+<!-- <div class="row">
+    <div class="col-md-12">
         <div class="col-md-12 text-center">
             <div class="btn-area">
                 <button type="button" class="btn btn-warning" (click)="onClickCopyPrev()">
@@ -61,4 +114,4 @@
 
         </table>
     </div>
-</div>
+</div> -->

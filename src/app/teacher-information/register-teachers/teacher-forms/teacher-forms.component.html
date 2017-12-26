@@ -1,190 +1,155 @@
 <div class="page-header">
     <h5 class="text-center">{{ pageHeadTitle }}</h5>
 </div>
+
 <div class="container">
-    <div class="row">
-        <form class="col-md-12 border-style" #teacherForm="ngForm" (submit)="onSubmit(teacherForm.value, teacher._id)"
-            *ngIf="getSelectTeacherAsObservable$ | async as teacher" novalidate>
-            <div class="form-column row">
-                <div class="form-cell col-md-2 table-warning">Number</div>
-                <div class="form-cell col-md-2">
-                    <input type="number" name="priority_number" class="form-control"
-                        #v_pNum="ngModel" [(ngModel)]="teacher._priority_number">
-                </div>
-                <div class="form-cell col-md-2 table-warning">Teacher Name</div>
-                <div class="form-cell col-md-2">
-                    <input type="text" name="name" class="form-control"
-                        #v_name="ngModel" [(ngModel)]="teacher._name">
-                </div>
-                <div class="form-cell col-md-2 table-warning">Name(JPN)</div>
-                <div class="form-cell col-md-2">
-                    <input type="text" name="name_jpn" class="form-control"
-                         #v_nameJpn="ngModel" [(ngModel)]="teacher._name_jpn">
-                </div>
-            </div>
-            <div class="form-column row">
-                <div class="form-cell col-md-2 table-warning">Customer's Language</div>
-                <div class="form-cell col-md-4">
-                    <select name="customers_language" class="form-control"
-                         #v_customers_language="ngModel" [(ngModel)]="teacher._customers_language">
-                        <option value="undefined">pleace select</option>
-                        <option *ngFor="let label of languages" [ngValue]="label.value">{{ label.title }}</option>
-                    </select>
-                </div>
-                <div class="form-cell col-md-2"></div>
-                <div class="form-cell col-md-2 table-warning">Status</div>
-                <div class="form-cell col-md-2">
-                    <div class="form-check form-check-inline">
-                        <label class="form-check-label">
-                            <input type="radio" name="status" [value]="true" class="form-check-input"
-                                #v_status="ngModel" [(ngModel)]="teacher._status"
-                                [checked]="teacher._status === true"> ON
-                        </label>
+    <mat-card>
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit(profileForm)" novalidate>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-2">
+                        <mat-form-field class="w-100">
+                            <input matInput type="number" placeholder="優先順位" formControlName="priority_number">
+                        </mat-form-field>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <label class="form-check-label">
-                            <input type="radio" name="status" [value]="false" class="form-check-input"
-                                #v_status="ngModel" [(ngModel)]="teacher._status"
-                                [checked]="teacher._status === false"> OFF
-                        </label>
+                    <div class="col-md-3">
+                        <mat-form-field class="w-100">
+                            <input matInput type="text" placeholder="講師名(English)" formControlName="name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field class="w-100">
+                            <input matInput type="text" placeholder="講師名(Japanese)" formControlName="name_jp">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="対応言語" formControlName="customers_language">
+                                <mat-option *ngFor="let language of languages" [value]="language.value">
+                                    {{ language.title }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="権限" formControlName="authority">
+                                <mat-option *ngFor="let auth of authoritys" [value]="auth.value">
+                                    {{ auth.title }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
                 </div>
-            </div>
-            <div class="form-column row">
-                <div class="form-cell col-md-2 table-warning" style="height: auto;">Details</div>
-                <div class="form-cell col-md-10" style="height: 100%; padding-top: 0;">
-                    <div class="row">
-                        <div class="form-cell col-md-3 table-info">Teaches</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_teaches" class="form-control"
-                                 #v_details_teaches="ngModel" [(ngModel)]="teacher._details_teaches">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">Other Language(s)</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_other_language" class="form-control"
-                                #v_details_other_language="ngModel" [(ngModel)]="teacher._details_other_language">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">Education</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_education" class="form-control"
-                                #v_details_education="ngModel" [(ngModel)]="teacher._details_education">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">Speciality</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_speciality" class="form-control"
-                                #v_details_speciality="ngModel" [(ngModel)]="teacher._details_speciality">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">Career</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_career" class="form-control"
-                                #v_details_career="ngModel" [(ngModel)]="teacher._details_career">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">Comment</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_comment" class="form-control"
-                                #v_details_comment="ngModel" [(ngModel)]="teacher._details_comment">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">Testimonial</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_testimonial" class="form-control"
-                                #v_details_testimonial="ngModel" [(ngModel)]="teacher._details_testimonial">
-                        </div>
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="タイムゾーン" formControlName="time_zone">
+                                <mat-option *ngFor="let tz of timeZones" [value]="tz">
+                                    {{ tz }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="mb-0">講師の状態: </label>
+                        <mat-radio-group aria-label="state" formControlName="state">
+                            <mat-radio-button [value]="+1">ON</mat-radio-button>
+                            <mat-radio-button [value]="+0">OFF</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col-md-5">
+                        <!-- 画像ファイルアップロードは未実装です(2017/12/25) -->
+                        <input hidden="true" id="input-file-id" type="file" accept="image/*" formControlName="picture">
+                        <label for="input-file-id" class="mat-raised-button mat-primary">画像選択</label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <mat-form-field class="w-100">
+                            <input matInput type="text" placeholder="Skype Name(ID)" formControlName="skype_name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field class="w-100">
+                            <input matInput type="email" placeholder="メールアドレス" formControlName="email">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field class="w-100">
+                            <input matInput type="text" placeholder="User ID" formControlName="user_id">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field class="w-100">
+                            <input matInput type="text" placeholder="パスワード" formControlName="password">
+                        </mat-form-field>
                     </div>
                 </div>
             </div>
-            <div class="form-column row">
-                <div class="form-cell col-md-2 table-warning" style="height: auto;">Details(JPN)</div>
-                <div class="form-cell col-md-10" style="height: 100%; padding-top: 0;">
-                    <div class="row">
-                        <div class="form-cell col-md-3 table-info">対応レベル</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_jpn_teaches" class="form-control"
-                                #v_details_jpn_teaches="ngModel" [(ngModel)]="teacher._details_jpn_teaches">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">その他可能言語</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_jpn_other_language" class="form-control"
-                                #v_details_jpn_other_language="ngModel" [(ngModel)]="teacher._details_jpn_other_language">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">学歴</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_jpn_education" class="form-control"
-                                #v_details_jpn_education="ngModel" [(ngModel)]="teacher._details_jpn_education">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">得意内容</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_jpn_speciality" class="form-control"
-                                #v_details_jpn_speciality="ngModel" [(ngModel)]="teacher._details_jpn_speciality">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">経歴</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_jpn_career" class="form-control"
-                                #v_details_jpn_career="ngModel" [(ngModel)]="teacher._details_jpn_career">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">ひとこと</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_jpn_comment" class="form-control"
-                                #v_details_jpn_comment="ngModel" [(ngModel)]="teacher._details_jpn_comment">
-                        </div>
-                        <div class="form-cell col-md-3 table-info">お客様の声</div>
-                        <div class="form-cell col-md-9">
-                            <input type="text" name="details_jpn_testimonial" class="form-control"
-                                #v_details_jpn_testimonial="ngModel" [(ngModel)]="teacher._details_jpn_testimonial">
-                        </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label>Details</label>
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="Teaches" formControlName="details_teaches">
+                                <mat-option *ngFor="let teach of teaches" [value]="teach.value">
+                                    {{ teach.title.en }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <input matInput type="text" placeholder="Other Language(s)" formControlName="details_other_language">
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <input matInput type="text" placeholder="Education" formControlName="details_education">
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <input matInput type="text" placeholder="Speciality" formControlName="details_speciality">
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <textarea matInput placeholder="Career" formControlName="details_career"></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <textarea matInput placeholder="Comment" formControlName="details_comment"></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <textarea matInput placeholder="Testimonial" formControlName="details_testimonial"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Details(JPN)</label>
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="対応レベル" formControlName="details_jp_teaches">
+                                <mat-option *ngFor="let teach of teaches" [value]="teach.value">
+                                    {{ teach.title.jp }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <input matInput type="text" placeholder="その他可能言語" formControlName="details_jp_other_language">
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <input matInput type="text" placeholder="学歴" formControlName="details_jp_education">
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <input matInput type="text" placeholder="得意内容" formControlName="details_jp_speciality">
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <textarea matInput placeholder="経歴" formControlName="details_jp_career"></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <textarea matInput placeholder="ひとこと" formControlName="details_jp_comment"></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="w-100">
+                            <textarea matInput placeholder="お客様の声" formControlName="details_jp_testimonial"></textarea>
+                        </mat-form-field>
                     </div>
                 </div>
             </div>
-            <div class="form-column row">
-                <div class="form-cell col-md-2 table-warning">Skype Name(ID)</div>
-                <div class="form-cell col-md-4">
-                    <input type="text" name="skype_name" class="form-control"
-                        #v_skype_name="ngModel" [(ngModel)]="teacher._skype_name">
-                </div>
-                <div class="form-cell col-md-2 table-warning">Email address</div>
-                <div class="form-cell col-md-4">
-                    <input type="text" name="email" class="form-control"
-                        #v_email="ngModel" [(ngModel)]="teacher._email">
-                </div>
-            </div>
-            <div class="form-column row">
-                <div class="form-cell col-md-2 table-warning">Picture upload</div>
-                <div class="form-cell col-md-4">
-                    <!-- <input type="file" name="picture" class="form-control"
-                         #v_picture="ngModel" [(ngModel)]="teacher._picture">  -->
-                    <label for="picture">
-                        Select a file.<br>
-                        <small>(jpg, jpeg, png etc)</small>
-                    </label>
-                    <input type="file" name="picture" id="picture" accept=".jpg, .jpeg, .png" style="display: none;"
-                        (change)="onChange($event, teacher)">
-                    <input type="text" name="picture" class="form-control" readonly="readonly"
-                        #v_picture="ngModel" [(ngModel)]="teacher._picture">
-                </div>
-                <div class="form-cell col-md-6"></div>
-            </div>
-            <div class="form-column row">
-                <div class="form-cell col-md-2 table-warning">User ID</div>
-                <div class="form-cell col-md-2">
-                    <input type="text" name="user_id" class="form-control"
-                        #v_user_id="ngModel" [(ngModel)]="teacher._user_id">
-                </div>
-                <div class="form-cell col-md-2 table-warning">Password</div>
-                <div class="form-cell col-md-2">
-                    <input type="password" name="password" class="form-control"
-                        #v_password="ngModel" [(ngModel)]="teacher._password">
-                </div>
-                <div class="form-cell col-md-2 table-warning">Authority</div>
-                <div class="form-cell col-md-2">
-                    <select name="authority" class="form-control"
-                        #v_authority="ngModel" [(ngModel)]="teacher._authority">
-                        <option value="undefined">please select</option>
-                        <option *ngFor="let item of authoritys" [ngValue]="item.value">{{ item.title }}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-12 text-center" style="padding:15px 0;">
-                <button type="submit" class="btn">{{ btnText }}</button>
+            <div class="form-group text-center">
+                <button type="submit" mat-raised-button>Register</button>
             </div>
         </form>
-    </div>
+    </mat-card>
 </div>

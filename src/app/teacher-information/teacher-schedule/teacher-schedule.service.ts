@@ -1,35 +1,47 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+// import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
-import { TeacherScheduleStore } from './teacher-schedule.store';
+import {
+    OperationsStore, OptionItemsState,
+    TeacherScheduleStore
+} from './teacher-schedule.store';
 import { ScheduleState } from '../../store/types';
 
 @Injectable()
 export class TeacherScheduleService {
-    readonly apiInitUrl = 'api/teacher-information/teacher-schedule';
-    readonly apiPutUrl = 'api/teacher-information/teacher-schedule/update';
-    private headers = new Headers({ 'Content-Type': 'application/json' });
-    private options = new RequestOptions({ headers: this.headers });
+    readonly apiInitUrl = 'api/teacher-information/teacher-schedule/operations-init';
+    private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    // readonly apiPutUrl = 'api/teacher-information/teacher-schedule/update';
 
     constructor(
-        private http: Http,
-        private store: TeacherScheduleStore
+        private http: HttpClient,
+        private operationsStore: OperationsStore
     ) { }
 
-    public getInit(): void {
-        this.http.get(this.apiInitUrl, this.options)
-            .map(s => s.json())
-            .subscribe(res => this.store.changeState(res));
+    public initComponentItems(): void {
+        this.http.get(this.apiInitUrl, { headers: this.headers }).pipe(
+            map(s => Object.values(s) as OptionItemsState[])
+        ).subscribe(res => this.operationsStore.changeState(res))
     }
 
-    public get getItems$(): Observable<ScheduleState[]> { return this.store.data$.map(s => Object.values(s)) }
+    public get getOperationsItems$(): Observable<OptionItemsState[]> { return this.operationsStore.data$.pipe(map(s => Object.values(s))) }
 
-    public putSchedule(schedules: ScheduleState[]): void {
-        this.http.put(this.apiPutUrl, schedules, this.options)
-            .map(s => s.json())
-            // .subscribe(res => this.store.changeState(res));
-            .subscribe(res => console.log(res));
-    }
+    // public getInit(): void {
+    //     this.http.get(this.apiInitUrl, this.options)
+    //         .map(s => s.json())
+    //         .subscribe(res => this.store.changeState(res));
+    // }
+
+    // public get getItems$(): Observable<ScheduleState[]> { return this.store.data$.map(s => Object.values(s)) }
+
+    // public putSchedule(schedules: ScheduleState[]): void {
+    //     this.http.put(this.apiPutUrl, schedules, this.options)
+    //         .map(s => s.json())
+    //         // .subscribe(res => this.store.changeState(res));
+    //         .subscribe(res => console.log(res));
+    // }
 
 }

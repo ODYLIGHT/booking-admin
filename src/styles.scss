@@ -1,8 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 button {
     cursor: pointer;
+    &:focus {
+        outline: none;
+    }
 }
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .page-header {
-    margin: 15px 0;
+    // margin: 15px 0;
     padding: 15px 0;
 }

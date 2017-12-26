@@ -1,11 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpModule } from '@angular/http'; // 削除予定
+// HttpClientModuleに移行して行く
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MaterialModule } from './material.module';
 
 // global import for Observable.map
 import 'rxjs/add/operator/map';
+
+import { MomentService } from './services/moment.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +19,7 @@ import { HeaderComponent } from './header/header.component';
 import { TopMenuComponent } from './top-menu/top-menu.component';
 import { RegisterTeachersComponent } from './teacher-information/register-teachers/register-teachers.component';
 import { TeacherScheduleComponent } from './teacher-information/teacher-schedule/teacher-schedule.component';
+import { OperationsComponent } from './teacher-information/teacher-schedule/operations/operations.component';
 import { StudentInformationComponent } from './student-information/student-information/student-information.component';
 import { RegisterBookingComponent } from './reservation/register-booking/register-booking.component';
 import { SearchBookingComponent } from './reservation/search-booking/search-booking.component';
@@ -49,6 +56,7 @@ import { CreditInformationComponent } from './student-information/credit-informa
         TopMenuComponent,
         RegisterTeachersComponent,
         TeacherScheduleComponent,
+        OperationsComponent,
         StudentInformationComponent,
         RegisterBookingComponent,
         SearchBookingComponent,
@@ -77,12 +85,17 @@ import { CreditInformationComponent } from './student-information/credit-informa
     imports: [
         NgbModule.forRoot(),
         BrowserModule,
-        HttpModule,
+        BrowserAnimationsModule,
+        HttpModule, // 削除予定
+        HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MaterialModule
     ],
-    providers: [],
+    providers: [
+        MomentService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
