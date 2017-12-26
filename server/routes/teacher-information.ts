@@ -80,17 +80,23 @@ router.put('/register-teachers/put', (req: Request, res: Response, next: NextFun
     });
 });
 
-// Teacher Scheduleコンポーネントのオペレーション部分で使う、講師とそのタイムゾーンを初期化処理時に返す
+// GET teachers information for schedules operations.
 router.get('/teacher-schedule/operations-init', (req: Request, res: Response, next: NextFunction) => {
+    // Teacher Scheduleコンポーネントのオペレーション部分で使う、講師とそのタイムゾーンを初期化処理時に返す
+    // 要求するデータは`id`, `name`, `time_zone`です
     debug(`[ ${req.method} ]: ${req.url}`);
-    fs.readFile(jsons.teachers)
-        .then(result => res.status(200).json(result))
-        .catch(err => res.status(501).json(err));
-    // fs.readFile(paths.schedule)
-    //     .then(result => {
-    //         res.status(200).json(result);
-    //     })
-    //     .catch(err => { res.status(501).json(err) });
+
+    if (isDebug) {
+        fs.readFile(jsons.teachers)
+            .then((result: TeacherState[]) => {
+                const dataAsRequestFormat = result.map(item => {
+                    const { id, name, time_zone } = item;
+                    return { id, name, time_zone };
+                });
+                res.status(200).json(dataAsRequestFormat);
+            })
+            .catch(err => res.status(501).json(err));
+    }
 });
 
 // PUT teacher-schedule update

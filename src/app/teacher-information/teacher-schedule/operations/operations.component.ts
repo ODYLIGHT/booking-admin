@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { MatSelectChange } from '@angular/material';
 import { OptionItemsState } from '../teacher-schedule.store';
 
 @Component({
@@ -16,8 +17,8 @@ export class OperationsComponent implements OnInit {
     ngOnInit() {
     }
 
-    public onChange(e): void {
-        const idx = e.target.value;
+    public onChange(e: MatSelectChange): void {
+        const idx = e.value;
         this.selectEvent.emit(this.options[idx]);
     }
 
