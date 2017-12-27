@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, SimpleChange } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import { Moment } from 'moment-timezone';
@@ -12,5 +12,9 @@ export class TimeTableService extends MomentService {
     public getHeaderDates(tz: string): Date[] { return this.getDayOfWeek(tz) }
 
     public get getLeftColumns(): string[] { return this._getLeftColumns() }
+
+    public getAddedWeek(currentDate: Date[], simpleChange: SimpleChange): Date[] {
+        return this.addWeek(currentDate, simpleChange.currentValue > simpleChange.previousValue ? 'increment' : 'decrement');
+    }
 
 }

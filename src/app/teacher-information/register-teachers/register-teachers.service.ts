@@ -55,7 +55,7 @@ export class RegisterTeachersService {
                 },
                 () => {
                     // httpリクエストのsubscribeが無事完了したときのcomplete callbackでStoreの更新を呼び出す
-                    const current: TeacherState[] = Object.values(this.store.currentState);
+                    const current: TeacherState[] = Object.values(this.store.getCurrent);
                     const filteredState = current.filter(teacher => teacher.id !== id);
                     this.store.changeState(filteredState);
                 }

@@ -17,7 +17,7 @@ export interface TeacherState {
     id: number;
     name?: string;
     name_jp?: string;
-    state?: number;
+    state?: number | boolean;
     time_zone?: string;
     customers_language?: number;
     priority_number?: number;
@@ -43,9 +43,17 @@ export interface TeacherState {
     details_jp_testimonial?: string;
 }
 
+// DBから取得する講師のスケジュール情報
 export interface ScheduleState {
     teacher_id: number;
     schedule_date: Date;
+}
+
+// タイムテーブルに渡すために講師スケジュールの情報を変換したもの
+export interface TeacherSchedulesState {
+    currentSchedules: string[];
+    insertSchedules: string[];
+    deleteSchedules: string[];
 }
 
 export interface CustomerState {

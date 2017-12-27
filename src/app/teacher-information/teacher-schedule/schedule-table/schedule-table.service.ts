@@ -7,16 +7,19 @@ import { Moment } from 'moment-timezone';
 
 import { MomentService } from '../../../services/moment.service';
 import {
-    OptionItemsState,
-    TeacherSchedulesState, TeacherScheduleStore
+    TeacherScheduleStore, OptionItemsState,
 } from '../teacher-schedule.store';
 
 @Injectable()
-export class ScheduleTableService {
+export class ScheduleTableService extends MomentService {
 
     constructor(
         private http: HttpClient,
         private store: TeacherScheduleStore
-    ) { }
+    ) { super() }
+
+    public convertFormat(date: Date, format: string): string {
+        return this._convertFormat(date, format);
+    }
 
 }

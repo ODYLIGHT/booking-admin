@@ -7,7 +7,7 @@
             <app-operations [options]="options" (selectEvent)="onSelect($event)"></app-operations>
         </ng-container>
         <ng-container *ngIf="scheduleAsObsevable$ | async as schedues">
-            <app-schedule-table [teacher]="teacher" [schedules]="schedues"></app-schedule-table>
+            <app-schedule-table *ngIf="schedues.currentSchedules.length" [teacher]="teacher" [schedules]="schedues"></app-schedule-table>
         </ng-container>
     </mat-card>
     <!-- <div class="row">

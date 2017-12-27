@@ -4,12 +4,12 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { map } from 'rxjs/operators';
 import { Moment } from 'moment-timezone';
 
-// import { ScheduleState } from '../../../store/types';
 import { MomentService } from '../../../services/moment.service';
 import {
-    OptionItemsState, TeacherSchedulesState, TeacherScheduleStore
+    OptionItemsState, TeacherScheduleStore
 } from '../teacher-schedule.store';
 import { ScheduleTableService } from './schedule-table.service';
+import { TeacherSchedulesState } from '../../../store/types';
 
 @Component({
     selector: 'app-schedule-table',
@@ -28,6 +28,8 @@ export class ScheduleTableComponent implements OnInit, OnChanges {
     @Input()
     set schedules(item: TeacherSchedulesState) { this._schedules = item || undefined }
     get schedules() { return this._schedules }
+    public weekOfPeriod = '';
+    public additionalNumber = 0;
 
     constructor(
         private moment: MomentService,
@@ -40,6 +42,15 @@ export class ScheduleTableComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: { [popKey: string]: SimpleChange }) {
+    }
+
+    public prevWeek() { --this.additionalNumber }
+
+    public nextWeek() { ++this.additionalNumber }
+
+    public observerForDayOfWeek(e: Date[]): void {
+        this.weekOfPeriod =
+            `${this.service.convertFormat(e[0], 'DD.MMM.YYYY')} - ${this.service.convertFormat(e[6], 'DD.MMM.YYYY')}`;
     }
 
     // private initMoment(): void {

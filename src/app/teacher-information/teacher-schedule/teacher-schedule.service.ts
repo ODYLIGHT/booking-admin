@@ -6,9 +6,9 @@ import { map } from 'rxjs/operators';
 
 import {
     OperationsStore, OptionItemsState,
-    TeacherScheduleStore, TeacherSchedulesState
+    TeacherScheduleStore
 } from './teacher-schedule.store';
-import { ScheduleState } from '../../store/types';
+import { ScheduleState, TeacherSchedulesState } from '../../store/types';
 
 @Injectable()
 export class TeacherScheduleService {
@@ -31,7 +31,7 @@ export class TeacherScheduleService {
 
     public getScheduleApi(paramsItem: OptionItemsState): void {
         const params = new HttpParams().set('id', `${paramsItem.id}`);
-        this.http.get<ScheduleState[]>(this.apiGetScheduleUrl, { headers: this.headers, params: params }).subscribe(res => {
+        this.http.get<Date[]>(this.apiGetScheduleUrl, { headers: this.headers, params: params }).subscribe(res => {
             const updateState = Object.assign({}, this.scheduleStore.getCurrent, { currentSchedules: res });
             this.scheduleStore.changeState(updateState);
         })

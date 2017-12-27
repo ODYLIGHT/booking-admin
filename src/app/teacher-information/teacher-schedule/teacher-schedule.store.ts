@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
-import { ScheduleState } from '../../store/types';
+import { ScheduleState, TeacherSchedulesState } from '../../store/types';
 
 export interface OptionItemsState {
     id: number;
     name: string;
     time_zone: string;
-}
-
-export interface TeacherSchedulesState {
-    currentSchedules: string[];
-    insertSchedules: string[];
-    deleteSchedules: string[];
 }
 
 export const initOptionsState: OptionItemsState = {
@@ -35,7 +29,7 @@ export class OperationsStore extends Store<OptionItemsState[]> {
 
 @Injectable()
 export class TeacherScheduleStore extends Store<TeacherSchedulesState> {
-    constructor() { super(<TeacherSchedulesState>null) }
+    constructor() { super(<TeacherSchedulesState>initScheduleState) }
     private _changeState(items: Partial<TeacherSchedulesState>) {
         return (c: Readonly<TeacherSchedulesState>): Partial<TeacherSchedulesState> => items;
     }

@@ -1,9 +1,24 @@
 <div class="col-md-12">
-    {{ schedules | json }}
-    <!-- <app-time-table
+    <div class="form-group align-items-center text-center">
+        <div class="row">
+            <div class="col-md">
+                <button mat-raised-button color="accent" (click)="prevWeek()">Previous week</button>
+            </div>
+            <div class="col-md">
+                <h5 class="text-center">{{ weekOfPeriod }}</h5>
+            </div>
+            <div class="col-md">
+                <button mat-raised-button color="accent" (click)="nextWeek()">Next week</button>
+            </div>
+        </div>
+    </div>
+    <app-time-table
         [timeZone]="teacher.time_zone"
         [isOnlyView]="false"
-    ></app-time-table> -->
+        [schedules]="schedules"
+        [additionalNumber]="additionalNumber"
+        (datePropagator)="observerForDayOfWeek($event)"
+    ></app-time-table>
 </div>
 
 <!-- <div class="row">

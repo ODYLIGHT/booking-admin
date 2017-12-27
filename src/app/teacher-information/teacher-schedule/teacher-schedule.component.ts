@@ -4,9 +4,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { TeacherScheduleService } from './teacher-schedule.service';
 import {
     OperationsStore, OptionItemsState,
-    TeacherScheduleStore, TeacherSchedulesState
+    TeacherScheduleStore
 } from './teacher-schedule.store';
-import { ScheduleState } from '../../store/types';
+import { ScheduleState, TeacherSchedulesState } from '../../store/types';
 
 @Component({
     templateUrl: './teacher-schedule.component.html',

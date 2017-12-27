@@ -35,6 +35,17 @@ export class MomentService {
         return headerDates;
     }
 
+    protected addWeek(currentDate: Date[], additionalAction: string): Date[] {
+        switch (additionalAction) {
+            case 'increment':
+                return currentDate.map(d => this._moment(d).add(1, 'w').toDate());
+            case 'decrement':
+                return currentDate.map(d => this._moment(d).subtract(1, 'w').toDate());
+            default:
+                return currentDate;
+        }
+    }
+
     protected _getLeftColumns(): string[] {
         const leftColumns: string[] = [];
         for (
@@ -45,6 +56,11 @@ export class MomentService {
             leftColumns.push(startDate.format('HH:mm'));
         }
         return leftColumns;
+    }
+
+    protected _convertFormat(date: Date, format: string): string {
+        this._moment.locale('en');
+        return this._moment(date).format(format);
     }
 
     /**

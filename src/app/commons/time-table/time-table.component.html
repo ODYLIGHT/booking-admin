@@ -1,7 +1,7 @@
 <table class="table table-sm table-bordered table-responsive-lg">
 
     <thead>
-        <tr>
+        <tr class="u-mat-primary">
             <th>Date</th>
             <th *ngFor="let d of dayOfWeek">
                 <div [class.text-danger]="(d | date: 'EEE') === 'Sun'" [class.text-primary]="(d | date: 'EEE') === 'Sat'">
@@ -14,9 +14,13 @@
 
     <tbody>
         <tr *ngFor="let time of leftColumns; let i = index">
-            <th>{{ concatTimeStr(i) }}</th>
-            <td [ngStyle]="{ cursor: isOnlyView ? 'inherit' : 'pointer' }" *ngFor="let date of dayOfWeek" (click)="onClick(convertDate(date, time))">
-                <i class="fa fa-check" aria-hidden="true"></i>
+            <th class="u-mat-primary">{{ concatTimeStr(i) }}</th>
+            <td
+                [ngStyle]="{ cursor: isOnlyView ? 'inherit' : 'pointer' }"
+                *ngFor="let date of dayOfWeek"
+                (click)="onClick(convertDateForUTC(date, time))"
+            >
+                <i class="fa fa-check" aria-hidden="true" *ngIf="isChecked(convertDateForUTC(date, time))"></i>
             </td>
         </tr>
     </tbody>
