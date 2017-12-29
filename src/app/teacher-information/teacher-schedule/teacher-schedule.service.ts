@@ -39,12 +39,10 @@ export class TeacherScheduleService {
 
     public updateScheduleState(arg: { targetColumn: string; action: string; value: string; }) {
         const currentState: TeacherSchedulesState = { ...this.scheduleStore.getCurrent };
-        const updatedProparty: {[key: string]: string[]} = {};
-        if (arg.action === 'add') {
-            updatedProparty[arg.targetColumn] = [...currentState[arg.targetColumn], arg.value];
-        } else {
-            updatedProparty[arg.targetColumn] = [...currentState[arg.targetColumn]].filter(str => str !== arg.value);
-        }
+        const updatedProparty: { [key: string]: string[] } = {};
+        updatedProparty[arg.targetColumn] = arg.action === 'add'
+            ? [...currentState[arg.targetColumn], arg.value]
+            : [...currentState[arg.targetColumn]].filter(str => str !== arg.value);
         const updateState = Object.assign({}, currentState, updatedProparty);
         this.scheduleStore.changeState(updateState);
     }
@@ -52,20 +50,5 @@ export class TeacherScheduleService {
     public get getOperationsItems$(): Observable<OptionItemsState[]> { return this.operationsStore.data$.pipe(map(s => Object.values(s))) }
 
     public get getSchedules$(): Observable<TeacherSchedulesState> { return this.scheduleStore.data$ }
-
-    // public getInit(): void {
-    //     this.http.get(this.apiInitUrl, this.options)
-    //         .map(s => s.json())
-    //         .subscribe(res => this.store.changeState(res));
-    // }
-
-    // public get getItems$(): Observable<ScheduleState[]> { return this.store.data$.map(s => Object.values(s)) }
-
-    // public putSchedule(schedules: ScheduleState[]): void {
-    //     this.http.put(this.apiPutUrl, schedules, this.options)
-    //         .map(s => s.json())
-    //         // .subscribe(res => this.store.changeState(res));
-    //         .subscribe(res => console.log(res));
-    // }
 
 }

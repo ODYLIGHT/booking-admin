@@ -36,8 +36,4 @@ export class TeacherScheduleStore extends Store<TeacherSchedulesState> {
     public changeState(items: Partial<TeacherSchedulesState>): void { this.dispatch(this._changeState(items)) }
 
     public get getCurrent(): Readonly<TeacherSchedulesState> { return this.current() }
-
-    // public changeModifier(val: Readonly<TeacherSchedulesState>) {
-    //     return super.modifier(val);
-    // }
 }

@@ -116,24 +116,30 @@ export class TimeTableComponent implements OnInit, OnChanges {
      * @param utcTimeStr 選択されたタイムテーブルのUTC時間
      * @return { targetColumn: string, action: 'add' or 'del', value: time string for UTC }
      */
-    public onClick(utcTimeStr: string) {
-        let requestObj: { targetColumn: string; action: string; value: string; };
-        if (this.schedules.current.includes(utcTimeStr) || this.reservation.current.includes(utcTimeStr)) {
-            // DB取得データ内に存在する場合は、`delete`カラムを操作する
-            requestObj = {
-                targetColumn: 'delete',
-                action: this.schedules.delete.includes(utcTimeStr) || this.reservation.delete.includes(utcTimeStr) ? 'del' : 'add',
-                value: utcTimeStr
-            };
-        } else {
-            // DB取得データには存在しない場合は、`insert`カラムを操作する
-            requestObj = {
-                targetColumn: 'insert',
-                action: this.schedules.insert.includes(utcTimeStr) || this.reservation.insert.includes(utcTimeStr) ? 'del' : 'add',
-                value: utcTimeStr
-            };
+    public onScheduledSigleTime(utcTimeStr: string) {
+        const isCurrent = this.schedules.current.includes(utcTimeStr) || this.reservation.current.includes(utcTimeStr);
+        // isCurrent === true: DB取得データ内に存在する場合は、`delete`カラムを操作する
+        // isCurrent === false: DB取得データには存在しない場合は、`insert`カラムを操作する
+        const requestObj: { targetColumn: string; action: string; value: string; } = {
+            targetColumn: isCurrent ? 'delete' : 'insert',
+            action: isCurrent
+                ? this.schedules.delete.includes(utcTimeStr) || this.reservation.delete.includes(utcTimeStr) ? 'del' : 'add'
+                : this.schedules.insert.includes(utcTimeStr) || this.reservation.insert.includes(utcTimeStr) ? 'del' : 'add',
+            value: utcTimeStr
         }
         this.clickHandler.emit(requestObj);
+    }
+
+    public onScheduledMultipleTime(date: Date | Date[], time: string | string[]) {
+        let allTimes: string[];
+        if (date instanceof Date && time instanceof Array) {
+            // テーブルヘッダーの日付クリック時　１日の全時間帯のStateを操作する
+            allTimes = time.map(_time => this.convertDateForUTC(date, _time));
+        } else if (date instanceof Array && typeof time === 'string') {
+            // 時間帯クリック時　その時間帯の一週間分のStateを操作する
+            allTimes = date.map(_date => this.convertDateForUTC(_date, time));
+        }
+        allTimes.forEach(utcTimeStr => this.onScheduledSigleTime(utcTimeStr));
     }
 
 }

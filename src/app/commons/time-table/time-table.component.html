@@ -3,22 +3,45 @@
     <thead>
         <tr class="u-mat-primary">
             <th>Date</th>
-            <th *ngFor="let d of dayOfWeek">
-                <div [class.text-danger]="(d | date: 'EEE') === 'Sun'" [class.text-primary]="(d | date: 'EEE') === 'Sat'">
-                    {{ d | date: 'EEE' }}
-                </div>
-                <div>{{ d | date: 'd.MMM.yyyy' }}</div>
-            </th>
+            <ng-container *ngIf="isOnlyView; else canChanging">
+                <th *ngFor="let d of dayOfWeek"
+                    [ngStyle]="{ cursor: 'inherit' }"
+                >
+                    <div [class.text-danger]="(d | date: 'EEE') === 'Sun'" [class.text-primary]="(d | date: 'EEE') === 'Sat'">
+                        {{ d | date: 'EEE' }}
+                    </div>
+                    <div>{{ d | date: 'd.MMM.yyyy' }}</div>
+                </th>
+            </ng-container>
+            <ng-template #canChanging>
+                <th *ngFor="let d of dayOfWeek"
+                    [ngStyle]="{ cursor: 'pointer' }"
+                    (click)="onScheduledMultipleTime(d, leftColumns)"
+                >
+                    <div [class.text-danger]="(d | date: 'EEE') === 'Sun'" [class.text-primary]="(d | date: 'EEE') === 'Sat'">
+                        {{ d | date: 'EEE' }}
+                    </div>
+                    <div>{{ d | date: 'd.MMM.yyyy' }}</div>
+                </th>
+            </ng-template>
         </tr>
     </thead>
 
     <tbody>
         <tr *ngFor="let time of leftColumns; let i = index">
-            <th class="u-mat-primary">{{ concatTimeStr(i) }}</th>
+            <ng-container *ngIf="isOnlyView; else canChanging">
+                <th class="u-mat-primary">{{ concatTimeStr(i) }}</th>
+            </ng-container>
+            <ng-template #canChanging>
+                <th class="u-mat-primary"
+                    [ngStyle]="{ cursor: 'pointer' }"
+                    (click)="onScheduledMultipleTime(dayOfWeek, time)"
+                >{{ concatTimeStr(i) }}</th>
+            </ng-template>
             <td
                 [ngStyle]="{ cursor: isOnlyView ? 'inherit' : 'pointer' }"
                 *ngFor="let date of dayOfWeek"
-                (click)="onClick(convertDateForUTC(date, time))"
+                (click)="onScheduledSigleTime(convertDateForUTC(date, time))"
             >
                 <ng-container *ngIf="isChecked(convertDateForUTC(date, time)) as checkState">
                     <i 
@@ -30,11 +53,6 @@
                         }"
                     ></i>
                 </ng-container>
-                <!-- <i
-                    aria-hidden="true"
-                    class="fa fa-check"
-                    *ngIf="isChecked(convertDateForUTC(date, time)) !== 'free'"
-                ></i> -->
             </td>
         </tr>
     </tbody>
