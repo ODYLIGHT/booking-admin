@@ -46,13 +46,13 @@ export class CheckTableComponent implements OnInit {
     public getThisSchedule(obj: ScheduleState) {
         // 予約情報から予約者を返したいけど名前取得してなかった・・・
         // とりあえずIDかえす？
-        if (!!obj._can_reserve) return 'Available';
+        // if (!!obj._can_reserve) return 'Available';
 
-        const isReservation = this.schedules.reservations.filter(o => {
-            return new Date(o._reserve_date).getTime() === new Date(obj._date).getTime();
-        });
-        if (isReservation.length) return `user ID: ${obj._reserved_user}`;
-        else return '';
+        // const isReservation = this.schedules.reservations.filter(o => {
+        //     return new Date(o._reserve_date).getTime() === new Date(obj._date).getTime();
+        // });
+        // if (isReservation.length) return `user ID: ${obj._reserved_user}`;
+        // else return '';
     }
 
 }

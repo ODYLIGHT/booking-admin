@@ -11,5 +11,5 @@ export class RegisterTeachersStore extends Store<TeacherState[]> {
     private _changeState(items: TeacherState[]) { return (c: Readonly<TeacherState[]>): Partial<TeacherState[]> => items }
     public changeState(items: TeacherState[]): void { this.dispatch(this._changeState(items)) }
 
-    public get currentState(): Readonly<TeacherState[]> { return this.current() }
+    public get getCurrent(): Readonly<TeacherState[]> { return this.current() }
 }

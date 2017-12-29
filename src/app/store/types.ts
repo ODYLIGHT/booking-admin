@@ -17,7 +17,7 @@ export interface TeacherState {
     id: number;
     name?: string;
     name_jp?: string;
-    state?: number;
+    state?: number | boolean;
     time_zone?: string;
     customers_language?: number;
     priority_number?: number;
@@ -43,10 +43,17 @@ export interface TeacherState {
     details_jp_testimonial?: string;
 }
 
+// DBから取得する講師のスケジュール情報
 export interface ScheduleState {
-    _date: Date;
-    _can_reserve: boolean;
-    _reserved_user: number;
+    teacher_id: number;
+    schedule_date: Date;
+}
+
+// タイムテーブルに渡すために講師スケジュールの情報を変換したもの
+export interface TeacherSchedulesState {
+    current: string[];
+    insert: string[];
+    delete: string[];
 }
 
 export interface CustomerState {
@@ -78,6 +85,13 @@ export interface ReservationState {
     _reserve_date: Date;
     _teacher_id: number;
     _status: string;
+}
+
+// タイムテーブルに渡すために生徒の予約情報を変換したもの
+export interface CustomerReservationState {
+    current: string[];
+    insert: string[];
+    delete: string[];
 }
 
 // ここまではDBのテーブル構造のまんま

@@ -6,8 +6,12 @@
         <ng-container *ngIf="optionsAsObservable$ | async as options">
             <app-operations [options]="options" (selectEvent)="onSelect($event)"></app-operations>
         </ng-container>
-        <ng-container *ngIf="teacher | async">
-            <app-schedule-table [teacher]="teacher"></app-schedule-table>
+        <ng-container *ngIf="scheduleAsObsevable$ | async as schedues">
+            <app-schedule-table *ngIf="schedues.current.length"
+                [teacher]="teacher"
+                [schedules]="schedues"
+                (clickEventProvider)="clickEventObserver($event)"
+            ></app-schedule-table>
         </ng-container>
     </mat-card>
     <!-- <div class="row">

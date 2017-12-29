@@ -48,6 +48,7 @@ import {
 import { InformationTableComponent } from './student-information/student-information/information-table/information-table.component';
 import { OverviewComponent } from './student-information/overview/overview.component';
 import { CreditInformationComponent } from './student-information/credit-information/credit-information.component';
+import { TimeTableComponent } from './commons/time-table/time-table.component';
 
 @NgModule({
     declarations: [
@@ -80,7 +81,8 @@ import { CreditInformationComponent } from './student-information/credit-informa
         InformationSearchFormComponent,
         InformationTableComponent,
         OverviewComponent,
-        CreditInformationComponent
+        CreditInformationComponent,
+        TimeTableComponent
     ],
     imports: [
         NgbModule.forRoot(),

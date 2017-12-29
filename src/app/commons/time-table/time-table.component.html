@@ -1,0 +1,60 @@
+<table class="table table-sm table-bordered table-responsive-lg">
+
+    <thead>
+        <tr class="u-mat-primary">
+            <th>Date</th>
+            <ng-container *ngIf="isOnlyView; else canChanging">
+                <th *ngFor="let d of dayOfWeek"
+                    [ngStyle]="{ cursor: 'inherit' }"
+                >
+                    <div [class.text-danger]="(d | date: 'EEE') === 'Sun'" [class.text-primary]="(d | date: 'EEE') === 'Sat'">
+                        {{ d | date: 'EEE' }}
+                    </div>
+                    <div>{{ d | date: 'd.MMM.yyyy' }}</div>
+                </th>
+            </ng-container>
+            <ng-template #canChanging>
+                <th *ngFor="let d of dayOfWeek"
+                    [ngStyle]="{ cursor: 'pointer' }"
+                    (click)="onScheduledMultipleTime(d, leftColumns)"
+                >
+                    <div [class.text-danger]="(d | date: 'EEE') === 'Sun'" [class.text-primary]="(d | date: 'EEE') === 'Sat'">
+                        {{ d | date: 'EEE' }}
+                    </div>
+                    <div>{{ d | date: 'd.MMM.yyyy' }}</div>
+                </th>
+            </ng-template>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let time of leftColumns; let i = index">
+            <ng-container *ngIf="isOnlyView; else canChanging">
+                <th class="u-mat-primary">{{ concatTimeStr(i) }}</th>
+            </ng-container>
+            <ng-template #canChanging>
+                <th class="u-mat-primary"
+                    [ngStyle]="{ cursor: 'pointer' }"
+                    (click)="onScheduledMultipleTime(dayOfWeek, time)"
+                >{{ concatTimeStr(i) }}</th>
+            </ng-template>
+            <td
+                [ngStyle]="{ cursor: isOnlyView ? 'inherit' : 'pointer' }"
+                *ngFor="let date of dayOfWeek"
+                (click)="onScheduledSigleTime(convertDateForUTC(date, time))"
+            >
+                <ng-container *ngIf="isChecked(convertDateForUTC(date, time)) as checkState">
+                    <i 
+                        aria-hidden="true"
+                        class="fa"
+                        [ngClass]="{
+                            'fa-check': checkState === 'scheduled',
+                            'fa-minus': checkState === 'reserved'
+                        }"
+                    ></i>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
