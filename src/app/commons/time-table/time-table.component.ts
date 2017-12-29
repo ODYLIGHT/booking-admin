@@ -7,7 +7,7 @@ import 'rxjs/add/observable/fromPromise';
 import { map} from 'rxjs/operators';
 import { TimeTableService } from './time-table.service';
 import { Moment } from 'moment-timezone';
-import { TeacherSchedulesState } from '../../store/types';
+import { TeacherSchedulesState, CustomerReservationState } from '../../store/types';
 
 /**
  *
@@ -32,15 +32,20 @@ export class TimeTableComponent implements OnInit, OnChanges {
     @Input()
     set isOnlyView(bool: boolean) { this._isOnlyView = bool }
     get isOnlyView() { return this._isOnlyView }
-    private _schedules: TeacherSchedulesState;
+    private _schedules: TeacherSchedulesState = { current: [], insert: [], delete: [] };
     @Input()
-    set schedules(sc: TeacherSchedulesState) { this._schedules = sc || { currentSchedules: [], insertSchedules: [], deleteSchedules: [] } }
+    set schedules(sc: TeacherSchedulesState) { this._schedules = sc }
     get schedules() { return this._schedules }
+    private _reservations: CustomerReservationState = { current: [], insert: [], delete: [] };
+    @Input()
+    set reservation(rv: CustomerReservationState) { this._reservations = rv };
+    get reservation() { return this._reservations }
     private _additionalNumber: number;
     @Input()
     set additionalNumber(n: number) { this._additionalNumber = n || 0 };
     get additionalNumber() { return this._additionalNumber }
     @Output() datePropagator = new EventEmitter<Date[]>();
+    @Output() clickHandler = new EventEmitter<{ targetColumn: string; action: string; value: string; }>();
 
     // 仮変数を定義しておく
     dayOfWeek: Date[];
@@ -81,13 +86,54 @@ export class TimeTableComponent implements OnInit, OnChanges {
 
     public convertDateForUTC(date: Date, time: string) { return this.service.convertDate(date, time) }
 
+    /**
+     * ここのチェックは予約登録時のタイムテーブルで拡張が必要です
+     * 現状は講師のスケジュールのみで判別していますが、拡張時は生徒の予約も合わせて判別する必要があります
+     */
     public isChecked(utcTimeStr: string) {
-        const idx = this._schedules.currentSchedules.indexOf(utcTimeStr);
-        return idx >= 0 ? true : false;
+        /**
+         * deleteに含まていてもこのままじゃチェックが入ってしまう気がする
+         */
+        ///////////////////////////////////////////////// スケジュールのチェック ///////////////////////////////////////////////////////
+        // `currentSchedule`,`insertSchedule`の配列を結合
+        const concatSchedules = this.schedules.current.concat(this.schedules.insert);
+        // 重複の削除したうえで存在のチェック
+        const isIncludedInSchedule: boolean =
+            (Array.from(new Set(concatSchedules))).includes(utcTimeStr) && !!!this.schedules.delete.includes(utcTimeStr);
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////// 予約のチェック ///////////////////////////////////////////////////////////////
+        let isIncludedInReservation: boolean;
+        if (this.reservation) { /* 予約情報更新時の処理 */ }
+        else isIncludedInReservation = false;
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (!!!isIncludedInSchedule && !!!isIncludedInReservation) return false;
+        else if (isIncludedInSchedule) return 'scheduled';
+        else return 'reserved';
     }
 
-    public onClick(str: string) {
-        console.log(str);
+    /**
+     * 選択した時間がスケジュール・予約に含まれているかどうか判別し、親コンポーネントにイベントを通知する
+     * @param utcTimeStr 選択されたタイムテーブルのUTC時間
+     * @return { targetColumn: string, action: 'add' or 'del', value: time string for UTC }
+     */
+    public onClick(utcTimeStr: string) {
+        let requestObj: { targetColumn: string; action: string; value: string; };
+        if (this.schedules.current.includes(utcTimeStr) || this.reservation.current.includes(utcTimeStr)) {
+            // DB取得データ内に存在する場合は、`delete`カラムを操作する
+            requestObj = {
+                targetColumn: 'delete',
+                action: this.schedules.delete.includes(utcTimeStr) || this.reservation.delete.includes(utcTimeStr) ? 'del' : 'add',
+                value: utcTimeStr
+            };
+        } else {
+            // DB取得データには存在しない場合は、`insert`カラムを操作する
+            requestObj = {
+                targetColumn: 'insert',
+                action: this.schedules.insert.includes(utcTimeStr) || this.reservation.insert.includes(utcTimeStr) ? 'del' : 'add',
+                value: utcTimeStr
+            };
+        }
+        this.clickHandler.emit(requestObj);
     }
 
 }

@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import {
     OperationsStore, OptionItemsState,
-    TeacherScheduleStore
+    TeacherScheduleStore, initScheduleState
 } from './teacher-schedule.store';
 import { ScheduleState, TeacherSchedulesState } from '../../store/types';
 
@@ -32,9 +32,21 @@ export class TeacherScheduleService {
     public getScheduleApi(paramsItem: OptionItemsState): void {
         const params = new HttpParams().set('id', `${paramsItem.id}`);
         this.http.get<Date[]>(this.apiGetScheduleUrl, { headers: this.headers, params: params }).subscribe(res => {
-            const updateState = Object.assign({}, this.scheduleStore.getCurrent, { currentSchedules: res });
+            const updateState = Object.assign({}, initScheduleState, { current: res });
             this.scheduleStore.changeState(updateState);
         })
+    }
+
+    public updateScheduleState(arg: { targetColumn: string; action: string; value: string; }) {
+        const currentState: TeacherSchedulesState = { ...this.scheduleStore.getCurrent };
+        const updatedProparty: {[key: string]: string[]} = {};
+        if (arg.action === 'add') {
+            updatedProparty[arg.targetColumn] = [...currentState[arg.targetColumn], arg.value];
+        } else {
+            updatedProparty[arg.targetColumn] = [...currentState[arg.targetColumn]].filter(str => str !== arg.value);
+        }
+        const updateState = Object.assign({}, currentState, updatedProparty);
+        this.scheduleStore.changeState(updateState);
     }
 
     public get getOperationsItems$(): Observable<OptionItemsState[]> { return this.operationsStore.data$.pipe(map(s => Object.values(s))) }

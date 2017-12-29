@@ -31,6 +31,10 @@ export class TeacherScheduleComponent implements OnInit {
         this.teacher = value;
     }
 
+    public clickEventObserver(event: { targetColumn: string; action: string; value: string; }) {
+        this.service.updateScheduleState(event);
+    }
+
     public get optionsAsObservable$(): Observable<OptionItemsState[]> { return this.service.getOperationsItems$ }
 
     public get scheduleAsObsevable$(): Observable<TeacherSchedulesState> { return this.service.getSchedules$ }

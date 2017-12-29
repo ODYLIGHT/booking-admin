@@ -30,6 +30,7 @@ export class ScheduleTableComponent implements OnInit, OnChanges {
     get schedules() { return this._schedules }
     public weekOfPeriod = '';
     public additionalNumber = 0;
+    @Output() clickEventProvider = new EventEmitter<{ targetColumn: string; action: string; value: string; }>();
 
     constructor(
         private moment: MomentService,
@@ -51,6 +52,11 @@ export class ScheduleTableComponent implements OnInit, OnChanges {
     public observerForDayOfWeek(e: Date[]): void {
         this.weekOfPeriod =
             `${this.service.convertFormat(e[0], 'DD.MMM.YYYY')} - ${this.service.convertFormat(e[6], 'DD.MMM.YYYY')}`;
+    }
+
+    public clickObserver(event: { targetColumn: string; action: string; value: string; }) {
+        // time-table.componentから受け取ったクリックイベントはそのまま親コンポーネントに渡してstateを更新する
+        this.clickEventProvider.emit(event);
     }
 
     // private initMoment(): void {

@@ -51,9 +51,9 @@ export interface ScheduleState {
 
 // タイムテーブルに渡すために講師スケジュールの情報を変換したもの
 export interface TeacherSchedulesState {
-    currentSchedules: string[];
-    insertSchedules: string[];
-    deleteSchedules: string[];
+    current: string[];
+    insert: string[];
+    delete: string[];
 }
 
 export interface CustomerState {
@@ -85,6 +85,13 @@ export interface ReservationState {
     _reserve_date: Date;
     _teacher_id: number;
     _status: string;
+}
+
+// タイムテーブルに渡すために生徒の予約情報を変換したもの
+export interface CustomerReservationState {
+    current: string[];
+    insert: string[];
+    delete: string[];
 }
 
 // ここまではDBのテーブル構造のまんま

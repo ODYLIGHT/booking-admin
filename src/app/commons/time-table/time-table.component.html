@@ -20,7 +20,21 @@
                 *ngFor="let date of dayOfWeek"
                 (click)="onClick(convertDateForUTC(date, time))"
             >
-                <i class="fa fa-check" aria-hidden="true" *ngIf="isChecked(convertDateForUTC(date, time))"></i>
+                <ng-container *ngIf="isChecked(convertDateForUTC(date, time)) as checkState">
+                    <i 
+                        aria-hidden="true"
+                        class="fa"
+                        [ngClass]="{
+                            'fa-check': checkState === 'scheduled',
+                            'fa-minus': checkState === 'reserved'
+                        }"
+                    ></i>
+                </ng-container>
+                <!-- <i
+                    aria-hidden="true"
+                    class="fa fa-check"
+                    *ngIf="isChecked(convertDateForUTC(date, time)) !== 'free'"
+                ></i> -->
             </td>
         </tr>
     </tbody>
