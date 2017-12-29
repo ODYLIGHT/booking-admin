@@ -1,0 +1,17 @@
+table {
+    font-size: 0.8rem;
+    thead > tr > th,
+    tbody > tr > th {
+      text-align: center;
+      vertical-align: inherit;
+    }
+    tbody > tr > td {
+        text-align: center;
+    }
+}
+
+label.mat-checkbox-layout {
+    margin-bottom: 0;
+    // width: 100%;
+}
+

@@ -1,0 +1,25 @@
+.btn-area {
+    margin-bottom: 20px;
+    display: inline-block;
+    button {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}
+table {
+    * {
+        text-align: center;
+    }
+    tr {
+        th, td {
+            vertical-align: middle;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .mt-md {
+        margin-top: 0.5rem;
+    }
+}
+

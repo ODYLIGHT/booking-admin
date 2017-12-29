@@ -1,0 +1,18 @@
+<div class="page-header">
+    <h5 class="text-center">Student information</h5>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <p>
+                1. Register New Student Information.
+                <button type="button" class="btn btn-sm btn-default" (click)="onClickAdd()">Add New Student</button>
+            </p>
+            <p>2. Search Student Information.</p>
+            <app-information-search-form (searchEvent)="search($event)"></app-information-search-form>
+            <div class="table-area">
+                <app-information-table [studentsAsObservable]="studentAsObservable$"></app-information-table>
+            </div>
+        </div>
+    </div>
+</div>

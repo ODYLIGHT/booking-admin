@@ -1,0 +1,20 @@
+<div class="page-header">
+    <h5 class="text-center">Register of Booking</h5>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-sm-10 offset-md-1 offset-sm-1">
+             <app-search-customer (search)="search($event)" (post)="post($event)"></app-search-customer>
+        </div>
+        <div class="col-md-12 col-sm-12">
+            <app-register-table
+                [teachers]="teachersAsObservable$ | async"
+                [schedule]="convertSchedule(scheduleAsObservable$ | async)"
+                [showsWeeks]="showWeeks"
+                [userId]="userId"
+                (switchWeek)="switchWeek($event)"
+                (selectTeacher)="selectTeacher($event)"
+            ></app-register-table>
+        </div>
+    </div>
+</div>

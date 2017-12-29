@@ -1,0 +1,29 @@
+<div class="col-md-12">
+    <div class="form-group align-items-center text-center">
+        <div class="row">
+            <div class="col-md">
+                <button mat-raised-button color="accent" (click)="prevWeek()">Previous week</button>
+            </div>
+            <div class="col-md">
+                <h5 class="text-center mt-md">{{ weekOfPeriod }}</h5>
+            </div>
+            <div class="col-md">
+                <button mat-raised-button color="accent" (click)="nextWeek()">Next week</button>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <h5>
+            Teacher: {{ teacher.name }} 
+            <small>[ TimeZone: {{ getTimeIntervalFromTimeZone }} ]</small>
+        </h5>
+    </div>
+    <app-time-table
+        [timeZone]="teacher.time_zone"
+        [isOnlyView]="false"
+        [schedules]="schedules"
+        [additionalNumber]="additionalNumber"
+        (datePropagator)="observerForDayOfWeek($event)"
+        (clickHandler)="clickObserver($event)"
+    ></app-time-table>
+</div>

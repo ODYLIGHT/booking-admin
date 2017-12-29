@@ -1,0 +1,74 @@
+<ng-container *ngIf="teachers.length !== 0">
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <div class="input-group-addon">Teacher</div>
+                <select name="teacher" class="form-control" (change)="onSelectTeacher($event)">
+                    <option value="">select teacher</option>
+                    <option *ngFor="let item of teachers" [value]="item._id">{{ item._name }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h5 class="text-center">
+                {{ showsWeeks[0] | date: 'd.MMM.yyyy' }} - {{ showsWeeks[6] | date: 'd.MMM.yyyy' }}
+            </h5>
+        </div>
+        <div class="col-md-4">
+            <div class="btn-area">
+                <button type="button" class="btn btn-warning" (click)="onClickSwitchWeek('prev')">
+                    <i class="fa fa-caret-left" aria-hidden="true"></i> Previous week
+                </button>
+                <button type="button" class="btn btn-warning" (click)="onClickSwitchWeek('next')">
+                    Next week <i class="fa fa-caret-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3 col-md-10 offset-md-1" *ngIf="!!userId && !!schedule.length">
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th class="table-warning">Date</th>
+                    <ng-container *ngFor="let date of showsWeeks; let n = index">
+                        <th style="cursor: pointer;" (click)="onSelectAday(n)">
+                            <div [class.text-danger]="(date | date: 'EEE') === 'Sun'"
+                                 [class.text-primary]="(date | date: 'EEE') === 'Sat'">
+                                 {{ date | date: 'EEE' }}
+                            </div>
+                            <div>{{ date | date: 'd.MMM.yyyy' }}</div>
+                        </th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let items of schedule; let i = index">
+                    <td class="table-warning" style="cursor: pointer" (click)="onSelectAhour(i)">
+                        {{ items?.title }}
+                    </td>
+                    <ng-container *ngFor="let val of items?.value">
+                        <!-- <td style="cursor: pointer;" (click)="onClick(val)">
+                            <i class="fa fa-check" aria-hidden="true" *ngIf="!!!val._can_reserve"></i>
+                        </td> -->
+                        <ng-container *ngIf="isCanReserve(val) === 0">
+                            <td>
+                                <i class="fa fa-minus" aria-hidden="true"></i>
+                            </td>
+                        </ng-container>
+                        <ng-container *ngIf="isCanReserve(val) === 1">
+                            <td>
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </td>
+                        </ng-container>
+                        <ng-container *ngIf="isCanReserve(val) === 2">
+                            <td style="cursor: pointer;" (click)="onClick(val)">
+                                <i class="fa fa-check" aria-hidden="true" *ngIf="!!val._reserved_user"></i>
+                            </td>
+                        </ng-container>
+                    </ng-container>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</ng-container>
