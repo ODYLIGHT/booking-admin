@@ -31,6 +31,12 @@ export class TeacherScheduleComponent implements OnInit {
         this.teacher = value;
     }
 
+    public onSubmit(value: OptionItemsState) {
+        const _id = value.id;
+        const confirmMes = `Update ${value.name}'s schedules?`;
+        if (window.confirm(confirmMes)) this.service.updateApi(_id);
+    }
+
     public clickEventObserver(event: { targetColumn: string; action: string; value: string; }) {
         this.service.updateScheduleState(event);
     }
