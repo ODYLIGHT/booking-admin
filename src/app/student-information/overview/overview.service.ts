@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { PullDownMenusState, OverviewStore } from './overview.store';
-import { CustomerState } from '../../store/types';
+import { PullDownMenusState, OverviewStore, CustomerState } from './overview.store';
+// import { CustomerState } from '../../store/types';
 
 @Injectable()
 export class OverviewService {

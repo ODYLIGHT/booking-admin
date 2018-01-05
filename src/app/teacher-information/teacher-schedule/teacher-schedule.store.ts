@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
-import { ScheduleState, TeacherSchedulesState } from '../../store/types';
+import { TeacherSchedulesState } from '../../store/types';
 
 export interface OptionItemsState {
     id: number;

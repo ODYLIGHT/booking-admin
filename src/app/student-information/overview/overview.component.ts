@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { OverviewService } from './overview.service';
-import { StudentForm, OtherLang1, OtherLang2, PullDownMenusState, OverviewStore } from './overview.store';
-import { CustomerState } from '../../store/types';
+import { StudentForm, OtherLang1, OtherLang2, PullDownMenusState, OverviewStore, CustomerState } from './overview.store';
+// import { CustomerState } from '../../store/types';
 
 @Component({
     selector: 'app-overview',

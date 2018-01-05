@@ -2,8 +2,7 @@
 import { Router, Response, Request, NextFunction } from 'express';
 import { FsService } from '../modules/fs.modules';
 import * as Debug from 'debug';
-// jsonsに新しいテストデータを作っていきます（2017/12以降）
-import { paths, jsons } from '../modules/paths';
+import { jsons } from '../modules/paths';
 import { TeacherState, ScheduleState } from '../../src/app/store/types';
 
 const router: Router = Router();

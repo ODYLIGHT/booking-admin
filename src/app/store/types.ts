@@ -43,12 +43,6 @@ export interface TeacherState {
     details_jp_testimonial?: string;
 }
 
-// DBから取得する講師のスケジュール情報
-export interface ScheduleState {
-    teacher_id: number;
-    schedule_date: Date;
-}
-
 // タイムテーブルに渡すために講師スケジュールの情報を変換したもの
 export interface TeacherSchedulesState {
     current: string[];
@@ -56,36 +50,35 @@ export interface TeacherSchedulesState {
     delete: string[];
 }
 
+// 生徒の個人情報
 export interface CustomerState {
     id: number;
-    customerName: string;
-    nickName: string;
-    jpName: string;
-    gender: string; // male or female
-    birth: Date; // データ格納時はDate型にして、利用時に別途分解する
-    skypeName: string;
-    mailAddress: string;
-    password: string;
-    frenchLevel: string;
-    learningExperience: string; // 学習経験
-    purpose: string;
-    motherTongue: string; // 母国語
-    howFinded: string; // このサイトを知ったきっかけ
-    otherLanguage1: string;
-    otherLanguage1_level: number;
-    otherLanguage2: string;
-    otherLanguage2_level: number;
-    programCode: string;
-    remark: string;
-    clientCode: string;
+    name?: string;
 }
 
-export interface ReservationState {
-    _id: number;
-    _reserve_date: Date;
-    _teacher_id: number;
-    _status: string;
-}
+// export interface CustomerState {
+//     id: number;
+//     customerName: string;
+//     nickName: string;
+//     jpName: string;
+//     gender: string; // male or female
+//     birth: Date; // データ格納時はDate型にして、利用時に別途分解する
+//     skypeName: string;
+//     mailAddress: string;
+//     password: string;
+//     frenchLevel: string;
+//     learningExperience: string; // 学習経験
+//     purpose: string;
+//     motherTongue: string; // 母国語
+//     howFinded: string; // このサイトを知ったきっかけ
+//     otherLanguage1: string;
+//     otherLanguage1_level: number;
+//     otherLanguage2: string;
+//     otherLanguage2_level: number;
+//     programCode: string;
+//     remark: string;
+//     clientCode: string;
+// }
 
 // タイムテーブルに渡すために生徒の予約情報を変換したもの
 export interface CustomerReservationState {
@@ -94,7 +87,20 @@ export interface CustomerReservationState {
     delete: string[];
 }
 
-// ここまではDBのテーブル構造のまんま
+// DBから取得する講師のスケジュール情報
+export interface ScheduleState {
+    teacher_id: number;
+    schedule_date: Date;
+}
+
+// この上までは間違いなく使っている(2018/01/05現在)
+
+export interface ReservationState {
+    _id: number;
+    _reserve_date: Date;
+    _teacher_id: number;
+    _status: string;
+}
 
 export interface RegisterBookingTeachersState {
     _id: number;

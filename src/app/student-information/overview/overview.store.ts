@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
-import { CustomerState } from '../../store/types';
+// import { CustomerState } from '../../store/types';
 
 export interface PullDownMenusState {
     time_zone: { label: string, value: string }[];
@@ -10,6 +10,30 @@ export interface PullDownMenusState {
     program_code: { label: string, value: string }[];
     remark: { label: string, value: string }[];
     client_code: { label: string, value: string }[];
+}
+
+export interface CustomerState {
+    id: number;
+    customerName: string;
+    nickName: string;
+    jpName: string;
+    gender: string; // male or female
+    birth: Date; // データ格納時はDate型にして、利用時に別途分解する
+    skypeName: string;
+    mailAddress: string;
+    password: string;
+    frenchLevel: string;
+    learningExperience: string; // 学習経験
+    purpose: string;
+    motherTongue: string; // 母国語
+    howFinded: string; // このサイトを知ったきっかけ
+    otherLanguage1: string;
+    otherLanguage1_level: number;
+    otherLanguage2: string;
+    otherLanguage2_level: number;
+    programCode: string;
+    remark: string;
+    clientCode: string;
 }
 
 export class StudentForm {

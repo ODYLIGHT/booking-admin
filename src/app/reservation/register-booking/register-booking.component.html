@@ -1,3 +1,10 @@
-<p>
-  register-booking works!
-</p>
+<div class="page-header">
+    <h5 class="text-center">Register of booking</h5>
+</div>
+<div class="container">
+    <mat-card>
+        <ng-container *ngIf="customerAsObservable$ | async as customer">
+            <app-search-customer [customer]="customer" (searchEvent)="onSearch($event)"></app-search-customer>
+        </ng-container>
+    </mat-card>
+</div>

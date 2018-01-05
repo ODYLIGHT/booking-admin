@@ -19,7 +19,6 @@ import { TeacherSchedulesState } from '../../../store/types';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScheduleTableComponent implements OnInit, OnChanges {
-    // @Input() teacher: BehaviorSubject<OptionItemsState>;
     private _teacher: OptionItemsState;
     @Input()
     set teacher(item: OptionItemsState) { this._teacher = item || undefined }
@@ -38,9 +37,7 @@ export class ScheduleTableComponent implements OnInit, OnChanges {
         private store: TeacherScheduleStore
     ) { }
 
-    ngOnInit() {
-        // this.initMoment();
-    }
+    ngOnInit() { }
 
     ngOnChanges(changes: { [popKey: string]: SimpleChange }) {
     }

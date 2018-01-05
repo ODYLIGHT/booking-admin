@@ -1,0 +1,21 @@
+<div class="container">
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit(customerForm)" novalidate>
+        <div class="form-row">
+            <div class="col-md-3">
+                <mat-form-field class="w-100">
+                    <input matInput type="number" placeholder="Customer ID..." formControlName="id" required>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mb-3 text-right">
+                <button mat-raised-button [disabled]="customerForm.invalid">Search</button>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6">
+                <mat-form-field class="w-100">
+                    <input matInput type="text" placeholder="Customer name" formControlName="name" readonly>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</div>

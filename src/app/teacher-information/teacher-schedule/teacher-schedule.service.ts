@@ -10,7 +10,7 @@ import {
     OperationsStore, OptionItemsState,
     TeacherScheduleStore, initScheduleState
 } from './teacher-schedule.store';
-import { ScheduleState, TeacherSchedulesState } from '../../store/types';
+import { TeacherSchedulesState } from '../../store/types';
 
 @Injectable()
 export class TeacherScheduleService {
