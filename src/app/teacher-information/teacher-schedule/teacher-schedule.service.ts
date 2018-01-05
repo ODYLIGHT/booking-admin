@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-// import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
+
+import { environment } from '../../../environments/environment';
 
 import {
     OperationsStore, OptionItemsState,
@@ -14,13 +16,14 @@ import { ScheduleState, TeacherSchedulesState } from '../../store/types';
 export class TeacherScheduleService {
     readonly apiInitUrl = 'api/teacher-information/teacher-schedule/operations-init';
     readonly apiGetScheduleUrl = 'api/teacher-information/teacher-schedule/get-schedule';
+    readonly apiPutUrl = 'api/teacher-information/teacher-schedule/update';
     private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    // readonly apiPutUrl = 'api/teacher-information/teacher-schedule/update';
 
     constructor(
         private http: HttpClient,
         private operationsStore: OperationsStore,
-        private scheduleStore: TeacherScheduleStore
+        private scheduleStore: TeacherScheduleStore,
+        private snackBar: MatSnackBar
     ) { }
 
     public initComponentItems(): void {
@@ -35,6 +38,35 @@ export class TeacherScheduleService {
             const updateState = Object.assign({}, initScheduleState, { current: res });
             this.scheduleStore.changeState(updateState);
         })
+    }
+
+    public updateApi(id: number): void {
+        const currentState: TeacherSchedulesState = { ...this.scheduleStore.getCurrent };
+        const params = { id, insert: currentState.insert, delete: currentState.delete };
+        if (!!!currentState.insert.length && !!!currentState.delete.length) return window.alert('nothing to change.');
+        this.http.put(this.apiPutUrl, { headers: this.headers })
+            .subscribe(
+                res => {
+                    if (!!!environment.production) console.log(res);
+                    this.snackBar.open('Successfully updated.', null, { duration: 2000 });
+                },
+                (err: HttpErrorResponse) => {
+                    const errorMessage =
+                        'There was a problem on the server side.\n'
+                        + 'Please give the administrator the following message / code.\n'
+                        + `[message]: ${err.statusText}\n`
+                        + `[code]: ${err.status}\n`
+                        ;
+                    window.alert(errorMessage);
+                },
+                () => {
+                    // Updating Store State.
+                    const current = currentState.current.filter(time => !!!currentState.delete.includes(time));
+                    current.push(...currentState.insert);
+                    const newState = { current, insert: [], delete: [] };
+                    this.scheduleStore.changeState(newState);
+                }
+            );
     }
 
     public updateScheduleState(arg: { targetColumn: string; action: string; value: string; }) {

@@ -115,12 +115,17 @@ router.get('/teacher-schedule/get-schedule', (req: Request, res: Response, next:
 
 // PUT teacher-schedule update
 router.put('/teacher-schedule/update', (req: Request, res: Response, next: NextFunction) => {
-    debug(`[ PUT ] from teacher-schedule`);
-    const params = req.body;
-    // console.log(params);
-    res.json({
-        put: true
-    });
+    // このリクエストは、講師のIDと、新規登録用、更新用それぞれの日付文字列の配列を受け取ります
+    // スケジュールの更新は、新しいスケジュールの追加と、既存のスケジュールの修正（削除）です
+    // そのため、SQLクエリは`INSERT`と`DELETE`の２つを実行してください
+    const params: { id: number, insert: string[], delete: string[] } = req.body;
+    debug(`[ PUT ] from teacher-schedule. target id = ${params.id}`);
+    if (isDebug) {
+        // 70%で成功　30%でリクエストエラーを発生させる
+        const randumNum = Math.random();
+        if (randumNum <= 0.7) res.status(200).json({ isSuccess: true });
+        else res.status(501).json({ isSuccess: false });
+    }
 });
 
 module.exports = router;

@@ -10,7 +10,8 @@ import { OptionItemsState } from '../teacher-schedule.store';
 })
 export class OperationsComponent implements OnInit {
     @Input() options: OptionItemsState[];
-    @Output() selectEvent = new EventEmitter();
+    @Output() selectEvent: EventEmitter<OptionItemsState> = new EventEmitter();
+    @Output() submitEvent: EventEmitter<OptionItemsState> = new EventEmitter();
 
     constructor() { }
 
@@ -20,6 +21,10 @@ export class OperationsComponent implements OnInit {
     public onChange(e: MatSelectChange): void {
         const idx = e.value;
         this.selectEvent.emit(this.options[idx]);
+    }
+
+    public onSubmit(teacher: OptionItemsState): void {
+        this.submitEvent.emit(teacher);
     }
 
 }
