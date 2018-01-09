@@ -3,8 +3,18 @@
 </div>
 <div class="container">
     <mat-card>
-        <ng-container *ngIf="customerAsObservable$ | async as customer">
+        <!-- <ng-container *ngIf="customerAsObservable$ | async as customer">
             <app-search-customer [customer]="customer" (searchEvent)="onSearch($event)"></app-search-customer>
-        </ng-container>
+        </ng-container> -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <ng-container *ngIf="customerAsObservable$ | async as customer">
+                        <app-search-customer [customer]="customer" (searchEvent)="onSearch($event)"></app-search-customer>
+                    </ng-container>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
     </mat-card>
 </div>

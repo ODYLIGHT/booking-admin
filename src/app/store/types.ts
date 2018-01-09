@@ -54,6 +54,7 @@ export interface TeacherSchedulesState {
 export interface CustomerState {
     id: number;
     name?: string;
+    time_zone?: string;
 }
 
 // export interface CustomerState {

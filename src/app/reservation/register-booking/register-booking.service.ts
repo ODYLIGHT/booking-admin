@@ -24,7 +24,7 @@ export class RegisterBookingService {
             .subscribe(
             res => {
                 if (!!!res) window.alert('No target data...');
-                const updateState = Object.assign({}, customer, { name: res });
+                const updateState = Object.assign({}, customer, { name: res.name, time_zone: res.time_zone });
                 console.log(updateState);
                 this.scStore.changeState(updateState);
             },

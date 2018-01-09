@@ -1,82 +1,102 @@
 [
     {
         "id": 0,
-        "name": "Georgette Dillard"
+        "name": "Georgette Dillard",
+        "time_zone": "Europe/Paris"
     },
     {
         "id": 1,
-        "name": "Aurora Haynes"
+        "name": "Aurora Haynes",
+        "time_zone": "America/Denver"
     },
     {
         "id": 2,
-        "name": "Slater Webster"
+        "name": "Slater Webster",
+        "time_zone": "Europe/Paris"
     },
     {
         "id": 3,
-        "name": "Gibson Wall"
+        "name": "Gibson Wall",
+        "time_zone": "Europe/Paris"
     },
     {
         "id": 4,
-        "name": "Hale Prince"
+        "name": "Hale Prince",
+        "time_zone": "Europe/Paris"
     },
     {
         "id": 5,
-        "name": "Sanders Sharp"
+        "name": "Sanders Sharp",
+        "time_zone": "America/New_York"
     },
     {
         "id": 6,
-        "name": "Sabrina Eaton"
+        "name": "Sabrina Eaton",
+        "time_zone": "Europe/Paris"
     },
     {
         "id": 7,
-        "name": "Concetta Bridges"
+        "name": "Concetta Bridges",
+        "time_zone": "Europe/Berlin"
     },
     {
         "id": 8,
-        "name": "Leblanc Mcintosh"
+        "name": "Leblanc Mcintosh",
+        "time_zone": "Indian/Cocos"
     },
     {
         "id": 9,
-        "name": "Powell White"
+        "name": "Powell White",
+        "time_zone": "Europe/Paris"
     },
     {
         "id": 10,
-        "name": "Madeleine West"
+        "name": "Madeleine West",
+        "time_zone": "Europe/Paris"
     },
     {
         "id": 11,
-        "name": "Ines Rogers"
+        "name": "Ines Rogers",
+        "time_zone": "Europe/Paris"
     },
     {
         "id": 12,
-        "name": "Moss Perry"
+        "name": "Moss Perry",
+        "time_zone": "Europe/Berlin"
     },
     {
         "id": 13,
-        "name": "Sexton Bartlett"
+        "name": "Sexton Bartlett",
+        "time_zone": "Europe/Paris"
     },
     {
         "id": 14,
-        "name": "Janet Weber"
+        "name": "Janet Weber",
+        "time_zone": "Europe/Berlin"
     },
     {
         "id": 15,
-        "name": "Head Wynn"
+        "name": "Head Wynn",
+        "time_zone": "Europe/Paris"
     },
     {
         "id": 16,
-        "name": "Acosta Beard"
+        "name": "Acosta Beard",
+        "time_zone": "Europe/Paris"
     },
     {
         "id": 17,
-        "name": "Tamera Maldonado"
+        "name": "Tamera Maldonado",
+        "time_zone": "Asia/Tokyo"
     },
     {
         "id": 18,
-        "name": "Merrill Mccray"
+        "name": "Merrill Mccray",
+        "time_zone": "Asia/Tokyo"
     },
     {
         "id": 19,
-        "name": "Torres Gamble"
+        "name": "Torres Gamble",
+        "time_zone": "Europe/Paris"
     }
 ]

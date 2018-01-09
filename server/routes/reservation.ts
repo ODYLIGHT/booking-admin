@@ -12,14 +12,14 @@ const isDebug = debug.enabled;
 
 router.get('/register-of-booking/search-customer', (req: Request, res: Response, next: NextFunction) => {
     // `register of booking`から生徒のIDで検索リクエスト
-    // nameのみのオブジェクトをリクエストします
+    // `id`,`name`,`time_zone`をリクエストします
     const customerId = +req.query.id;
     debug(`[ GET ] from search-customer with Id = ${customerId}`);
     if (isDebug) {
         fs.readFile(jsons.customers)
             .then((results: CustomerState[]) => {
                 const dataAsRequestFormat = results.find(obj => obj.id === customerId);
-                res.status(200).json(dataAsRequestFormat ? dataAsRequestFormat.name : undefined);
+                res.status(200).json(dataAsRequestFormat ? dataAsRequestFormat : undefined);
             })
             .catch(err => res.status(501).json(err));
     }

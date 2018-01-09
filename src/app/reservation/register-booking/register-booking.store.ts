@@ -4,6 +4,7 @@ import { Store } from '../../store/abstract.store';
 export interface SearchCustomerState {
     id: number;
     name: string;
+    time_zone: string;
 }
 
 /**
