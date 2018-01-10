@@ -9,7 +9,7 @@ import { CheckScheduleSearchFormComponent } from './check-teacher-schedule/check
 import { CheckTableComponent } from './check-teacher-schedule/check-table/check-table.component';
 
 import { RegisterBookingComponent } from './register-booking/register-booking.component';
-import { SearchCustomerComponent } from './register-booking/search-customer/search-customer.component';
+import { OperationsComponent } from './register-booking/operations/operations.component';
 
 import { SearchBookingComponent } from './search-booking/search-booking.component';
 import { CancellationBookingComponent } from './search-booking/cancellation-booking/cancellation-booking.component';
@@ -28,7 +28,7 @@ import { SearchTableComponent } from './search-booking/search-table/search-table
         CheckScheduleSearchFormComponent,
         CheckTableComponent,
         RegisterBookingComponent,
-        SearchCustomerComponent,
+        OperationsComponent,
         SearchBookingComponent,
         CancellationBookingComponent,
         SearchFormComponent,
@@ -39,7 +39,7 @@ import { SearchTableComponent } from './search-booking/search-table/search-table
         CheckScheduleSearchFormComponent,
         CheckTableComponent,
         RegisterBookingComponent,
-        SearchCustomerComponent,
+        OperationsComponent,
         SearchBookingComponent,
         CancellationBookingComponent,
         SearchFormComponent,

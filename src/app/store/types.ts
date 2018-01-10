@@ -94,14 +94,21 @@ export interface ScheduleState {
     schedule_date: Date;
 }
 
+// 予約情報
+export interface ReservationState {
+    customer_id: number;
+    teacher_id: number;
+    reserved_date: Date;
+}
+
 // この上までは間違いなく使っている(2018/01/05現在)
 
-export interface ReservationState {
-    _id: number;
-    _reserve_date: Date;
-    _teacher_id: number;
-    _status: string;
-}
+// export interface ReservationState {
+//     _id: number;
+//     _reserve_date: Date;
+//     _teacher_id: number;
+//     _status: string;
+// }
 
 export interface RegisterBookingTeachersState {
     _id: number;

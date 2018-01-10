@@ -3,40 +3,80 @@ import { Router, Response, Request, NextFunction } from 'express';
 import { FsService } from '../modules/fs.modules';
 import * as Debug from 'debug';
 import { paths, jsons } from '../modules/paths';
-import { CustomerState } from '../../src/app/store/types';
+import { CustomerState, TeacherState, ScheduleState, ReservationState } from '../../src/app/store/types';
 
 const router: Router = Router();
 const fs: FsService = FsService.instance;
 const debug = Debug('debug:reservation');
 const isDebug = debug.enabled;
 
-router.get('/register-of-booking/search-customer', (req: Request, res: Response, next: NextFunction) => {
-    // `register of booking`から生徒のIDで検索リクエスト
-    // `id`,`name`,`time_zone`をリクエストします
-    const customerId = +req.query.id;
-    debug(`[ GET ] from search-customer with Id = ${customerId}`);
+router.get('/register-of-booking/get-teacher', (req: Request, res: Response, next: NextFunction) => {
+    // Teacher Scheduleコンポーネントのオペレーション部分で使う、講師とそのタイムゾーンを初期化処理時に返す
+    // 要求するデータは`id`, `name`, `time_zone`です
+    debug(`[ ${req.method} ]: ${req.url}`);
+
     if (isDebug) {
-        fs.readFile(jsons.customers)
-            .then((results: CustomerState[]) => {
-                const dataAsRequestFormat = results.find(obj => obj.id === customerId);
-                res.status(200).json(dataAsRequestFormat ? dataAsRequestFormat : undefined);
+        fs.readFile(jsons.teachers)
+            .then((result: TeacherState[]) => {
+                const dataAsRequestFormat = result.map(item => {
+                    const { id, name, time_zone } = item;
+                    return { id, name, time_zone };
+                });
+                res.status(200).json(dataAsRequestFormat);
             })
             .catch(err => res.status(501).json(err));
     }
 });
 
-router.get('/register-of-booking/init', (req: Request, res: Response, next: NextFunction) => {
-    console.info(`request: GET from register-booking init`);
-    fs.readFile(paths.register_teachers)
-        .then((result: any[]) => {
-            const teachers = result.map(obj => {
-                return { _id: obj._id, _name: obj._name };
-            });
-            res.status(200).json(teachers);
-        })
-        .catch(err => res.status(501).json(err));
+router.get('/register-of-booking/search-booking', (req: Request, res: Response, next: NextFunction) => {
+    const customerId = +req.query.customerId;
+    const teacherId = +req.query.teacherId;
+    debug(`[ GET ] from search-customer`);
+    if (isDebug) {
+        fs.readFile(jsons.customers)
+            .then((results: CustomerState[]) => {
+                const requestCustomer = results.find(obj => obj.id === customerId);
+                if (!!!requestCustomer) res.status(200).json(undefined);
+                else {
+                    // 検索した生徒がいれば講師のスケジュールと、予約状況を取得して返す
+                    fs.readFile(jsons.schedules)
+                        .then((schedules: ScheduleState[]) => {
+                            const _schedules: Date[] = schedules.filter(obj => {
+                                return obj.teacher_id === teacherId;
+                            }).map(item => item.schedule_date);
 
+                            fs.readFile(jsons.reservations)
+                                .then((reservations: ReservationState[]) => {
+                                    // その講師の全ての予約（顧客関係なく）
+                                    const _reservations: ReservationState[] = reservations.filter(obj => obj.teacher_id === teacherId);
+                                    res.status(200).json({
+                                        customer: requestCustomer,
+                                        schedules: _schedules,
+                                        reservations: _reservations
+                                    });
+                                })
+                                .catch(err => res.status(501).json(err));
+
+                        })
+                        .catch(err => res.status(501).json(err));
+                }
+            })
+            .catch(err => res.status(501).json(err));
+    }
 });
+
+// router.get('/register-of-booking/init', (req: Request, res: Response, next: NextFunction) => {
+//     console.info(`request: GET from register-booking init`);
+//     fs.readFile(paths.register_teachers)
+//         .then((result: any[]) => {
+//             const teachers = result.map(obj => {
+//                 return { _id: obj._id, _name: obj._name };
+//             });
+//             res.status(200).json(teachers);
+//         })
+//         .catch(err => res.status(501).json(err));
+
+// });
 
 router.get('/register-of-booking/schedule', (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
