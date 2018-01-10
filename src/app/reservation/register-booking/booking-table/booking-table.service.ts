@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MomentService } from '../../../services/moment.service';
 
 @Injectable()
-export class ScheduleTableService extends MomentService {
+export class BookingTableService extends MomentService {
 
     constructor() { super() }
 

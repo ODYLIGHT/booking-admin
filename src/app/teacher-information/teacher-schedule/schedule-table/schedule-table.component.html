@@ -21,7 +21,7 @@
     <app-time-table
         [timeZone]="teacher.time_zone"
         [isOnlyView]="false"
-        [schedules]="schedules"
+        [timeState]="schedules"
         [additionalNumber]="additionalNumber"
         (datePropagator)="observerForDayOfWeek($event)"
         (clickHandler)="clickObserver($event)"

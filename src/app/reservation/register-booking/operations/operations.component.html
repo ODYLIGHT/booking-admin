@@ -14,8 +14,8 @@
     <div class="form-row">
         <div class="col-md-6" formGroupName="teacher">
             <mat-form-field class="w-100">
-                <mat-select placeholder="Select the instructor name to register" formControlName="id" (change)="onChange($event)" required>
-                    <mat-option *ngFor="let teacher of teachers; let i = index" [value]="i">
+                <mat-select placeholder="Select the instructor name to register" (change)="onChange($event)" required>
+                    <mat-option *ngFor="let teacher of teachers; let i = index" [value]="teacher">
                         {{ teacher.name }}
                     </mat-option>
                 </mat-select>

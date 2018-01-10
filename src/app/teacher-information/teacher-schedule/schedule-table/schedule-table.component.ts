@@ -1,15 +1,10 @@
 import { Component, OnInit, OnChanges, Output, Input, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { map } from 'rxjs/operators';
-import { Moment } from 'moment-timezone';
-
 import { MomentService } from '../../../services/moment.service';
 import {
     OptionItemsState, TeacherScheduleStore
 } from '../teacher-schedule.store';
 import { ScheduleTableService } from './schedule-table.service';
-import { TeacherSchedulesState } from '../../../store/types';
+import { TimeState } from '../../../store/types';
 
 @Component({
     selector: 'app-schedule-table',
@@ -23,9 +18,9 @@ export class ScheduleTableComponent implements OnInit, OnChanges {
     @Input()
     set teacher(item: OptionItemsState) { this._teacher = item || undefined }
     get teacher() { return this._teacher }
-    private _schedules: TeacherSchedulesState;
+    private _schedules: TimeState;
     @Input()
-    set schedules(item: TeacherSchedulesState) { this._schedules = item || undefined }
+    set schedules(item: TimeState) { this._schedules = item || undefined }
     get schedules() { return this._schedules }
     public weekOfPeriod = '';
     public additionalNumber = 0;

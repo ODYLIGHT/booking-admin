@@ -15,7 +15,14 @@
                     </ng-container>
                 </div>
                 <div class="col-md-12">
-                    <pre>{{bookingAsObservable$ | async | json}}</pre>
+                    <ng-container *ngIf="bookingAsObservable$ | async as booking">
+                        <ng-container *ngIf="booking.customerId">
+                            <app-booking-table
+                                [customer]="(operationsAsObservable$ | async).customer"
+                                [booking]="booking"
+                            ></app-booking-table>
+                        </ng-container>
+                    </ng-container>
                 </div>
             </div>
         </div>

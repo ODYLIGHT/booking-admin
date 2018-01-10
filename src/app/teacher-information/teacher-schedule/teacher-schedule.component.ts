@@ -5,7 +5,7 @@ import {
     OperationsStore, OptionItemsState,
     TeacherScheduleStore
 } from './teacher-schedule.store';
-import { TeacherSchedulesState } from '../../store/types';
+import { TimeState } from '../../store/types';
 
 @Component({
     templateUrl: './teacher-schedule.component.html',
@@ -41,6 +41,6 @@ export class TeacherScheduleComponent implements OnInit {
 
     public get optionsAsObservable$(): Observable<OptionItemsState[]> { return this.service.getOperationsItems$ }
 
-    public get scheduleAsObsevable$(): Observable<TeacherSchedulesState> { return this.service.getSchedules$ }
+    public get scheduleAsObsevable$(): Observable<TimeState> { return this.service.getSchedules$ }
 
 }

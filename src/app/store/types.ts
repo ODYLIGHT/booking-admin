@@ -43,11 +43,11 @@ export interface TeacherState {
     details_jp_testimonial?: string;
 }
 
-// タイムテーブルに渡すために講師スケジュールの情報を変換したもの
-export interface TeacherSchedulesState {
-    current: string[];
-    insert: string[];
-    delete: string[];
+// タイムテーブルに渡すUTC時間文字列
+export interface TimeState {
+    current: string[]; // DB取得したもの（講師スケジュールor生徒の予約）
+    insert: string[]; // タイムテーブル上で新規に選択した時間
+    delete: string[]; // currentに含まれている時間をタイムテーブルで選択した場合に格納される
 }
 
 // 生徒の個人情報
@@ -56,6 +56,32 @@ export interface CustomerState {
     name?: string;
     time_zone?: string;
 }
+
+// 見本
+// interface CustomerState {
+//     id: number; // プライマリーキー
+//     name: string; // ローマ字での名前 'YAMADA Taro' etc
+//     time_zone: string; // 'Asia/Tokyo' etc
+//     nick_name: string; // 英語画面で必要
+//     jp_name: string; // 日本語画面で必要
+//     gender: string; // male or female 数字でもよいかと
+//     birthday: Date;
+//     skype_name: string;
+//     mail_address: string;
+//     password: string;
+//     frenchLevel: string; // 現在のフランス語レベル
+//     learning_experience: string; // 学習経験
+//     purpose: string; // 学習目的
+//     mother_tongue: string; // 母国語
+//     how_finded: string; // このサイトを知ったきっかけ
+//     other_language1: string;
+//     other_language1_level: number;
+//     other_language2: string;
+//     other_language2_level: number;
+//     program_code: string;
+//     remark: string;
+//     client_code: string;
+// }
 
 // export interface CustomerState {
 //     id: number;

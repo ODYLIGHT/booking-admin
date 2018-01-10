@@ -8,7 +8,7 @@ import { ReservationState } from '../../store/types';
 import {
     SearchCustomerState,
     TeacherForOptionState, TeacherStore,
-    OperationsState, OperationsStore,
+    OperationsState, OperationsStore, initOperation,
     BookingStore, BookingState, initBookingState
 } from './register-booking.store';
 
@@ -40,7 +40,15 @@ export class RegisterBookingService {
         this.http.get(this.apiSearchBookingUrl, { headers: this.headers, params })
             .subscribe(
                 res => {
-                    if (!!!res) return window.alert('No target customer...');
+                    if (!!!res) {
+                        const resetOperations = {
+                            customer: Object.assign({}, initOperation.customer, { id: _params.customer.id }),
+                            teacher: _params.teacher
+                        }
+                        this.operationStore.changeState(resetOperations);
+                        this.bookingStore.changeState(undefined);
+                        return window.alert('No target customer...');
+                    }
                     const newCustomerState = Object.assign({}, res['customer']);
                     const newTeacherState = _params['teacher'];
                     // OperationStoreの更新
@@ -48,7 +56,7 @@ export class RegisterBookingService {
                     // BookingStoreの更新
                     const allReservations: ReservationState[] = res['reservations'];
                     const current = [];
-                    const canNotReserve = [];
+                    const canNotReserve = res['schedules'];
                     allReservations.forEach(obj => {
                         obj.customer_id === params.customerId ? current.push(obj.reserved_date) : canNotReserve.push(obj.reserved_date);
                     });

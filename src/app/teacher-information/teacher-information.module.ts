@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { CommonsModule } from '../commons/commons.module';
 import { MaterialModule } from '../material.module';
-
-import { TimeTableComponent } from '../commons/time-table/time-table.component';
 
 import { RegisterTeachersComponent } from './register-teachers/register-teachers.component';
 import { TeacherFormsComponent } from './register-teachers/teacher-forms/teacher-forms.component';
@@ -20,10 +19,10 @@ import { ScheduleTableComponent } from './teacher-schedule/schedule-table/schedu
         CommonModule,
         MaterialModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CommonsModule
     ],
     declarations: [
-        TimeTableComponent,
         RegisterTeachersComponent,
         TeacherFormsComponent,
         TeacherScheduleComponent,

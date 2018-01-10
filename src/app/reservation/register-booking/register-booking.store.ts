@@ -67,7 +67,7 @@ export class OperationsStore extends Store<OperationsState> {
 
 @Injectable()
 export class BookingStore extends Store<BookingState> {
-    constructor() { super(<BookingState>initBookingState) }
+    constructor() { super(<BookingState>undefined) }
     private _changeState(items: BookingState) {
         return (current: Readonly<BookingState>): Partial<BookingState> => items;
     }

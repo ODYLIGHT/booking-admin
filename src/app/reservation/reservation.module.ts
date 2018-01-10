@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../material.module';
+import { CommonsModule } from '../commons/commons.module';
 
 import { CheckTeacherScheduleComponent } from './check-teacher-schedule/check-teacher-schedule.component';
 import { CheckScheduleSearchFormComponent } from './check-teacher-schedule/check-schedule-search-form/check-schedule-search-form.component';
@@ -10,6 +11,7 @@ import { CheckTableComponent } from './check-teacher-schedule/check-table/check-
 
 import { RegisterBookingComponent } from './register-booking/register-booking.component';
 import { OperationsComponent } from './register-booking/operations/operations.component';
+import { BookingTableComponent } from './register-booking/booking-table/booking-table.component';
 
 import { SearchBookingComponent } from './search-booking/search-booking.component';
 import { CancellationBookingComponent } from './search-booking/cancellation-booking/cancellation-booking.component';
@@ -21,7 +23,8 @@ import { SearchTableComponent } from './search-booking/search-table/search-table
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        CommonsModule
     ],
     declarations: [
         CheckTeacherScheduleComponent,
@@ -29,6 +32,7 @@ import { SearchTableComponent } from './search-booking/search-table/search-table
         CheckTableComponent,
         RegisterBookingComponent,
         OperationsComponent,
+        BookingTableComponent,
         SearchBookingComponent,
         CancellationBookingComponent,
         SearchFormComponent,
@@ -36,14 +40,8 @@ import { SearchTableComponent } from './search-booking/search-table/search-table
     ],
     exports: [
         CheckTeacherScheduleComponent,
-        CheckScheduleSearchFormComponent,
-        CheckTableComponent,
         RegisterBookingComponent,
-        OperationsComponent,
-        SearchBookingComponent,
-        CancellationBookingComponent,
-        SearchFormComponent,
-        SearchTableComponent
+        SearchBookingComponent
     ]
 })
 export class ReservationModule { }

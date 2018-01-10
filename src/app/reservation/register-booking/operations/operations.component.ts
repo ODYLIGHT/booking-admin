@@ -47,8 +47,10 @@ export class OperationsComponent implements OnInit, OnChanges {
     }
 
     public onChange(e: MatSelectChange): void {
-        const idx = e.value;
-        this.operationsForm.patchValue({ teacher: this.teachers[idx] });
+        this.operationsForm.patchValue({ teacher: e.value });
+        // const teacherId = e.value;
+        // const selectedTeacher = this.teachers.find(o => o.id === teacherId);
+        // this.operationsForm.patchValue({ teacher: selectedTeacher });
     }
 
 }
