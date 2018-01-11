@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
-import { ScheduleState, TeacherSchedulesState } from '../../store/types';
+import { TimeState } from '../../store/types';
 
 export interface OptionItemsState {
     id: number;
@@ -14,7 +14,7 @@ export const initOptionsState: OptionItemsState = {
     time_zone: ''
 };
 
-export const initScheduleState: TeacherSchedulesState = {
+export const initScheduleState: TimeState = {
     current: [],
     insert: [],
     delete: []
@@ -28,12 +28,12 @@ export class OperationsStore extends Store<OptionItemsState[]> {
 }
 
 @Injectable()
-export class TeacherScheduleStore extends Store<TeacherSchedulesState> {
-    constructor() { super(<TeacherSchedulesState>initScheduleState) }
-    private _changeState(items: Partial<TeacherSchedulesState>) {
-        return (c: Readonly<TeacherSchedulesState>): Partial<TeacherSchedulesState> => items;
+export class TeacherScheduleStore extends Store<TimeState> {
+    constructor() { super(<TimeState>initScheduleState) }
+    private _changeState(items: Partial<TimeState>) {
+        return (c: Readonly<TimeState>): Partial<TimeState> => items;
     }
-    public changeState(items: Partial<TeacherSchedulesState>): void { this.dispatch(this._changeState(items)) }
+    public changeState(items: Partial<TimeState>): void { this.dispatch(this._changeState(items)) }
 
-    public get getCurrent(): Readonly<TeacherSchedulesState> { return this.current() }
+    public get getCurrent(): Readonly<TimeState> { return this.current() }
 }

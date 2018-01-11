@@ -21,7 +21,7 @@
                         <tr class="row m-0">
                             <td class="text-center d-inline-block col-1">{{ teacher.id }}</td>
                             <td class=" d-inline-block col-3">{{ teacher.name }}</td>
-                            <td class=" d-inline-block col-3">{{ teacher.name_jp }}</td>
+                            <td class=" d-inline-block col-3">{{ teacher.jp_name }}</td>
                             <td class="text-center d-inline-block col-1">{{ teacher.state === true ? 'ON' : 'OFF' }}</td>
                             <td class="text-center d-inline-block col-2">
                                 <button mat-raised-button color="primary" (click)="onModify(teacher.id)">Modify</button>

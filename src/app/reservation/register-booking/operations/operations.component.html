@@ -1,0 +1,31 @@
+<form [formGroup]="operationsForm" (ngSubmit)="onSubmit(operationsForm)" novalidate>
+    <div class="form-row" formGroupName="customer">
+        <div class="col-md-3">
+            <mat-form-field class="w-100">
+                <input matInput type="number" placeholder="Customer ID..." formControlName="id" autocomplete="off" required>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4 offset-md-1">
+            <mat-form-field class="w-100">
+                <input matInput type="text" placeholder="Customer name(Read only)" formControlName="name" readonly>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3 offset-md-1 text-center mb-3" *ngIf="operationsForm.value.customer.name">
+            <button mat-raised-button color="primary" type="button" (click)="onRegister()">Register</button>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3">
+            <mat-form-field class="w-100">
+                <mat-select placeholder="Select the instructor name to register" formControlName="teacherIdx" required>
+                    <mat-option *ngFor="let teacher of teachers; let i = index" [value]="i">
+                        {{ teacher.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4 offset-md-1 mb-3">
+            <button mat-raised-button [disabled]="operationsForm.invalid">Search</button>
+        </div>
+    </div>
+</form>

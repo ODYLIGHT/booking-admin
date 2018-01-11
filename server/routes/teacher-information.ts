@@ -2,8 +2,7 @@
 import { Router, Response, Request, NextFunction } from 'express';
 import { FsService } from '../modules/fs.modules';
 import * as Debug from 'debug';
-// jsonsに新しいテストデータを作っていきます（2017/12以降）
-import { paths, jsons } from '../modules/paths';
+import { jsons } from '../modules/paths';
 import { TeacherState, ScheduleState } from '../../src/app/store/types';
 
 const router: Router = Router();
@@ -13,14 +12,14 @@ const isDebug = debug.enabled;
 
 // init - register-teachers
 router.get('/register-teachers', (req: Request, res: Response, next: NextFunction) => {
-    // このリクエストは、講師情報の`id`, `name`, `name_jp`, `state`を要求します
+    // このリクエストは、講師情報の`id`, `name`, `jp_name`, `state`を要求します
     debug(`[ GET ] from register-teachers`);
     if (isDebug) {
         fs.readFile(jsons.teachers)
             .then((result: TeacherState[]) => {
                 const dataAsRequestFormat = result.map(item => {
-                    const { id, name, name_jp, state } = item;
-                    return { id, name, name_jp, state };
+                    const { id, name, jp_name, state } = item;
+                    return { id, name, jp_name, state };
                 });
                 res.status(200).json(dataAsRequestFormat);
             })

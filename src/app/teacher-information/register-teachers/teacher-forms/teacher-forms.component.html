@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-md-3">
                         <mat-form-field class="w-100">
-                            <input matInput type="text" placeholder="講師名(Japanese)" formControlName="name_jp">
+                            <input matInput type="text" placeholder="講師名(Japanese)" formControlName="jp_name">
                         </mat-form-field>
                     </div>
                     <div class="col-md-2">
@@ -72,7 +72,7 @@
                     </div>
                     <div class="col-md-3">
                         <mat-form-field class="w-100">
-                            <input matInput type="email" placeholder="メールアドレス" formControlName="email">
+                            <input matInput type="email" placeholder="メールアドレス" formControlName="mail_address">
                         </mat-form-field>
                     </div>
                     <div class="col-md-3">
@@ -120,7 +120,7 @@
                     <div class="col-md-6">
                         <label>Details(JPN)</label>
                         <mat-form-field class="w-100">
-                            <mat-select placeholder="対応レベル" formControlName="details_jp_teaches">
+                            <mat-select placeholder="対応レベル" formControlName="details_teaches">
                                 <mat-option *ngFor="let teach of teaches" [value]="teach.value">
                                     {{ teach.title.jp }}
                                 </mat-option>

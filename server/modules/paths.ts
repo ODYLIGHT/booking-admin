@@ -10,6 +10,8 @@ export const paths = {
 }
 
 export const jsons = {
-    teachers: './src/assets/samples/teachers.json',
-    schedules: './src/assets/samples/schedules.json'
+    customers: './src/assets/samples/customers.json',
+    reservations: './src/assets/samples/reservations.json',
+    schedules: './src/assets/samples/schedules.json',
+    teachers: './src/assets/samples/teachers.json'
 }

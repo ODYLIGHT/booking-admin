@@ -10,7 +10,7 @@ import {
     OperationsStore, OptionItemsState,
     TeacherScheduleStore, initScheduleState
 } from './teacher-schedule.store';
-import { ScheduleState, TeacherSchedulesState } from '../../store/types';
+import { TimeState } from '../../store/types';
 
 @Injectable()
 export class TeacherScheduleService {
@@ -41,10 +41,10 @@ export class TeacherScheduleService {
     }
 
     public updateApi(id: number): void {
-        const currentState: TeacherSchedulesState = { ...this.scheduleStore.getCurrent };
+        const currentState: TimeState = { ...this.scheduleStore.getCurrent };
         const params = { id, insert: currentState.insert, delete: currentState.delete };
         if (!!!currentState.insert.length && !!!currentState.delete.length) return window.alert('nothing to change.');
-        this.http.put(this.apiPutUrl, { headers: this.headers })
+        this.http.put(this.apiPutUrl, params, { headers: this.headers })
             .subscribe(
                 res => {
                     if (!!!environment.production) console.log(res);
@@ -70,7 +70,7 @@ export class TeacherScheduleService {
     }
 
     public updateScheduleState(arg: { targetColumn: string; action: string; value: string; }) {
-        const currentState: TeacherSchedulesState = { ...this.scheduleStore.getCurrent };
+        const currentState: TimeState = { ...this.scheduleStore.getCurrent };
         const updatedProparty: { [key: string]: string[] } = {};
         updatedProparty[arg.targetColumn] = arg.action === 'add'
             ? [...currentState[arg.targetColumn], arg.value]
@@ -81,6 +81,6 @@ export class TeacherScheduleService {
 
     public get getOperationsItems$(): Observable<OptionItemsState[]> { return this.operationsStore.data$.pipe(map(s => Object.values(s))) }
 
-    public get getSchedules$(): Observable<TeacherSchedulesState> { return this.scheduleStore.data$ }
+    public get getSchedules$(): Observable<TimeState> { return this.scheduleStore.data$ }
 
 }

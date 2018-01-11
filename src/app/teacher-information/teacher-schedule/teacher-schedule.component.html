@@ -11,7 +11,7 @@
             ></app-operations>
         </ng-container>
         <ng-container *ngIf="scheduleAsObsevable$ | async as schedues">
-            <app-schedule-table *ngIf="schedues.current.length"
+            <app-schedule-table *ngIf="teacher"
                 [teacher]="teacher"
                 [schedules]="schedues"
                 (clickEventProvider)="clickEventObserver($event)"
