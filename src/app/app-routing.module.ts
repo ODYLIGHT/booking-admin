@@ -8,7 +8,7 @@ import { StudentInformationComponent } from './student-information/student-infor
 import { OverviewComponent } from './student-information/overview/overview.component';
 import { RegisterBookingComponent } from './reservation/register-booking/register-booking.component';
 import { SearchBookingComponent } from './reservation/search-booking/search-booking.component';
-import { CancellationBookingComponent } from './reservation/search-booking/cancellation-booking/cancellation-booking.component';
+// import { CancellationBookingComponent } from './reservation/search-booking/cancellation-booking/cancellation-booking.component';
 import { CheckTeacherScheduleComponent } from './reservation/check-teacher-schedule/check-teacher-schedule.component';
 import { SchoolInformationComponent } from './administration/school-information/school-information.component';
 import { RegisterAdministratorsComponent } from './administration/register-administrators/register-administrators.component';
@@ -44,7 +44,7 @@ const routes: Routes = [
                 path: 'search-booking',
                 children: [
                     { path: '', component: SearchBookingComponent },
-                    { path: 'cancellation', component: CancellationBookingComponent }
+                    // { path: 'cancellation', component: CancellationBookingComponent }
                 ]
             },
             { path: 'check-teachers-schedule', component: CheckTeacherScheduleComponent },

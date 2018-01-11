@@ -1,8 +1,9 @@
 import { Component, OnInit, OnChanges, Output, Input, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 
 import { MomentService } from '../../../services/moment.service';
+import { PersonalInformationState } from '../../../store/types';
 import { BookingTableService } from './booking-table.service';
-import { PersonalInformationState, BookingState } from '../register-booking.store';
+import { BookingState } from '../register-booking.store';
 
 @Component({
     selector: 'app-booking-table',

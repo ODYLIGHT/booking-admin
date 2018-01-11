@@ -14,9 +14,6 @@ import { OperationsComponent } from './register-booking/operations/operations.co
 import { BookingTableComponent } from './register-booking/booking-table/booking-table.component';
 
 import { SearchBookingComponent } from './search-booking/search-booking.component';
-import { CancellationBookingComponent } from './search-booking/cancellation-booking/cancellation-booking.component';
-import { SearchFormComponent } from './search-booking/search-form/search-form.component';
-import { SearchTableComponent } from './search-booking/search-table/search-table.component';
 
 @NgModule({
     imports: [
@@ -33,10 +30,7 @@ import { SearchTableComponent } from './search-booking/search-table/search-table
         RegisterBookingComponent,
         OperationsComponent,
         BookingTableComponent,
-        SearchBookingComponent,
-        CancellationBookingComponent,
-        SearchFormComponent,
-        SearchTableComponent
+        SearchBookingComponent
     ],
     exports: [
         CheckTeacherScheduleComponent,

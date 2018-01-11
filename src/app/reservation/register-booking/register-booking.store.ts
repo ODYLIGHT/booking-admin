@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
-import { CustomerReservationState } from '../../store/types';
-
-export interface PersonalInformationState {
-    id: number;
-    name: string;
-    time_zone: string;
-}
+import { CustomerReservationState, PersonalInformationState } from '../../store/types';
 
 export interface OperationsState {
     customer: PersonalInformationState;

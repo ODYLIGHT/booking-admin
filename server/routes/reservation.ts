@@ -10,9 +10,10 @@ const fs: FsService = FsService.instance;
 const debug = Debug('debug:reservation');
 const isDebug = debug.enabled;
 
-router.get('/register-of-booking/get-teacher', (req: Request, res: Response, next: NextFunction) => {
+router.get('/get-teacher', (req: Request, res: Response, next: NextFunction) => {
     // Teacher Scheduleコンポーネントのオペレーション部分で使う、講師とそのタイムゾーンを初期化処理時に返す
     // 要求するデータは`id`, `name`, `time_zone`です
+    // 複数個所で使うためURLに個別コンポーネント名は含めていません
     debug(`[ ${req.method} ]: ${req.url}`);
 
     if (isDebug) {
