@@ -44,7 +44,10 @@ export class BookingTableComponent implements OnInit {
     }
 
     public clickObserver(event: { targetColumn: string; action: string; value: string; }) {
+        // 予約不可時間帯がクリックされた場合は処理を終える
+        if (this.booking.canNotReserve.includes(event.value)) return;
         console.log(event);
+        console.log(this.booking);
     }
 
 }

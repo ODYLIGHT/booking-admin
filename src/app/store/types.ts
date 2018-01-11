@@ -16,13 +16,13 @@ export interface MenuState {
 export interface TeacherState {
     id: number;
     name?: string;
-    name_jp?: string;
+    jp_name?: string;
     state?: number | boolean;
     time_zone?: string;
     customers_language?: number;
     priority_number?: number;
     skype_name?: string;
-    email?: string;
+    mail_address?: string;
     picture?: string;
     user_id?: string;
     password?: string;
@@ -34,7 +34,6 @@ export interface TeacherState {
     details_career?: string;
     details_comment?: string;
     details_testimonial?: string;
-    details_jp_teaches?: number;
     details_jp_other_language?: string;
     details_jp_education?: string;
     details_jp_speciality?: string;
@@ -69,7 +68,7 @@ export interface CustomerState {
 //     skype_name: string;
 //     mail_address: string;
 //     password: string;
-//     frenchLevel: string; // 現在のフランス語レベル
+//     french_level: string; // 現在のフランス語レベル
 //     learning_experience: string; // 学習経験
 //     purpose: string; // 学習目的
 //     mother_tongue: string; // 母国語
