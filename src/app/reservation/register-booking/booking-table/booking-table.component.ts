@@ -2,9 +2,7 @@ import { Component, OnInit, OnChanges, Output, Input, EventEmitter, SimpleChange
 
 import { MomentService } from '../../../services/moment.service';
 import { BookingTableService } from './booking-table.service';
-import {
-    SearchCustomerState, BookingState
-} from '../register-booking.store';
+import { PersonalInformationState, BookingState } from '../register-booking.store';
 
 @Component({
     selector: 'app-booking-table',
@@ -14,16 +12,17 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BookingTableComponent implements OnInit {
-    private _customer: SearchCustomerState;
+    private _customer: PersonalInformationState;
     @Input()
-    set customer(c: SearchCustomerState) { this._customer = c }
-    get customer(): SearchCustomerState { return this._customer }
+    set customer(c: PersonalInformationState) { this._customer = c }
+    get customer(): PersonalInformationState { return this._customer }
     private _booking: BookingState;
     @Input()
     set booking(b: BookingState) { this._booking = b }
     get booking(): BookingState { return this._booking }
     public additionalNumber = 0;
     public weekOfPeriod = '';
+    @Output() clickEventProvider = new EventEmitter<{ targetColumn: string; action: string; value: string; }>();
 
     constructor(
         private moment: MomentService,
@@ -46,8 +45,7 @@ export class BookingTableComponent implements OnInit {
     public clickObserver(event: { targetColumn: string; action: string; value: string; }) {
         // 予約不可時間帯がクリックされた場合は処理を終える
         if (this.booking.canNotReserve.includes(event.value)) return;
-        console.log(event);
-        console.log(this.booking);
+        this.clickEventProvider.emit(event);
     }
 
 }

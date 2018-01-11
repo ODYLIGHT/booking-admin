@@ -4,31 +4,33 @@ import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
+
 import { ReservationState } from '../../store/types';
 import {
-    SearchCustomerState,
-    TeacherForOptionState, TeacherStore,
+    PersonalInformationState, TeacherStore,
     OperationsState, OperationsStore, initOperation,
-    BookingStore, BookingState, initBookingState
+    BookingStore, BookingState
 } from './register-booking.store';
 
 @Injectable()
 export class RegisterBookingService {
     readonly apiGetTeacherUrl = 'api/reservation/register-of-booking/get-teacher';
     readonly apiSearchBookingUrl = 'api/reservation/register-of-booking/search-booking';
-    // readonly apiSearchCustomerUrl = 'api/reservation/register-of-booking/search-customer';
+    readonly apiPutUrl = 'api/reservation/register-of-booking/update';
     private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     constructor(
         private http: HttpClient,
         private teacherStore: TeacherStore,
         private operationStore: OperationsStore,
-        private bookingStore: BookingStore
+        private bookingStore: BookingStore,
+        private snackBar: MatSnackBar
     ) { }
 
     public getTeacherApi(): void {
-        this.http.get<TeacherForOptionState[]>(this.apiGetTeacherUrl, { headers: this.headers }).pipe(
-            map(s => Object.values(s) as TeacherForOptionState[])
+        this.http.get<PersonalInformationState[]>(this.apiGetTeacherUrl, { headers: this.headers }).pipe(
+            map(s => Object.values(s) as PersonalInformationState[])
         ).subscribe(res => this.teacherStore.changeState(res));
     }
 
@@ -83,13 +85,58 @@ export class RegisterBookingService {
             );
     }
 
+    public updateApi(): void {
+        const currentBookingState = { ...this.bookingStore.getCurrent };
+        const params = {
+            customerId: currentBookingState.customerId,
+            teacherId: currentBookingState.teacherId,
+            insert: currentBookingState.reservations.insert,
+            delete: currentBookingState.reservations.delete
+        };
+        if (!!!params.insert.length && !!!params.delete.length) return window.alert('nothing to change.');
+        this.http.put(this.apiPutUrl, params, { headers: this.headers })
+            .subscribe(
+                res => {
+                    if (!!!environment.production) console.log(res);
+                    this.snackBar.open('Successfully updated.', null, { duration: 2000 });
+                },
+                (err: HttpErrorResponse) => {
+                    const errorMessage =
+                        'There was a problem on the server side.\n'
+                        + 'Please give the administrator the following message / code.\n'
+                        + `[message]: ${err.statusText}\n`
+                        + `[code]: ${err.status}\n`
+                        ;
+                    window.alert(errorMessage);
+                },
+                () => {
+                    const current = currentBookingState.reservations.current.filter(time => !!!params.delete.includes(time));
+                    current.push(...currentBookingState.reservations.insert);
+                    const newReservationsState = { current, insert: [], delete: [] };
+                    const newBookingState = Object.assign({}, currentBookingState, { reservations: newReservationsState });
+                    this.bookingStore.changeState(newBookingState);
+                }
+            );
+    }
+
     public saveBookingState(newState: any): void {
         const currentBooking = { ...this.bookingStore.getCurrent };
         const updateState: BookingState = Object.assign({}, currentBooking, newState);
         this.bookingStore.changeState(updateState);
     }
 
-    public get getTeachers$(): Observable<TeacherForOptionState[]> { return this.teacherStore.data$.pipe(map(s => Object.values(s))) }
+    public updateState(arg: { targetColumn: string; action: string; value: string; }) {
+        const currentBookingState: BookingState = { ...this.bookingStore.getCurrent };
+        const updatedProparty: { [key: string]: string[] } = {};
+        updatedProparty[arg.targetColumn] = arg.action === 'add'
+            ? [...currentBookingState.reservations[arg.targetColumn], arg.value]
+            : [...currentBookingState.reservations[arg.targetColumn]].filter(str => str !== arg.value);
+        const newReservations = Object.assign({}, currentBookingState.reservations, updatedProparty);
+        const updateBookingState = Object.assign({}, currentBookingState, {reservations: newReservations});
+        this.bookingStore.changeState(updateBookingState);
+    }
+
+    public get getTeachers$(): Observable<PersonalInformationState[]> { return this.teacherStore.data$.pipe(map(s => Object.values(s))) }
     public get getOperation$(): Observable<OperationsState> { return this.operationStore.data$ }
     public get getBooking$(): Observable<BookingState> { return this.bookingStore.data$ }
 

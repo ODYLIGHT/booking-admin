@@ -11,6 +11,7 @@
                             [teachers]="teachers"
                             [operations]="operationsAsObservable$ | async"
                             (searchEvent)="onSearch($event)"
+                            (registerEvent)="register()"
                         ></app-operations>
                     </ng-container>
                 </div>
@@ -20,6 +21,7 @@
                             <app-booking-table
                                 [customer]="(operationsAsObservable$ | async).customer"
                                 [booking]="booking"
+                                (clickEventProvider)="clickEventObserver($event)"
                             ></app-booking-table>
                         </ng-container>
                     </ng-container>

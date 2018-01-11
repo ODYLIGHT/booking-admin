@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Output, Input, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material';
-import { TeacherForOptionState, SearchCustomerState, OperationsState, initOptionsState } from '../register-booking.store';
+import { PersonalInformationState, OperationsState } from '../register-booking.store';
 
 @Component({
     selector: 'app-operations',
@@ -11,16 +11,16 @@ import { TeacherForOptionState, SearchCustomerState, OperationsState, initOption
 })
 export class OperationsComponent implements OnInit, OnChanges {
     public operationsForm: FormGroup;
-    private _teachers: TeacherForOptionState[];
+    private _teachers: PersonalInformationState[];
     @Input()
-    set teachers(item: TeacherForOptionState[]) { this._teachers = item }
+    set teachers(item: PersonalInformationState[]) { this._teachers = item }
     get teachers() { return this._teachers }
     private _operations: OperationsState;
     @Input()
     set operations(item: OperationsState) { this._operations = item }
     get operations() { return this._operations }
     @Output() searchEvent = new EventEmitter();
-    @Output() selectEvent: EventEmitter<TeacherForOptionState> = new EventEmitter();
+    @Output() registerEvent = new EventEmitter();
 
     constructor(private fb: FormBuilder) { }
 
@@ -30,27 +30,20 @@ export class OperationsComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: { [popKey: string]: SimpleChange }) {
         if (!!!changes.operations || changes.operations.isFirstChange()) return;
-        this.operationsForm.reset(changes.operations.currentValue);
+        this.operationsForm.patchValue({ customer: changes.operations.currentValue.customer });
     }
 
     private createForm(): void {
         this.operationsForm = this.fb.group({
             customer: this.fb.group(this.operations.customer),
-            teacher: this.fb.group(initOptionsState)
+            teacherIdx: [null, Validators.required]
         });
     }
 
     public onSubmit(form: FormGroup): void {
-        // フォームの顧客情報の初期化 ビューの`Customer Name`がちらつく
-        // this.operationsForm.patchValue({ customer: { id: form.value.customer.id, name: '', time_zone: '' } });
-        this.searchEvent.emit(form.value);
+        const submitValue = { customer: form.value.customer, teacher: this.teachers[form.value.teacherIdx] };
+        this.searchEvent.emit(submitValue);
     }
 
-    public onChange(e: MatSelectChange): void {
-        this.operationsForm.patchValue({ teacher: e.value });
-        // const teacherId = e.value;
-        // const selectedTeacher = this.teachers.find(o => o.id === teacherId);
-        // this.operationsForm.patchValue({ teacher: selectedTeacher });
-    }
-
+    public onRegister(): void { this.registerEvent.emit() }
 }

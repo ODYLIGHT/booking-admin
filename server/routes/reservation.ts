@@ -31,7 +31,7 @@ router.get('/register-of-booking/get-teacher', (req: Request, res: Response, nex
 router.get('/register-of-booking/search-booking', (req: Request, res: Response, next: NextFunction) => {
     const customerId = +req.query.customerId;
     const teacherId = +req.query.teacherId;
-    debug(`[ GET ] from search-customer`);
+    debug(`[ ${req.method} ]: ${req.url}`);
     if (isDebug) {
         fs.readFile(jsons.customers)
             .then((results: CustomerState[]) => {
@@ -65,18 +65,22 @@ router.get('/register-of-booking/search-booking', (req: Request, res: Response, 
     }
 });
 
-// router.get('/register-of-booking/init', (req: Request, res: Response, next: NextFunction) => {
-//     console.info(`request: GET from register-booking init`);
-//     fs.readFile(paths.register_teachers)
-//         .then((result: any[]) => {
-//             const teachers = result.map(obj => {
-//                 return { _id: obj._id, _name: obj._name };
-//             });
-//             res.status(200).json(teachers);
-//         })
-//         .catch(err => res.status(501).json(err));
+router.put('/register-of-booking/update', (req: Request, res: Response, next: NextFunction) => {
+    // このリクエストは、講師・生徒のIDと、新規登録用、更新用それぞれの日付文字列の配列を受け取ります
+    // 動作は`teacher schedule`のUpdateと同じですが、paramsのIDが生徒と講師両方あります
+    // スケジュールの更新は、新しいスケジュールの追加と、既存のスケジュールの修正（削除）です
+    // そのため、SQLクエリは`INSERT`と`DELETE`の２つを実行してください
+    const params: { customerId: number, teacherId: number, insert: string[], delete: string[] } = req.body;
+    debug(`[ ${req.method} ]: ${req.url}`);
+    if (isDebug) {
+        // 70%で成功　30%でリクエストエラーを発生させる
+        const randumNum = Math.random();
+        if (randumNum <= 0.7) res.status(200).json({ isSuccess: true });
+        else res.status(501).json({ isSuccess: false });
+    }
+});
 
-// });
+//////////////////////////// ここまでが`register of booking`のAPI ////////////////////////////////////////
 
 router.get('/register-of-booking/schedule', (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;

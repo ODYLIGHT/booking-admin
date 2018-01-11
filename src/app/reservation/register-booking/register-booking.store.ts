@@ -2,33 +2,16 @@ import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
 import { CustomerReservationState } from '../../store/types';
 
-export interface SearchCustomerState {
+export interface PersonalInformationState {
     id: number;
     name: string;
     time_zone: string;
 }
-
-export interface TeacherForOptionState {
-    id: number;
-    name: string;
-    time_zone: string;
-}
-
-export const initOptionsState: SearchCustomerState | TeacherForOptionState = {
-    id: null,
-    name: '',
-    time_zone: ''
-};
 
 export interface OperationsState {
-    customer: SearchCustomerState;
-    teacher: TeacherForOptionState;
+    customer: PersonalInformationState;
+    teacher: PersonalInformationState;
 }
-
-export const initOperation: OperationsState = {
-    customer: initOptionsState,
-    teacher: initOptionsState
-};
 
 export interface BookingState {
     customerId: number;
@@ -36,6 +19,17 @@ export interface BookingState {
     reservations: CustomerReservationState;
     canNotReserve: string[];
 }
+
+export const initOptionsState: PersonalInformationState = {
+    id: null,
+    name: '',
+    time_zone: ''
+};
+
+export const initOperation: OperationsState = {
+    customer: initOptionsState,
+    teacher: initOptionsState
+};
 
 export const initBookingState: BookingState = {
     customerId: null,
@@ -46,13 +40,13 @@ export const initBookingState: BookingState = {
 
 // 全講師情報ストア
 @Injectable()
-export class TeacherStore extends Store<TeacherForOptionState[]> {
-    constructor() { super(<TeacherForOptionState[]>[]) }
-    private _changeState(items: TeacherForOptionState[]) {
-        return (current: Readonly<TeacherForOptionState[]>): Partial<TeacherForOptionState[]> => items;
+export class TeacherStore extends Store<PersonalInformationState[]> {
+    constructor() { super(<PersonalInformationState[]>[]) }
+    private _changeState(items: PersonalInformationState[]) {
+        return (current: Readonly<PersonalInformationState[]>): Partial<PersonalInformationState[]> => items;
     }
-    public changeState(items: TeacherForOptionState[]): void { this.dispatch(this._changeState(items)) }
-    public get getCurrent(): Readonly<TeacherForOptionState[]> { return this.current() }
+    public changeState(items: PersonalInformationState[]): void { this.dispatch(this._changeState(items)) }
+    public get getCurrent(): Readonly<PersonalInformationState[]> { return this.current() }
 }
 
 @Injectable()

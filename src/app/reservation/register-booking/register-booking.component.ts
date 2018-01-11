@@ -2,8 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { RegisterBookingService } from './register-booking.service';
 import {
-    SearchCustomerState,
-    TeacherStore, TeacherForOptionState,
+    TeacherStore, PersonalInformationState,
     OperationsStore, OperationsState,
     BookingStore, BookingState
 } from './register-booking.store';
@@ -17,17 +16,17 @@ import {
 })
 export class RegisterBookingComponent implements OnInit {
 
-    constructor(
-        private service: RegisterBookingService
-    ) { }
+    constructor( private service: RegisterBookingService ) { }
 
-    ngOnInit() {
-        this.service.getTeacherApi();
-    }
+    ngOnInit() { this.service.getTeacherApi() }
 
     public onSearch(params): void { this.service.searchCustomerApi(params) }
 
-    public get teacherAsObservable$(): Observable<TeacherForOptionState[]> { return this.service.getTeachers$ }
+    public clickEventObserver(event: { targetColumn: string; action: string; value: string; }) { this.service.updateState(event) }
+
+    public register(): void { this.service.updateApi() }
+
+    public get teacherAsObservable$(): Observable<PersonalInformationState[]> { return this.service.getTeachers$ }
     public get operationsAsObservable$(): Observable<OperationsState> { return this.service.getOperation$ }
     public get bookingAsObservable$(): Observable<BookingState> { return this.service.getBooking$ }
 }
