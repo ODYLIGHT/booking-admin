@@ -83,6 +83,24 @@ router.put('/register-of-booking/update', (req: Request, res: Response, next: Ne
 
 //////////////////////////// ここまでが`register of booking`のAPI ////////////////////////////////////////
 
+router.get('/search-booking/searching', (req: Request, res: Response, next: NextFunction) => {
+    // customer_profile, teacher_profile, customer_reservationsが検索対象になります
+    // Responseは、顧客ID、予約ID、顧客名（ローマ字）、予約日付、担当講師名、予約実行者フラグ　です
+
+    // paramsの概要（teacherId以外はDBのカラム名と同じキー）
+    // id: 顧客ID
+    // name: 顧客名
+    // mail_address: 顧客メールアドレス
+    // skype_name: 顧客スカイプ名
+    // reserved_date: 予約日（YYYY-MM-DD形式）
+    // teacherId: 講師ID
+    const params = req.query;
+    debug(`[ ${req.method} ]: ${req.url}`);
+    if (isDebug) {
+        res.status(200).json(params);
+    }
+});
+
 router.get('/register-of-booking/schedule', (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
     fs.readFile(paths.schedule)

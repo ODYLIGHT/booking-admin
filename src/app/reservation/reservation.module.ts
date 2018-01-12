@@ -14,6 +14,7 @@ import { OperationsComponent } from './register-booking/operations/operations.co
 import { BookingTableComponent } from './register-booking/booking-table/booking-table.component';
 
 import { SearchBookingComponent } from './search-booking/search-booking.component';
+import { BookingSearchComponent } from './search-booking/booking-search/booking-search.component';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { SearchBookingComponent } from './search-booking/search-booking.componen
         RegisterBookingComponent,
         OperationsComponent,
         BookingTableComponent,
-        SearchBookingComponent
+        SearchBookingComponent,
+        BookingSearchComponent
     ],
     exports: [
         CheckTeacherScheduleComponent,

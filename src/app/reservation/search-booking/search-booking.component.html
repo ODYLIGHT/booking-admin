@@ -7,7 +7,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <ng-container *ngIf="teachersAsObservable$ | async as teachers">
-                        <pre>{{teachers | json}}</pre>
+                        <app-booking-search
+                            [teachers]="teachers"
+                            (searchEvent)="onSearch($event)"
+                        ></app-booking-search>
                     </ng-container>
                 </div>
                 <div class="col-md-12">

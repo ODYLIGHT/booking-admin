@@ -78,8 +78,10 @@ export interface ScheduleState {
 
 // 予約情報
 export interface ReservationState {
+    id: number | string;
     customer_id: number;
     teacher_id: number;
+    reserved_by?: number;
     reserved_date: Date;
 }
 
