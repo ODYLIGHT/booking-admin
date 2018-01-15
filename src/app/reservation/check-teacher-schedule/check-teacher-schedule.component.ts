@@ -19,6 +19,8 @@ export class CheckTeacherScheduleComponent implements OnInit {
 
     ngOnInit() { this.service.initGetTeacherApi() }
 
+    public onSearch(params): void { this.service.GetScheduleApi(params) }
+
     public get teachersAsObservable$(): Observable<PersonalInformationState[]> { return this.service.getTeachers$ }
 
 }

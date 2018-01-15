@@ -6,8 +6,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <pre>{{teachersAsObservable$ | async | json}}</pre>
-                    <app-check-teacher-schedule-form></app-check-teacher-schedule-form>
+                    <ng-container *ngIf="teachersAsObservable$ | async as teachers">
+                        <app-check-teacher-schedule-form
+                            [teachers]="teachers"
+                            (searchEvent)="onSearch($event)"
+                        ></app-check-teacher-schedule-form>
+                    </ng-container>
                 </div>
                 <div class="col-md-12">
                     <app-check-teacher-schedule-table></app-check-teacher-schedule-table>

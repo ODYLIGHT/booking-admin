@@ -1,3 +1,24 @@
-<p>
-  check-teacher-schedule-form works!
-</p>
+<form [formGroup]="searchForm" (ngSubmit)="onSearch(searchForm)">
+    <div class="form-row">
+        <div class="col-md-4">
+            <mat-form-field class="w-100">
+                <mat-select placeholder="Teacher Name" formControlName="teacherId" required>
+                    <mat-option [value]="">Blank</mat-option>
+                    <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+                        {{ teacher.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="w-100">
+                <input matInput [matDatepicker]="picker" placeholder="Schedule date" formControlName="date" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3 offset-md-1 mb-3">
+            <button mat-raised-button [disabled]="searchForm.invalid">Search</button>
+        </div>
+    </div>
+</form>
