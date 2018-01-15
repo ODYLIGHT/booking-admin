@@ -14,7 +14,8 @@
                     </ng-container>
                 </div>
                 <div class="col-md-12">
-                    <ng-container></ng-container>
+                    <ng-container *ngIf="bookingAsObservable$ | async as bookings">
+                    </ng-container>
                 </div>
             </div>
         </div>

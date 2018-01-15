@@ -12,14 +12,14 @@ const isDebug = debug.enabled;
 
 // init - register-teachers
 router.get('/register-teachers', (req: Request, res: Response, next: NextFunction) => {
-    // このリクエストは、講師情報の`id`, `name`, `jp_name`, `state`を要求します
+    // このリクエストは、講師情報の`id`, `name`, `state`を要求します
     debug(`[ GET ] from register-teachers`);
     if (isDebug) {
         fs.readFile(jsons.teachers)
             .then((result: TeacherState[]) => {
                 const dataAsRequestFormat = result.map(item => {
-                    const { id, name, jp_name, state } = item;
-                    return { id, name, jp_name, state };
+                    const { id, name, state } = item;
+                    return { id, name, state };
                 });
                 res.status(200).json(dataAsRequestFormat);
             })

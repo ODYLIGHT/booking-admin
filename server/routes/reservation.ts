@@ -85,21 +85,73 @@ router.put('/register-of-booking/update', (req: Request, res: Response, next: Ne
 
 router.get('/search-booking/searching', (req: Request, res: Response, next: NextFunction) => {
     // customer_profile, teacher_profile, customer_reservationsが検索対象になります
-    // Responseは、顧客ID、予約ID、顧客名（ローマ字）、予約日付、担当講師名、予約実行者フラグ　です
 
-    // paramsの概要（teacherId以外はDBのカラム名と同じキー）
-    // id: 顧客ID
-    // name: 顧客名
-    // mail_address: 顧客メールアドレス
-    // skype_name: 顧客スカイプ名
-    // reserved_date: 予約日（YYYY-MM-DD形式）
-    // teacherId: 講師ID
-    const params = req.query;
+    interface ParamsState {
+        id?: number; // 顧客ID
+        name?: string; // 顧客名
+        mail_address?: string; // 顧客メールアドレス
+        skype_name?: string; // 顧客スカイプ名
+        reserved_date?: string; // 予約日（YYYY-MM-DD形式）
+        teacherId?: number; // 講師ID
+    }
+    // teacherIdが入っている場合は、その講師の全予約情報を返すみたいです。
+
+    const params: ParamsState = req.query;
     debug(`[ ${req.method} ]: ${req.url}`);
     if (isDebug) {
-        res.status(200).json(params);
+        const tasks = [
+            fs.readFile(jsons.customers),
+            fs.readFile(jsons.teachers),
+            fs.readFile(jsons.reservations)
+        ];
+        Promise.all(tasks)
+            .then((results: any[][]) => {
+                // サーバーサイドで取得した３つのテーブル情報を一つにまとめます
+                // この処理はフロント側で行うべきか要検討
+                const customers = results[0].map((profile: CustomerState) => {
+                    const { id, name, time_zone } = profile;
+                    return { id, name, time_zone };
+                }).reduce((o, c) => ({ ...o, [c.id]: c }), {});
+                const teachers = results[1].map((profile: CustomerState) => {
+                    const { id, name, time_zone } = profile;
+                    return { id, name, time_zone };
+                }).reduce((o, c) => ({ ...o, [c.id]: c }), {});
+
+                let bookings: any[];
+
+                if (!!params.teacherId) {
+                    bookings = results[2].filter((reserved: ReservationState) => reserved.teacher_id === +params.teacherId)
+                        .map((item: ReservationState) => {
+                            return {
+                                customer_id: item.customer_id,
+                                reserved_id: item.id,
+                                customer_name: customers[item.customer_id].name,
+                                teacher_name: teachers[item.teacher_id].name,
+                                reserved_date: item.reserved_date,
+                                reserved_by: item.reserved_by
+                            };
+                        });
+                } else {
+                    if (!!!params.id) return res.status(501).json('開発用APIでは、顧客検索はIDのみです・・・');
+                    bookings = results[2].filter((reserved: ReservationState) => reserved.customer_id === +params.id)
+                        .map((item: ReservationState) => {
+                            return {
+                                customer_id: item.customer_id,
+                                reserved_id: item.id,
+                                customer_name: customers[item.customer_id].name,
+                                teacher_name: teachers[item.teacher_id].name,
+                                reserved_date: item.reserved_date,
+                                reserved_by: item.reserved_by
+                            }
+                        });
+                }
+                res.status(200).json(bookings);
+            })
+            .catch(err => res.status(501).json(err));
     }
 });
+
+////////////////////////////// ここまでが`search of booking`のAPI //////////////////////////////////////////
 
 router.get('/register-of-booking/schedule', (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;

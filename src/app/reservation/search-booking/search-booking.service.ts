@@ -7,8 +7,8 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 import { MomentService } from '../../services/moment.service';
-import { PersonalInformationState } from '../../store/types';
-import { TeacherStore } from './search-booking.store';
+import { PersonalInformationState, BookingState } from '../../store/types';
+import { TeacherStore, SearchBookingStore } from './search-booking.store';
 
 @Injectable()
 export class SearchBookingService extends MomentService {
@@ -19,7 +19,8 @@ export class SearchBookingService extends MomentService {
     constructor(
         private snackBar: MatSnackBar,
         private http: HttpClient,
-        private teacherStore: TeacherStore
+        private teacherStore: TeacherStore,
+        private bookingStore: SearchBookingStore
     ) { super() }
 
     public initGetTeacherApi(): void {
@@ -40,12 +41,12 @@ export class SearchBookingService extends MomentService {
             }
         }
         const searchParams = new HttpParams({ fromString: queryStr });
-        this.http.get(this.apiSearchBookingUrl, { headers: this.headers, params: searchParams })
-            .subscribe(res => {
-                console.log(res);
-            });
+        // express側でデータ形成していますが、必要であればこちらで形成を行ってStoreを更新する
+        this.http.get < BookingState[]>(this.apiSearchBookingUrl, { headers: this.headers, params: searchParams })
+            .subscribe(res => this.bookingStore.changeState(res));
     }
 
     public get getTeachers$(): Observable<PersonalInformationState[]> { return this.teacherStore.data$.pipe(map(s => Object.values(s))) };
+    public get getBookings$(): Observable<BookingState[]> { return this.bookingStore.data$.pipe(map(s => Object.values(s))) }
 
 }

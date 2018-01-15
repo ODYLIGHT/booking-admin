@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
 
-import { PersonalInformationState } from '../../store/types';
+import { PersonalInformationState, BookingState } from '../../store/types';
 
 @Injectable()
 export class TeacherStore extends Store<PersonalInformationState[]> {
@@ -15,8 +15,13 @@ export class TeacherStore extends Store<PersonalInformationState[]> {
 
 
 @Injectable()
-export class SearchBookingStore {
+export class SearchBookingStore extends Store<BookingState[]> {
 
-    constructor() { }
+    constructor() { super(<BookingState[]>[]) }
+    private _changeState(items: BookingState[]) {
+        return (current: Readonly<BookingState[]>): Partial<BookingState[]> => items;
+    }
+    public changeState(items: BookingState[]): void { this.dispatch(this._changeState(items)) }
+    public get getCurrent(): Readonly<BookingState[]> { return this.current() }
 
 }
