@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { MaterialModule } from '../material.module';
 import { CommonsModule } from '../commons/commons.module';
@@ -15,6 +16,7 @@ import { BookingTableComponent } from './register-booking/booking-table/booking-
 
 import { SearchBookingComponent } from './search-booking/search-booking.component';
 import { BookingSearchComponent } from './search-booking/booking-search/booking-search.component';
+import { BookingListComponent, MyDialogComponent } from './search-booking/booking-list/booking-list.component';
 
 @NgModule({
     imports: [
@@ -22,7 +24,8 @@ import { BookingSearchComponent } from './search-booking/booking-search/booking-
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        CommonsModule
+        CommonsModule,
+        NgbModule
     ],
     declarations: [
         CheckTeacherScheduleComponent,
@@ -32,12 +35,15 @@ import { BookingSearchComponent } from './search-booking/booking-search/booking-
         OperationsComponent,
         BookingTableComponent,
         SearchBookingComponent,
-        BookingSearchComponent
+        BookingSearchComponent,
+        BookingListComponent,
+        MyDialogComponent
     ],
     exports: [
         CheckTeacherScheduleComponent,
         RegisterBookingComponent,
         SearchBookingComponent
-    ]
+    ],
+    entryComponents: [MyDialogComponent]
 })
 export class ReservationModule { }

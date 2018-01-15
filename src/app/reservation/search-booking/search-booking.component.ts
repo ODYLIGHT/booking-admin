@@ -21,6 +21,10 @@ export class SearchBookingComponent implements OnInit {
 
     public onSearch(params): void { this.service.searchBookingApi(params) }
 
+    public onCancel(reservationId: string): void {
+        this.service.cancelBookingApi(reservationId);
+    }
+
     public get teachersAsObservable$(): Observable<PersonalInformationState[]> { return this.service.getTeachers$ }
     public get bookingAsObservable$(): Observable<BookingState[]> { return this.service.getBookings$ }
 

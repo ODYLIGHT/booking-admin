@@ -15,6 +15,7 @@ export class SearchBookingService extends MomentService {
     private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     readonly apiGetTeacherUrl = 'api/reservation/get-teacher';
     readonly apiSearchBookingUrl = 'api/reservation/search-booking/searching';
+    readonly apiCancelBookingUrl = 'api/reservation/search-booking/cancel';
 
     constructor(
         private snackBar: MatSnackBar,
@@ -44,6 +45,30 @@ export class SearchBookingService extends MomentService {
         // express側でデータ形成していますが、必要であればこちらで形成を行ってStoreを更新する
         this.http.get < BookingState[]>(this.apiSearchBookingUrl, { headers: this.headers, params: searchParams })
             .subscribe(res => this.bookingStore.changeState(res));
+    }
+
+    public cancelBookingApi(reservationId: string): void {
+        this.http.put(this.apiCancelBookingUrl, {reservationId}, { headers: this.headers })
+            .subscribe(
+                res => {
+                    if (!!!environment.production) console.log(res);
+                    this.snackBar.open('Successfully deleted', null, { duration: 2000 });
+                },
+                (err: HttpErrorResponse) => {
+                    const errorMessage =
+                        'There was a problem on the server side.\n'
+                        + 'Please give the administrator the following message / code.\n'
+                        + `[message]: ${err.statusText}\n`
+                        + `[code]: ${err.status}\n`
+                        ;
+                    window.alert(errorMessage);
+                },
+                () => {
+                    const currentState: BookingState[] = Object.values(this.bookingStore.getCurrent);
+                    const newState = currentState.filter(item => item.reserved_id !== reservationId);
+                    this.bookingStore.changeState(newState);
+                }
+            );
     }
 
     public get getTeachers$(): Observable<PersonalInformationState[]> { return this.teacherStore.data$.pipe(map(s => Object.values(s))) };
