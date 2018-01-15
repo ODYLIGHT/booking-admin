@@ -1,0 +1,18 @@
+<div class="page-header">
+    <h5 class="text-center">Check Teacher schedule</h5>
+</div>
+<div class="container">
+    <mat-card>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <pre>{{teachersAsObservable$ | async | json}}</pre>
+                    <app-check-teacher-schedule-form></app-check-teacher-schedule-form>
+                </div>
+                <div class="col-md-12">
+                    <app-check-teacher-schedule-table></app-check-teacher-schedule-table>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>

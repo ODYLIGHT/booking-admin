@@ -6,10 +6,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MaterialModule } from '../material.module';
 import { CommonsModule } from '../commons/commons.module';
 
-import { CheckTeacherScheduleComponent } from './check-teacher-schedule/check-teacher-schedule.component';
-import { CheckScheduleSearchFormComponent } from './check-teacher-schedule/check-schedule-search-form/check-schedule-search-form.component';
-import { CheckTableComponent } from './check-teacher-schedule/check-table/check-table.component';
-
 import { RegisterBookingComponent } from './register-booking/register-booking.component';
 import { OperationsComponent } from './register-booking/operations/operations.component';
 import { BookingTableComponent } from './register-booking/booking-table/booking-table.component';
@@ -17,6 +13,14 @@ import { BookingTableComponent } from './register-booking/booking-table/booking-
 import { SearchBookingComponent } from './search-booking/search-booking.component';
 import { BookingSearchComponent } from './search-booking/booking-search/booking-search.component';
 import { BookingListComponent, MyDialogComponent } from './search-booking/booking-list/booking-list.component';
+
+import { CheckTeacherScheduleComponent } from './check-teacher-schedule/check-teacher-schedule.component';
+import {
+    CheckTeacherScheduleFormComponent
+} from './check-teacher-schedule/check-teacher-schedule-form/check-teacher-schedule-form.component';
+import {
+    CheckTeacherScheduleTableComponent
+} from './check-teacher-schedule/check-teacher-schedule-table/check-teacher-schedule-table.component';
 
 @NgModule({
     imports: [
@@ -28,21 +32,21 @@ import { BookingListComponent, MyDialogComponent } from './search-booking/bookin
         NgbModule
     ],
     declarations: [
-        CheckTeacherScheduleComponent,
-        CheckScheduleSearchFormComponent,
-        CheckTableComponent,
         RegisterBookingComponent,
         OperationsComponent,
         BookingTableComponent,
         SearchBookingComponent,
         BookingSearchComponent,
         BookingListComponent,
-        MyDialogComponent
+        MyDialogComponent,
+        CheckTeacherScheduleComponent,
+        CheckTeacherScheduleFormComponent,
+        CheckTeacherScheduleTableComponent
     ],
     exports: [
-        CheckTeacherScheduleComponent,
         RegisterBookingComponent,
-        SearchBookingComponent
+        SearchBookingComponent,
+        CheckTeacherScheduleComponent
     ],
     entryComponents: [MyDialogComponent]
 })
