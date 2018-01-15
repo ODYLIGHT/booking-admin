@@ -1,0 +1,54 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm)" novalidate>
+    <div class="form-row">
+        <div class="col-md-3">
+            <mat-form-field class="w-100">
+                <input matInput type="number" placeholder="Customer ID" formControlName="id" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="w-100">
+                <input matInput type="text" placeholder="Customer Name" formControlName="name" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="w-100">
+                <input matInput type="text" placeholder="Skype Name" formControlName="skype_name" autocomplete="off">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-4">
+            <mat-form-field class="w-100">
+                <input matInput type="text" placeholder="E-mail address" formControlName="mail_address" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="w-100">
+                <input matInput [matDatepicker]="picker" placeholder="Reservation date" formControlName="reserved_date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="w-100">
+                <mat-select placeholder="Teacher Name" formControlName="teacherId">
+                    <mat-option [value]="">Blank</mat-option>
+                    <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+                        {{ teacher.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2 mb-3">
+            <button mat-raised-button
+                [disabled]="
+                    !!!searchForm.touched || !!!searchForm.dirty || (!!!searchForm.controls['id'].value
+                    && !!!searchForm.controls['name'].value && !!!searchForm.controls['skype_name'].value
+                    && !!!searchForm.controls['mail_address'].value && !!!searchForm.controls['reserved_date'].value
+                    && !!!searchForm.controls['teacherId'].value)
+                "
+            >Search</button>
+        </div>
+    </div>
+    <!-- <div class="form-row"></div> -->
+</form>

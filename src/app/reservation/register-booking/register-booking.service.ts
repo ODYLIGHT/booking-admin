@@ -6,16 +6,16 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
-import { ReservationState } from '../../store/types';
+import { ReservationState, PersonalInformationState } from '../../store/types';
 import {
-    PersonalInformationState, TeacherStore,
+    TeacherStore,
     OperationsState, OperationsStore, initOperation,
     BookingStore, BookingState
 } from './register-booking.store';
 
 @Injectable()
 export class RegisterBookingService {
-    readonly apiGetTeacherUrl = 'api/reservation/register-of-booking/get-teacher';
+    readonly apiGetTeacherUrl = 'api/reservation/get-teacher';
     readonly apiSearchBookingUrl = 'api/reservation/register-of-booking/search-booking';
     readonly apiPutUrl = 'api/reservation/register-of-booking/update';
     private headers = new HttpHeaders({ 'Content-Type': 'application/json' });

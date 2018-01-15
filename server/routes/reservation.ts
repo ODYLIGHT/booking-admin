@@ -10,9 +10,10 @@ const fs: FsService = FsService.instance;
 const debug = Debug('debug:reservation');
 const isDebug = debug.enabled;
 
-router.get('/register-of-booking/get-teacher', (req: Request, res: Response, next: NextFunction) => {
+router.get('/get-teacher', (req: Request, res: Response, next: NextFunction) => {
     // Teacher Scheduleコンポーネントのオペレーション部分で使う、講師とそのタイムゾーンを初期化処理時に返す
     // 要求するデータは`id`, `name`, `time_zone`です
+    // 複数個所で使うためURLに個別コンポーネント名は含めていません
     debug(`[ ${req.method} ]: ${req.url}`);
 
     if (isDebug) {
@@ -82,123 +83,87 @@ router.put('/register-of-booking/update', (req: Request, res: Response, next: Ne
 
 //////////////////////////// ここまでが`register of booking`のAPI ////////////////////////////////////////
 
-router.get('/register-of-booking/schedule', (req: Request, res: Response, next: NextFunction) => {
-    const id = req.params.id;
-    fs.readFile(paths.schedule)
-        .then(result => res.status(200).json(result))
-        .catch(err => res.status(501).json(err));
-});
+router.get('/search-booking/searching', (req: Request, res: Response, next: NextFunction) => {
+    // customer_profile, teacher_profile, customer_reservationsが検索対象になります
 
-router.get('/search-booking/:parson', (req: Request, res: Response, next: NextFunction) => {
-    console.info(`request: GET from search-booking`);
-    const parsonName = req.params.parson;
-    const queryObj = req.query;
-
-    let responseData;
-
-    // 条件によって検索対象テーブルが変わると思われるので、条件分岐を用意しておきます(2017/10/18)
-    if (parsonName === 'customer') {
-        // 顧客情報での検索
-        responseData = [
-            {
-                customerId: 987123,
-                reservationId: 'A0000001',
-                studentName: 'TARO yamada',
-                date: '2017-10-20 15:00:00',
-                teacherName: 'Chris',
-                reserveBy: 'student'
-            },
-            {
-                customerId: 987123,
-                reservationId: 'A0000002',
-                studentName: 'TARO yamada',
-                date: '2017-10-20 18:30:00',
-                teacherName: 'Chris',
-                reserveBy: 'student'
-            },
-            {
-                customerId: 987123,
-                reservationId: 'A0000005',
-                studentName: 'TARO yamada',
-                date: '2017-11-05 13:00:00',
-                teacherName: 'Chris',
-                reserveBy: 'student'
-            },
-            {
-                customerId: 987123,
-                reservationId: 'A0000003',
-                studentName: 'TARO yamada',
-                date: '2017-10-22 12:30:00',
-                teacherName: 'Chris',
-                reserveBy: 'student'
-            },
-            {
-                customerId: 987123,
-                reservationId: 'A0000004',
-                studentName: 'TARO yamada',
-                date: '2017-10-21 17:00:00',
-                teacherName: 'Wenda',
-                reserveBy: 'student'
-            }
-        ];
-    } else {
-        // 講師情報での検索
-        responseData = [
-            {
-                customerId: 987123,
-                reservationId: 'A0000001',
-                studentName: 'TARO yamada',
-                date: '2017-10-20 15:00:00',
-                teacherName: 'Chris',
-                reserveBy: 'student'
-            },
-            {
-                customerId: 987123,
-                reservationId: 'A0000002',
-                studentName: 'TARO yamada',
-                date: '2017-10-20 18:30:00',
-                teacherName: 'Chris',
-                reserveBy: 'student'
-            },
-            {
-                customerId: 987126,
-                reservationId: 'A0000009',
-                studentName: 'JIRO gotou',
-                date: '2017-10-20 19:00:00',
-                teacherName: 'Chris',
-                reserveBy: 'admin'
-            },
-            {
-                customerId: 987126,
-                reservationId: 'A0000016',
-                studentName: 'TAKASHI saito',
-                date: '2017-10-21 10:00:00',
-                teacherName: 'Chris',
-                reserveBy: 'student'
-            },
-            {
-                customerId: 987124,
-                reservationId: 'A0000012',
-                studentName: 'RIE tanaka',
-                date: '2017-10-22 11:00:00',
-                teacherName: 'Chris',
-                reserveBy: 'admin'
-            }
-        ]
+    interface ParamsState {
+        id?: number; // 顧客ID
+        name?: string; // 顧客名
+        mail_address?: string; // 顧客メールアドレス
+        skype_name?: string; // 顧客スカイプ名
+        reserved_date?: string; // 予約日（YYYY-MM-DD形式）
+        teacherId?: number; // 講師ID
     }
+    // teacherIdが入っている場合は、その講師の全予約情報を返すみたいです。
 
-    res.status(200).json(responseData);
+    const params: ParamsState = req.query;
+    debug(`[ ${req.method} ]: ${req.url}`);
+    if (isDebug) {
+        const tasks = [
+            fs.readFile(jsons.customers),
+            fs.readFile(jsons.teachers),
+            fs.readFile(jsons.reservations)
+        ];
+        Promise.all(tasks)
+            .then((results: any[][]) => {
+                // サーバーサイドで取得した３つのテーブル情報を一つにまとめます
+                // この処理はフロント側で行うべきか要検討
+                const customers = results[0].map((profile: CustomerState) => {
+                    const { id, name, time_zone } = profile;
+                    return { id, name, time_zone };
+                }).reduce((o, c) => ({ ...o, [c.id]: c }), {});
+                const teachers = results[1].map((profile: CustomerState) => {
+                    const { id, name, time_zone } = profile;
+                    return { id, name, time_zone };
+                }).reduce((o, c) => ({ ...o, [c.id]: c }), {});
+
+                let bookings: any[];
+
+                if (!!params.teacherId) {
+                    bookings = results[2].filter((reserved: ReservationState) => reserved.teacher_id === +params.teacherId)
+                        .map((item: ReservationState) => {
+                            return {
+                                customer_id: item.customer_id,
+                                reserved_id: item.id,
+                                customer_name: customers[item.customer_id].name,
+                                teacher_name: teachers[item.teacher_id].name,
+                                reserved_date: item.reserved_date,
+                                reserved_by: item.reserved_by
+                            };
+                        });
+                } else {
+                    if (!!!params.id) return res.status(501).json('開発用APIでは、顧客検索はIDのみです・・・');
+                    bookings = results[2].filter((reserved: ReservationState) => reserved.customer_id === +params.id)
+                        .map((item: ReservationState) => {
+                            return {
+                                customer_id: item.customer_id,
+                                reserved_id: item.id,
+                                customer_name: customers[item.customer_id].name,
+                                teacher_name: teachers[item.teacher_id].name,
+                                reserved_date: item.reserved_date,
+                                reserved_by: item.reserved_by
+                            }
+                        });
+                }
+                res.status(200).json(bookings);
+            })
+            .catch(err => res.status(501).json(err));
+    }
 });
 
-router.post('/search-booking/cancel', (req: Request, res: Response, next: NextFunction) => {
-    /**
-     * 予約のキャンセル処理（Cancellation of booking）
-     * paramsにはテストデータに`classIssue`プロパティを追加したものが入る
-     */
-    const params = req.body;
-    console.log(params);
-    res.status(200).json('cancel post success.');
+router.put('/search-booking/cancel', (req: Request, res: Response, next: NextFunction) => {
+    const reservationId = req.body;
+    debug(`[ ${req.method} ]: ${req.url}`);
+    if (isDebug) {
+        console.log(reservationId);
+        // 70%で成功　30%でリクエストエラーを発生させる
+        const randumNum = Math.random();
+        if (randumNum <= 0.7) res.status(200).json({ isSuccess: true });
+        else res.status(501).json({ isSuccess: false });
+    }
 });
+
+////////////////////////////// ここまでが`search of booking`のAPI //////////////////////////////////////////
 
 router.get('/check-teacher-schedule/init-teacher', (req: Request, res: Response, next: NextFunction) => {
     // Check Teacher schedule コンポーネントで、検索用教師情報を返す

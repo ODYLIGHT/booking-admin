@@ -2,7 +2,6 @@
     {
         "id": 1,
         "name": "Cardenas",
-        "jp_name": "カルデナス",
         "state": true,
         "time_zone": "Europe/Berlin",
         "customers_language": 0,
@@ -30,7 +29,6 @@
     {
         "id": 2,
         "name": "Leach",
-        "jp_name": "リーチ",
         "state": true,
         "time_zone": "Europe/Paris",
         "customers_language": 0,
@@ -58,7 +56,6 @@
     {
         "id": 3,
         "name": "Noel",
-        "jp_name": "ノエル",
         "state": true,
         "time_zone": "America/New_York",
         "customers_language": 0,
@@ -86,7 +83,6 @@
     {
         "id": 4,
         "name": "Rivas",
-        "jp_name": "リーバス",
         "state": false,
         "time_zone": "Pacific/Honolulu",
         "customers_language": 0,
@@ -114,7 +110,6 @@
     {
         "id": 5,
         "name": "Mccall",
-        "jp_name": "マッコール",
         "state": true,
         "time_zone": "America/Los_Angeles",
         "customers_language": 0,
@@ -142,7 +137,6 @@
     {
         "id": 6,
         "name": "Sato",
-        "jp_name": "サトウ",
         "state": true,
         "time_zone": "Asia/Tokyo",
         "customers_language": 0,
@@ -170,7 +164,6 @@
     {
         "id": 7,
         "name": "White",
-        "jp_name": "ホワイト",
         "state": true,
         "time_zone": "Europe/London",
         "customers_language": 0,
@@ -198,7 +191,6 @@
     {
         "id": 8,
         "name": "Velasquez",
-        "jp_name": "ベラスケス",
         "state": true,
         "time_zone": "Europe/Minsk",
         "customers_language": 0,
@@ -226,7 +218,6 @@
     {
         "id": 9,
         "name": "Daphne",
-        "jp_name": "ダフネ",
         "state": false,
         "time_zone": "Australia/Brisbane",
         "customers_language": 0,
@@ -254,7 +245,6 @@
     {
         "id": 10,
         "name": "Ellen",
-        "jp_name": "エレン",
         "state": true,
         "time_zone": "America/Juneau",
         "customers_language": 0,
@@ -282,7 +272,6 @@
     {
         "id": 11,
         "name": "Wright",
-        "jp_name": "ライト",
         "state": true,
         "time_zone": "Europe/Madrid",
         "customers_language": 0,
@@ -310,7 +299,6 @@
     {
         "id": 12,
         "name": "dark",
-        "jp_name": "ダーク",
         "state": true,
         "time_zone": "Europe/Madrid",
         "customers_language": 0,

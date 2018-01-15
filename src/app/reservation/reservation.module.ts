@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { MaterialModule } from '../material.module';
 import { CommonsModule } from '../commons/commons.module';
@@ -14,9 +15,8 @@ import { OperationsComponent } from './register-booking/operations/operations.co
 import { BookingTableComponent } from './register-booking/booking-table/booking-table.component';
 
 import { SearchBookingComponent } from './search-booking/search-booking.component';
-import { CancellationBookingComponent } from './search-booking/cancellation-booking/cancellation-booking.component';
-import { SearchFormComponent } from './search-booking/search-form/search-form.component';
-import { SearchTableComponent } from './search-booking/search-table/search-table.component';
+import { BookingSearchComponent } from './search-booking/booking-search/booking-search.component';
+import { BookingListComponent, MyDialogComponent } from './search-booking/booking-list/booking-list.component';
 
 @NgModule({
     imports: [
@@ -24,7 +24,8 @@ import { SearchTableComponent } from './search-booking/search-table/search-table
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        CommonsModule
+        CommonsModule,
+        NgbModule
     ],
     declarations: [
         CheckTeacherScheduleComponent,
@@ -34,14 +35,15 @@ import { SearchTableComponent } from './search-booking/search-table/search-table
         OperationsComponent,
         BookingTableComponent,
         SearchBookingComponent,
-        CancellationBookingComponent,
-        SearchFormComponent,
-        SearchTableComponent
+        BookingSearchComponent,
+        BookingListComponent,
+        MyDialogComponent
     ],
     exports: [
         CheckTeacherScheduleComponent,
         RegisterBookingComponent,
         SearchBookingComponent
-    ]
+    ],
+    entryComponents: [MyDialogComponent]
 })
 export class ReservationModule { }

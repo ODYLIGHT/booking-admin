@@ -1,7 +1,9 @@
 import { Component, OnInit, OnChanges, Output, Input, EventEmitter, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material';
-import { PersonalInformationState, OperationsState } from '../register-booking.store';
+
+import { PersonalInformationState } from '../../../store/types';
+import { OperationsState } from '../register-booking.store';
 
 @Component({
     selector: 'app-operations',

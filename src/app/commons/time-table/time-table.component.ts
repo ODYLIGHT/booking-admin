@@ -7,7 +7,7 @@ import 'rxjs/add/observable/fromPromise';
 import { map} from 'rxjs/operators';
 import { TimeTableService } from './time-table.service';
 import { Moment } from 'moment-timezone';
-import { TimeState, CustomerReservationState } from '../../store/types';
+import { TimeState } from '../../store/types';
 
 /**
  *

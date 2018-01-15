@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { RegisterBookingService } from './register-booking.service';
+import { PersonalInformationState } from '../../store/types';
 import {
-    TeacherStore, PersonalInformationState,
+    TeacherStore,
     OperationsStore, OperationsState,
     BookingStore, BookingState
 } from './register-booking.store';
