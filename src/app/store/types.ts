@@ -16,7 +16,6 @@ export interface MenuState {
 export interface TeacherState {
     id: number;
     name?: string;
-    jp_name?: string;
     state?: number | boolean;
     time_zone?: string;
     customers_language?: number;
@@ -61,13 +60,6 @@ export interface PersonalInformationState {
     id: number;
     name: string;
     time_zone: string;
-}
-
-// タイムテーブルに渡すために生徒の予約情報を変換したもの
-export interface CustomerReservationState {
-    current: string[];
-    insert: string[];
-    delete: string[];
 }
 
 // DBから取得する講師のスケジュール情報

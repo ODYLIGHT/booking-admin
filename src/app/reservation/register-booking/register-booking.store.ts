@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
-import { CustomerReservationState, PersonalInformationState } from '../../store/types';
+import { TimeState, PersonalInformationState } from '../../store/types';
 
 export interface OperationsState {
     customer: PersonalInformationState;
@@ -10,7 +10,7 @@ export interface OperationsState {
 export interface BookingState {
     customerId: number;
     teacherId: number;
-    reservations: CustomerReservationState;
+    reservations: TimeState;
     canNotReserve: string[];
 }
 

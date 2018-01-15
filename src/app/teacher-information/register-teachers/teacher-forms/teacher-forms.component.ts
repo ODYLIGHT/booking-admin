@@ -15,7 +15,6 @@ interface OptionsState {
 const initialFormState: TeacherState = {
     id: null,
     name: '',
-    jp_name: '',
     state: 0,
     time_zone: '',
     customers_language: 0,
