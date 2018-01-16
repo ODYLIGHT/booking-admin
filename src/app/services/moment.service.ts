@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import * as moment from 'moment';
-import 'moment-timezone';
-import { Moment } from 'moment-timezone';
+// import * as moment from 'moment';
+// import 'moment-timezone';
+// import { Moment } from 'moment-timezone';
+import * as moment from 'moment-timezone';
 
 /**
  *
