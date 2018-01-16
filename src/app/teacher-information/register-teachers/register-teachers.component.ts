@@ -24,7 +24,7 @@ export class RegisterTeachersComponent implements OnInit {
 
     ngOnInit() { this.service.getInit() }
 
-    public get getTeachersAsObservable$(): Observable<TeacherState[]> { return this.service.getItems$.map(s => s) }
+    public get getTeachersAsObservable$(): Observable<TeacherState[]> { return this.service.getItems$ }
 
     public selectItems(allData: TeacherState[]): TeacherState[] {
         return allData.slice((this.currentPage - 1) * this.itemPerPage, this.currentPage * this.itemPerPage)

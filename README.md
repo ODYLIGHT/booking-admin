@@ -1,9 +1,15 @@
 # booking-admin
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.4.
 
-## Development Server
+## Development
+開発環境は、アプリケーションサーバー・APIサーバーの２つを建てる必要があります
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4300/`. The app will automatically reload if you change any of the source files.
-
-Run `npm run start:express` for a api server on port 4400. automatically reload if you change any of the server source files.
+### app server
+```
+$ npm start
+```
+### API server
+```
+$ npm run start:express
+```

@@ -4,6 +4,24 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BookingState } from '../../../store/types';
 
 @Component({
+    selector: 'app-mat-dialog',
+    template: `
+    <h1 mat-dialog-title>booking number: {{ data.reserved_id }}</h1>
+    <mat-dialog-content>Are you sure want to cancel this slot?</mat-dialog-content>
+    <mat-dialog-actions align="center">
+        <button mat-button mat-dialog-close>No thanks</button>
+        <button mat-button [mat-dialog-close]="data.reserved_id">Done</button>
+    </mat-dialog-actions>
+    `
+})
+export class MyDialogComponent {
+    constructor(
+        public dialogRef: MatDialogRef<MyDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) { }
+}
+
+@Component({
     selector: 'app-booking-list',
     templateUrl: './booking-list.component.html',
     styleUrls: ['./booking-list.component.scss'],
@@ -36,22 +54,4 @@ export class BookingListComponent implements OnInit {
         })
     }
 
-}
-
-@Component({
-    selector: 'app-mat-dialog',
-    template: `
-    <h1 mat-dialog-title>booking number: {{ data.reserved_id }}</h1>
-    <mat-dialog-content>Are you sure want to cancel this slot?</mat-dialog-content>
-    <mat-dialog-actions align="center">
-        <button mat-button mat-dialog-close>No thanks</button>
-        <button mat-button [mat-dialog-close]="data.reserved_id">Done</button>
-    </mat-dialog-actions>
-    `
-})
-export class MyDialogComponent {
-    constructor(
-        public dialogRef: MatDialogRef<MyDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any
-    ) { }
 }

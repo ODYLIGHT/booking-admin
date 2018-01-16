@@ -31,7 +31,7 @@ export class RegisterTeachersService {
     /**
      * 全講師分の情報配列をObservableで返す
      */
-    public get getItems$(): Observable<TeacherState[]> { return this.store.data$.map(s => Object.values(s)) }
+    public get getItems$(): Observable<TeacherState[]> { return this.store.data$.pipe(map(s => Object.values(s))) }
 
     /**
      * 引数`id`に不一致の講師配列を作成し、Storeを更新する
