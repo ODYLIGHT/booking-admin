@@ -142,7 +142,7 @@ router.get('/search-booking/searching', (req: Request, res: Response, next: Next
                                 teacher_name: teachers[item.teacher_id].name,
                                 reserved_date: item.reserved_date,
                                 reserved_by: item.reserved_by
-                            }
+                            };
                         });
                 }
                 res.status(200).json(bookings);
@@ -165,64 +165,48 @@ router.put('/search-booking/cancel', (req: Request, res: Response, next: NextFun
 
 ////////////////////////////// ここまでが`search of booking`のAPI //////////////////////////////////////////
 
-router.get('/check-teacher-schedule/init-teacher', (req: Request, res: Response, next: NextFunction) => {
-    // Check Teacher schedule コンポーネントで、検索用教師情報を返す
-    console.info(`request: GET from check-teacher-schedule init`);
-    const dumy_teachersName = [
-        {
-            id: 1,
-            name: 'Chris'
-        },
-        {
-            id: 2,
-            name: 'Aurora'
-        },
-        {
-            id: 3,
-            name: 'Pollard'
-        },
-        {
-            id: 4,
-            name: 'Hernandez'
-        }, {
-            id: 5,
-            name: 'Young'
-        }
-    ];
-    res.status(200).json(dumy_teachersName);
+router.get('/check-teacher-schedule/get', (req: Request, res: Response, next: NextFunction) => {
+    // 講師のIDと、スタート日付文字列を受け取ります
+    // 一週間分のデータを返却してください (講師スケジュール、対象予約、予約者名)
+    const params = {
+        id: +req.query.id,
+        date: req.query.date
+    };
+    debug(`[ ${req.method} ]: ${req.url}`);
+    if (isDebug) {
+        const tasks = [
+            fs.readFile(jsons.schedules),
+            fs.readFile(jsons.reservations),
+            fs.readFile(jsons.customers)
+        ];
+        Promise.all(tasks)
+            .then((results: any[][]) => {
+                const schedules = results[0].filter(sdk => {
+                    const intervalTime = new Date(sdk.schedule_date).getTime() - new Date(params.date).getTime();
+                    return sdk.teacher_id === params.id && intervalTime > 0 && intervalTime < 604800 * 1000;
+                });
+
+                const customers = results[2].map((profile: CustomerState) => {
+                    const { id, name, time_zone } = profile;
+                    return { id, name, time_zone };
+                }).reduce((o, c) => ({ ...o, [c.id]: c }), {});
+
+                const reservations = results[1].filter((reserve: ReservationState) => {
+                    const intervalTime = new Date(reserve.reserved_date).getTime() - new Date(params.date).getTime();
+                    return reserve.teacher_id === params.id && intervalTime > 0 && intervalTime < 604800 * 1000;
+                }).map((reserve: ReservationState) => {
+                    return {
+                        customer_name: customers[reserve.customer_id].name,
+                        reserved_date: reserve.reserved_date,
+                        reserved_by: reserve.reserved_by
+                    };
+                });
+                res.status(200).json({ schedules, reservations });
+            })
+            .catch(err => res.status(501).json(err));
+    }
 });
 
-router.post('/check-teacher-schedule/search-schedule', (req: Request, res: Response, next: NextFunction) => {
-    // １人の講師の一週間分のスケジュールを返す
-    // スケジュール・予約状況
-    const params = req.body; // {teacherId: number, year: number, month: number, day: number} monthは0~11
-    const paramsTimeStamp = new Date(`${params.year}-${++params.month}-${params.day} 00:00:00`).getTime();
-    const results = { schedules: [], reservations: [] };
-    // console.log(params);
-    fs.readFile(paths.schedule)
-        .then((schedules: any[]) => {
-            // 全てのスケジュールから検索日時の１週間分だけ抽出する
-            const betweenOneWeekSchedule = schedules.filter(s => {
-                const differenceTimeStamp = new Date(s._date).getTime() - paramsTimeStamp;
-                return differenceTimeStamp >= 0 && differenceTimeStamp < 1000 * 60 * 60 * 24 * 7;
-            });
-            results.schedules = betweenOneWeekSchedule;
-
-            fs.readFile(paths.reservation)
-                .then((reservations: any[]) => {
-                    // 全ての予約状況から検索講師分のみ取得
-                    const selectTeacherReservations = reservations.filter(s => {
-                        const differenceTimeStamp = new Date(s._reserve_date).getTime() - paramsTimeStamp;
-                        const isWithinRangeDate = differenceTimeStamp >= 0 && differenceTimeStamp < 1000 * 60 * 60 * 24 * 7;
-                        return isWithinRangeDate && s._teacher_id === parseInt(params.teacherId, 10);
-                    });
-                    results.reservations = selectTeacherReservations;
-                    res.status(200).json(results);
-                })
-                .catch(err => res.status(501).json(err));
-        })
-        .catch(err => res.status(501).json(err));
-
-});
+//////////////////////////// ここまでが`check teacher schedule`のAPI ////////////////////////////////////////
 
 module.exports = router;

@@ -9,7 +9,7 @@ export class TimeTableService extends MomentService {
 
     constructor() { super() }
 
-    public getHeaderDates(tz: string): Date[] { return this.getDayOfWeek(tz) }
+    public getHeaderDates(tz: string, date?: string): Date[] { return this.getDayOfWeek(tz, date) }
 
     public get getLeftColumns(): string[] { return this._getLeftColumns() }
 

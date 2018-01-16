@@ -1,35 +1,53 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
-import {
-    CheckTeacherScheduleStore, TeachersNameState
-} from './check-teacher-schedule.store';
-import { CheckTeacherScheduleState } from '../../store/types';
+import { environment } from '../../../environments/environment';
+
+import { MomentService } from '../../services/moment.service';
+import { PersonalInformationState } from '../../store/types';
+import { TeacherStore, CheckScheduleState, CheckTeacherScheduleStore } from './check-teacher-schedule.store';
 
 @Injectable()
-export class CheckTeacherScheduleService {
-    // search-formに送る教師名取得URL
-    private apiGetTeachersUrl = 'api/reservation/check-teacher-schedule/init-teacher';
-    private apiSearchScheduleUrl = 'api/reservation/check-teacher-schedule/search-schedule';
-    private headers = new Headers({ 'Content-Type': 'application/json' });
-    private options = new RequestOptions({ headers: this.headers });
+export class CheckTeacherScheduleService extends MomentService {
+    private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    readonly apiGetTeacherUrl = 'api/reservation/get-teacher';
+    readonly apiGetScheduleUrl = 'api/reservation/check-teacher-schedule/get';
 
     constructor(
-        private http: Http,
-        private store: CheckTeacherScheduleStore
-    ) { }
+        private snackBar: MatSnackBar,
+        private http: HttpClient,
+        private teacherStore: TeacherStore,
+        private checkStore: CheckTeacherScheduleStore
+    ) { super() }
 
-    public getTeachers(): Observable<TeachersNameState[]> {
-        return this.http.get(this.apiGetTeachersUrl, this.options).map(s => s.json());
+    public initGetTeacherApi(): void {
+        this.http.get<PersonalInformationState[]>(this.apiGetTeacherUrl, { headers: this.headers })
+            .subscribe(res => this.teacherStore.changeState(res));
     }
 
-    public getSchedule(params): void {
-        this.http.post(this.apiSearchScheduleUrl, params, this.options)
-            .map(s => s.json())
-            .subscribe(res => this.store.changeState(res));
+    private convertDateForStr(date: Date): string {
+        return this._convertFormat(date, 'YYYY-MM-DD');
     }
 
-    public get getSchedules$(): Observable<CheckTeacherScheduleState> { return this.store.data$.map(s => s) }
+    public GetScheduleApi(_p): void {
+        const dateStr = this.convertDateForStr(_p.date);
+        const params = new HttpParams().set('id', _p.teacher.id).set('date', dateStr);
+        this.http.get(this.apiGetScheduleUrl, { headers: this.headers, params })
+            .subscribe(res => {
+                const newState = {
+                    teacher: _p.teacher,
+                    dateAsUTC: dateStr,
+                    schedules: res['schedules'],
+                    reservations: res['reservations']
+                };
+                this.checkStore.changeState(newState);
+            });
+    }
+
+    public get getTeachers$(): Observable<PersonalInformationState[]> { return this.teacherStore.data$.pipe(map(s => Object.values(s))) };
+    public get getSchedules$(): Observable<CheckScheduleState> { return this.checkStore.data$ }
 
 }

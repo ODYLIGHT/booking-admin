@@ -1,18 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
-import { CheckTeacherScheduleState } from '../../store/types';
 
-export interface TeachersNameState {
-    id: number;
-    name: string;
+import { PersonalInformationState, ScheduleState, BookingState } from '../../store/types';
+
+export interface CheckScheduleState {
+    teacher: PersonalInformationState;
+    dateAsUTC: string;
+    schedules: ScheduleState;
+    reservations: BookingState;
 }
 
-export class CheckTeacherScheduleStore extends Store<CheckTeacherScheduleState> {
-    constructor() { super(<CheckTeacherScheduleState>null) }
-
-    private _changeState(items: CheckTeacherScheduleState) {
-        return (c: Readonly<CheckTeacherScheduleState>): Partial<CheckTeacherScheduleState> => items;
+@Injectable()
+export class TeacherStore extends Store<PersonalInformationState[]> {
+    constructor() { super(<PersonalInformationState[]>[]) }
+    private _changeState(items: PersonalInformationState[]) {
+        return (current: Readonly<PersonalInformationState[]>): Partial<PersonalInformationState[]> => items;
     }
+    public changeState(items: PersonalInformationState[]): void { this.dispatch(this._changeState(items)) }
+    public get getCurrent(): Readonly<PersonalInformationState[]> { return this.current() }
+}
 
-    public changeState(items: CheckTeacherScheduleState): void { this.dispatch(this._changeState(items)) }
+@Injectable()
+export class CheckTeacherScheduleStore extends Store<CheckScheduleState> {
+
+    constructor() { super(<CheckScheduleState>null) }
+    private _changeState(items: CheckScheduleState) {
+        return (current: Readonly<CheckScheduleState>): Partial<CheckScheduleState> => items;
+    }
+    public changeState(items: CheckScheduleState): void { this.dispatch(this._changeState(items)) }
+    public get getCurrent(): Readonly<CheckScheduleState> { return this.current() }
+
 }

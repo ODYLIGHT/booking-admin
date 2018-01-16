@@ -79,12 +79,12 @@ export interface ReservationState {
 
 // search of booking で、検索をしたレスポンス = 一覧に渡す状態
 export interface BookingState {
-    customer_id: number;
-    reserved_id: number | string;
-    customer_name: string;
-    teacher_name: string;
-    reserved_date: Date;
-    reserved_by: number;
+    customer_id?: number;
+    reserved_id?: number | string;
+    customer_name?: string;
+    teacher_name?: string;
+    reserved_date?: Date;
+    reserved_by?: number;
 }
 
 ///////////////////////////// この上までは間違いなく使っている(2018/01/05現在)

@@ -28,10 +28,12 @@ export class MomentService {
 
     public timeIntervalFromTimeZone(timeZone: string): string { return `${timeZone} ${this._moment.tz(timeZone).format('Z')}` }
 
-    protected getDayOfWeek(timeZone: string): Date[] {
+    protected getDayOfWeek(timeZone: string, date?: string): Date[] {
         const headerDates: Date[] = [];
-        const todayAsString = this._moment().tz(timeZone).format('YYYY-MM-DD'); // タイムゾーンを考慮した今日の日付文字列
-        let startDate = this._moment.tz(todayAsString, timeZone);
+        const d = (!!!date)
+            ? this._moment().tz(timeZone).format('YYYY-MM-DD')
+            : this._moment(date).format('YYYY-MM-DD');
+        let startDate = this._moment.tz(d, timeZone);
         const endDate = startDate.clone().add(6, 'd');
         while (startDate <= endDate) {
             headerDates.push(startDate.toDate());

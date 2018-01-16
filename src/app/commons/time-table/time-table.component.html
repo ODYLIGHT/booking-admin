@@ -31,14 +31,40 @@
         <tr *ngFor="let time of leftColumns; let i = index">
             <ng-container *ngIf="isOnlyView; else canChanging">
                 <th class="u-mat-primary">{{ concatTimeStr(i) }}</th>
+                <td *ngFor="let date of dayOfWeek">
+                    <ng-container *ngIf="reservationCheck(convertDateForUTC(date, time)) as value">
+                        <ng-container *ngIf="!!value && value === 'Available'; else reserved">
+                            <span class="text-primary">{{ value }}</span>
+                        </ng-container>
+                        <ng-template #reserved>
+                            {{ reserver(convertDateForUTC(date, time)) }}
+                        </ng-template>
+                    </ng-container>
+                </td>
             </ng-container>
             <ng-template #canChanging>
                 <th class="u-mat-primary"
                     [ngStyle]="{ cursor: 'pointer' }"
                     (click)="onScheduledMultipleTime(dayOfWeek, time)"
                 >{{ concatTimeStr(i) }}</th>
+                <td
+                    [ngStyle]="{ cursor: 'pointer' }"
+                    *ngFor="let date of dayOfWeek"
+                    (click)="onScheduledSigleTime(convertDateForUTC(date, time))"
+                >
+                    <ng-container *ngIf="isChecked(convertDateForUTC(date, time)) as checkState">
+                        <i 
+                            aria-hidden="true"
+                            class="fa"
+                            [ngClass]="{
+                                'fa-check': checkState === 'scheduled',
+                                'fa-minus': checkState === 'reserved'
+                            }"
+                        ></i>
+                    </ng-container>
+                </td>
             </ng-template>
-            <td
+            <!-- <td
                 [ngStyle]="{ cursor: isOnlyView ? 'inherit' : 'pointer' }"
                 *ngFor="let date of dayOfWeek"
                 (click)="onScheduledSigleTime(convertDateForUTC(date, time))"
@@ -53,7 +79,7 @@
                         }"
                     ></i>
                 </ng-container>
-            </td>
+            </td> -->
         </tr>
     </tbody>
 
