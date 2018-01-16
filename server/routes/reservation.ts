@@ -142,7 +142,7 @@ router.get('/search-booking/searching', (req: Request, res: Response, next: Next
                                 teacher_name: teachers[item.teacher_id].name,
                                 reserved_date: item.reserved_date,
                                 reserved_by: item.reserved_by
-                            }
+                            };
                         });
                 }
                 res.status(200).json(bookings);
