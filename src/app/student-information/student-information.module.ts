@@ -5,6 +5,9 @@ import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from '../material.module';
 
+import { StudentInformationComponent } from './student-information.component';
+import { InformationFormComponent } from './information-form/information-form.component';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -14,6 +17,8 @@ import { MaterialModule } from '../material.module';
         RouterModule
     ],
     declarations: [
+        StudentInformationComponent,
+        InformationFormComponent
     ]
 })
 export class StudentInformationModule { }

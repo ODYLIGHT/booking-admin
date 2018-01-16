@@ -1,0 +1,26 @@
+<div class="page-header">
+    <h5 class="text-center">Student information</h5>
+</div>
+<div class="container">
+    <mat-card>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <h6 class="mr-5 d-inline-block">1.Register New Student Information.</h6>
+                    <button mat-raised-button>Add New Student</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <h6>2.Search Student Information.</h6>
+                    <app-information-form
+                        (searchEvent)="onSearch($event)"
+                    ></app-information-form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12"></div>
+            </div>
+        </div>
+    </mat-card>
+</div>

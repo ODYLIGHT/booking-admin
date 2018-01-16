@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { map } from 'rxjs/operators';
-
 import { PersonalInformationState } from '../../../store/types';
 
 @Component({
