@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
 
 import { MomentService } from '../../services/moment.service';
 import { PersonalInformationState } from '../../store/types';
-import { TeacherStore } from './check-teacher-schedule.store';
+import { TeacherStore, CheckScheduleState, CheckTeacherScheduleStore } from './check-teacher-schedule.store';
 
 @Injectable()
 export class CheckTeacherScheduleService extends MomentService {
@@ -19,7 +19,8 @@ export class CheckTeacherScheduleService extends MomentService {
     constructor(
         private snackBar: MatSnackBar,
         private http: HttpClient,
-        private teacherStore: TeacherStore
+        private teacherStore: TeacherStore,
+        private checkStore: CheckTeacherScheduleStore
     ) { super() }
 
     public initGetTeacherApi(): void {
@@ -32,13 +33,21 @@ export class CheckTeacherScheduleService extends MomentService {
     }
 
     public GetScheduleApi(_p): void {
-        const params = new HttpParams().set('id', _p.teacherId).set('date', this.convertDateForStr(_p.date));
+        const dateStr = this.convertDateForStr(_p.date);
+        const params = new HttpParams().set('id', _p.teacher.id).set('date', dateStr);
         this.http.get(this.apiGetScheduleUrl, { headers: this.headers, params })
             .subscribe(res => {
-                console.log(res);
+                const newState = {
+                    teacher: _p.teacher,
+                    dateAsUTC: dateStr,
+                    schedules: res['schedules'],
+                    reservations: res['reservations']
+                };
+                this.checkStore.changeState(newState);
             });
     }
 
     public get getTeachers$(): Observable<PersonalInformationState[]> { return this.teacherStore.data$.pipe(map(s => Object.values(s))) };
+    public get getSchedules$(): Observable<CheckScheduleState> { return this.checkStore.data$ }
 
 }

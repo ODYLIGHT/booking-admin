@@ -176,7 +176,8 @@ router.get('/check-teacher-schedule/get', (req: Request, res: Response, next: Ne
     if (isDebug) {
         const tasks = [
             fs.readFile(jsons.schedules),
-            fs.readFile(jsons.reservations)
+            fs.readFile(jsons.reservations),
+            fs.readFile(jsons.customers)
         ];
         Promise.all(tasks)
             .then((results: any[][]) => {
@@ -184,9 +185,21 @@ router.get('/check-teacher-schedule/get', (req: Request, res: Response, next: Ne
                     const intervalTime = new Date(sdk.schedule_date).getTime() - new Date(params.date).getTime();
                     return sdk.teacher_id === params.id && intervalTime > 0 && intervalTime < 604800 * 1000;
                 });
+
+                const customers = results[2].map((profile: CustomerState) => {
+                    const { id, name, time_zone } = profile;
+                    return { id, name, time_zone };
+                }).reduce((o, c) => ({ ...o, [c.id]: c }), {});
+
                 const reservations = results[1].filter((reserve: ReservationState) => {
                     const intervalTime = new Date(reserve.reserved_date).getTime() - new Date(params.date).getTime();
                     return reserve.teacher_id === params.id && intervalTime > 0 && intervalTime < 604800 * 1000;
+                }).map((reserve: ReservationState) => {
+                    return {
+                        customer_name: customers[reserve.customer_id].name,
+                        reserved_date: reserve.reserved_date,
+                        reserved_by: reserve.reserved_by
+                    };
                 });
                 res.status(200).json({ schedules, reservations });
             })

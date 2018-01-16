@@ -23,11 +23,14 @@ export class CheckTeacherScheduleFormComponent implements OnInit {
 
     private createForm() {
         this.searchForm = this.fb.group({
-            teacherId: [null, Validators.required],
+            index: [null, Validators.required],
             date: ['', Validators.required]
         });
     }
 
-    public onSearch(form: FormGroup): void { this.searchEvent.emit(form.value) }
+    public onSearch(form: FormGroup): void {
+        const submitValue = { teacher: this.teachers[form.value.index], date: form.value.date };
+        this.searchEvent.emit(submitValue);
+    }
 
 }

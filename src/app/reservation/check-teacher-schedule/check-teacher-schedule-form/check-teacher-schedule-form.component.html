@@ -2,9 +2,9 @@
     <div class="form-row">
         <div class="col-md-4">
             <mat-form-field class="w-100">
-                <mat-select placeholder="Teacher Name" formControlName="teacherId" required>
+                <mat-select placeholder="Teacher Name" formControlName="index" required>
                     <mat-option [value]="">Blank</mat-option>
-                    <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+                    <mat-option *ngFor="let teacher of teachers; let i = index" [value]="i">
                         {{ teacher.name }}
                     </mat-option>
                 </mat-select>
@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-4">
             <mat-form-field class="w-100">
-                <input matInput [matDatepicker]="picker" placeholder="Schedule date" formControlName="date" required>
+                <input matInput [matDatepicker]="picker" placeholder="Week" formControlName="date" required>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>

@@ -26,30 +26,42 @@ import { TimeState } from '../../store/types';
 export class TimeTableComponent implements OnInit, OnChanges {
     private _timeZone: string;
     @Input()
-    set timeZone(tz: string) { this._timeZone = tz || '' }
-    get timeZone() { return this._timeZone }
+    set timeZone(tz: string) { this._timeZone = tz || '' };
+    get timeZone() { return this._timeZone };
+
+    private _onlyViewItems: { teacher: any[], schedules: any[], reservations: any[], dateAsUTC: string };
+    @Input()
+    set onlyViewItems(str) { this._onlyViewItems = str }
+    get onlyViewItems() { return this._onlyViewItems }
+
     private _isOnlyView: boolean;
     @Input()
-    set isOnlyView(bool: boolean) { this._isOnlyView = bool }
-    get isOnlyView() { return this._isOnlyView }
+    set isOnlyView(bool: boolean) { this._isOnlyView = bool };
+    get isOnlyView() { return this._isOnlyView };
+
     private _timeState: TimeState = { current: [], insert: [], delete: [] };
     @Input()
-    set timeState(ts: TimeState) { this._timeState = ts }
-    get timeState() { return this._timeState }
+    set timeState(ts: TimeState) { this._timeState = ts };
+    get timeState() { return this._timeState };
+
     private _canNotReserve: string[];
     @Input()
     set canNotReserve(cnr: string[]) { this._canNotReserve = cnr };
-    get canNotReserve() { return this._canNotReserve || [] }
+    get canNotReserve() { return this._canNotReserve || [] };
+
     private _additionalNumber: number;
     @Input()
     set additionalNumber(n: number) { this._additionalNumber = n || 0 };
-    get additionalNumber() { return this._additionalNumber }
+    get additionalNumber() { return this._additionalNumber };
+
     @Output() datePropagator = new EventEmitter<Date[]>();
     @Output() clickHandler = new EventEmitter<{ targetColumn: string; action: string; value: string; }>();
 
     // 仮変数を定義しておく
     dayOfWeek: Date[];
     leftColumns: string[];
+    all_schedules: any[];
+    all_reservations: any[];
 
     constructor(private service: TimeTableService) { }
 
@@ -68,6 +80,13 @@ export class TimeTableComponent implements OnInit, OnChanges {
                 } else if (propName === 'additionalNumber' && !!!changes[propName].firstChange) {
                     this.dayOfWeek = this.service.getAddedWeek(this.dayOfWeek, changes[propName]);
                     this.datePropagator.emit(this.dayOfWeek);
+                } else if (propName === 'onlyViewItems') {
+                    // 予約状況チェックコンポーネントからの利用
+                    const _items = changes[propName].currentValue;
+                    this.dayOfWeek = this.service.getHeaderDates(_items.teacher.time_zone, _items.dateAsUTC);
+                    this.all_schedules = this.onlyViewItems.schedules.map(obj => obj.schedule_date);
+                    this.all_reservations = this.onlyViewItems.reservations.map(obj => obj.reserved_date);
+                    console.log(_items);
                 }
             }
         }
@@ -132,6 +151,16 @@ export class TimeTableComponent implements OnInit, OnChanges {
             allTimes = date.map(_date => this.convertDateForUTC(_date, time));
         }
         allTimes.forEach(utcTimeStr => this.onScheduledSigleTime(utcTimeStr));
+    }
+
+    public reservationCheck(dateStr: string): string {
+        const isSdk = this.all_schedules.includes(dateStr);
+        const isRvt = this.all_reservations.includes(dateStr);
+        return (isSdk) ? '' : (isRvt) ? 'reserved' : 'Available';
+    }
+
+    public reserver(dateStr: string): string {
+        return this.onlyViewItems.reservations[this.onlyViewItems.reservations.findIndex(o => o.reserved_date === dateStr)].customer_name;
     }
 
 }

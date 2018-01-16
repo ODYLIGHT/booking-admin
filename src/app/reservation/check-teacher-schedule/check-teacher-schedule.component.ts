@@ -4,13 +4,13 @@ import { Observable } from 'rxjs/Observable';
 import { PersonalInformationState } from '../../store/types';
 
 import { CheckTeacherScheduleService } from './check-teacher-schedule.service';
-import { TeacherStore } from './check-teacher-schedule.store';
+import { TeacherStore, CheckScheduleState, CheckTeacherScheduleStore } from './check-teacher-schedule.store';
 
 @Component({
     selector: 'app-check-teacher-schedule',
     templateUrl: './check-teacher-schedule.component.html',
     styleUrls: ['./check-teacher-schedule.component.scss'],
-    providers: [CheckTeacherScheduleService, TeacherStore],
+    providers: [CheckTeacherScheduleService, TeacherStore, CheckTeacherScheduleStore],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CheckTeacherScheduleComponent implements OnInit {
@@ -22,5 +22,6 @@ export class CheckTeacherScheduleComponent implements OnInit {
     public onSearch(params): void { this.service.GetScheduleApi(params) }
 
     public get teachersAsObservable$(): Observable<PersonalInformationState[]> { return this.service.getTeachers$ }
+    public get schedulesAsObservable$(): Observable<CheckScheduleState> { return this.service.getSchedules$ }
 
 }
