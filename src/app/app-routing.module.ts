@@ -8,6 +8,8 @@ import { TeacherScheduleComponent } from './teacher-information/teacher-schedule
 import { TeacherFormsComponent } from './teacher-information/register-teachers/teacher-forms/teacher-forms.component';
 
 import { StudentInformationComponent } from './student-information/student-information.component';
+import { EditProfileComponent } from './student-information/edit-profile/edit-profile.component';
+import { LessonHistoryComponent } from './student-information/lesson-history/lesson-history.component';
 
 import { RegisterBookingComponent } from './reservation/register-booking/register-booking.component';
 import { SearchBookingComponent } from './reservation/search-booking/search-booking.component';
@@ -53,8 +55,8 @@ const routes: Routes = [
                 path: 'student-information',
                 children: [
                     { path: '', component: StudentInformationComponent },
-                    // { path: 'overview/:id', component: OverviewComponent },
-                    // { path: 'credit-information', component: CreditInformationComponent }
+                    { path: 'edit-profile/:id', component: EditProfileComponent },
+                    { path: 'lesson-history/:id', component: LessonHistoryComponent }
                 ]
             }, // Children will be added
             { path: 'school-information', component: SchoolInformationComponent },

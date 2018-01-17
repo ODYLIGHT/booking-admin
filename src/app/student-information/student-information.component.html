@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-12 mb-3">
                     <h6 class="mr-5 d-inline-block">1.Register New Student Information.</h6>
-                    <button mat-raised-button>Add New Student</button>
+                    <a mat-raised-button [routerLink]="['./edit-profile', 'new']">Add New Student</a>
                 </div>
             </div>
             <div class="row">
@@ -20,7 +20,12 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <pre>{{informationsAsObservable$ | async | json}}</pre>
+                    <ng-container *ngIf="informationsAsObservable$ | async as customers">
+                        <app-information-table *ngIf="customers.length"
+                            [customers]="customers"
+                            
+                        ></app-information-table>
+                    </ng-container>
                 </div>
             </div>
         </div>
