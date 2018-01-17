@@ -23,7 +23,6 @@
                     <ng-container *ngIf="informationsAsObservable$ | async as customers">
                         <app-information-table *ngIf="customers.length"
                             [customers]="customers"
-                            
                         ></app-information-table>
                     </ng-container>
                 </div>

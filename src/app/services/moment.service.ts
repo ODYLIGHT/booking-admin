@@ -27,6 +27,8 @@ export class MomentService {
      */
     public get getTimeZones(): string[] { return this._moment.tz.names() }
 
+    protected formatedTimeZone(timeZone: string) { return this._moment.tz(timeZone).format('Z') }
+
     public timeIntervalFromTimeZone(timeZone: string): string { return `${timeZone} ${this._moment.tz(timeZone).format('Z')}` }
 
     protected getDayOfWeek(timeZone: string, date?: string): Date[] {

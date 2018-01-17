@@ -2,7 +2,7 @@
 
     <thead>
         <tr class="u-mat-primary">
-            <th>Customer ID</th>
+            <th>Id</th>
             <th>Name</th>
             <th>Gender</th>
             <th>Country</th>
@@ -19,7 +19,7 @@
                 <td class="text-center">{{ customer.id }}</td>
                 <td>{{ customer.name }}</td>
                 <td class="text-center">{{ customer.gender ? 'Male' : 'Female' }}</td>
-                <td>{{ customer.time_zone }}</td>
+                <td>{{ getCountry(customer.time_zone) }}</td>
                 <td>{{ customer.skype_name }}</td>
                 <td>{{ customer.mail_address }}</td>
                 <td>

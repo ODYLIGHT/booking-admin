@@ -39,7 +39,21 @@ export class StudentInformationService {
         };
         const httpParams = new HttpParams({ fromObject: params });
         this.http.get<StudentInformationState[]>(this.apiGetCustomerUrl, { headers: this.headers, params: httpParams })
-            .subscribe(res => this.store.changeState(res));
+            .subscribe(
+                res => {
+                    if (!!!res.length) window.alert('Nothing to match...');
+                    this.store.changeState(res);
+                },
+                (err: HttpErrorResponse) => {
+                    const errorMessage =
+                        'There was a problem on the server side.\n'
+                        + 'Please give the administrator the following message / code.\n'
+                        + `[message]: ${err.statusText}\n`
+                        + `[code]: ${err.status}\n`
+                        ;
+                    window.alert(errorMessage);
+                }
+            );
     }
 
     public get getInformations$(): Observable<StudentInformationState[]> { return this.store.data$.pipe(map(s => Object.values(s))) }
