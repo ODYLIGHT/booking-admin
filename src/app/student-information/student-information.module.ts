@@ -11,6 +11,7 @@ import { InformationFormComponent } from './information-form/information-form.co
 import { InformationTableComponent } from './information-table/information-table.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { LessonHistoryComponent } from './lesson-history/lesson-history.component';
+import { CreditInformationComponent } from './credit-information/credit-information.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { LessonHistoryComponent } from './lesson-history/lesson-history.componen
         InformationFormComponent,
         InformationTableComponent,
         EditProfileComponent,
-        LessonHistoryComponent
+        LessonHistoryComponent,
+        CreditInformationComponent
     ]
 })
 export class StudentInformationModule { }
