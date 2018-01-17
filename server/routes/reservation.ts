@@ -2,7 +2,7 @@
 import { Router, Response, Request, NextFunction } from 'express';
 import { FsService } from '../modules/fs.modules';
 import * as Debug from 'debug';
-import { paths, jsons } from '../modules/paths';
+import { jsons } from '../modules/paths';
 import { CustomerState, TeacherState, ScheduleState, ReservationState } from '../../src/app/store/types';
 
 const router: Router = Router();
