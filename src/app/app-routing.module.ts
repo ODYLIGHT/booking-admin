@@ -56,7 +56,7 @@ const routes: Routes = [
                 path: 'student-information',
                 children: [
                     { path: '', component: StudentInformationComponent },
-                    { path: 'edit-profile/:id', component: EditProfileComponent },
+                    { path: 'edit-profile', component: EditProfileComponent },
                     { path: 'lesson-history/:id', component: LessonHistoryComponent },
                     { path: 'credit-information', component: CreditInformationComponent }
                 ]

@@ -44,4 +44,18 @@ router.get('/get', (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
+router.get('/get-profile', (req: Request, res: Response, next: NextFunction) => {
+    debug(`[ ${req.method} ]: ${req.url}`);
+    const id = +req.query.id;
+    // 顧客のIDから個人情報を取得します　単一オブジェクトを要求
+    if (isDebug) {
+        fs.readFile(jsons.customers)
+            .then((response: CustomerState[]) => {
+                const customer = response.find(value => value.id === id);
+                res.status(200).json(customer);
+            })
+            .catch(err => res.status(501).json(err));
+    }
+});
+
 module.exports = router;

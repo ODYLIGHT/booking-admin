@@ -25,7 +25,11 @@
                 <td>{{ customer.skype_name }}</td>
                 <td>{{ customer.mail_address }}</td>
                 <td>
-                    <a mat-raised-button color="primary" [routerLink]="['./edit-profile', customer.id]">Overview</a>
+                    <!-- <a mat-raised-button color="primary" [routerLink]="['./edit-profile', customer.id]">Overview</a> -->
+                    <a mat-raised-button color="primary"
+                        routerLink="./edit-profile"
+                        [queryParams]="{id: customer.id}"
+                    >Overview</a>
                 </td>
                 <td>
                     <a mat-raised-button color="warn" [routerLink]="['./lesson-history', customer.id]">History</a>
