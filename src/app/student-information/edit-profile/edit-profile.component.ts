@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { CustomerState } from '../../store/types';
+import { CustomerState, ListState } from '../../store/types';
 import { EditProfileService } from './edit-profile.service';
 
 @Component({
@@ -16,7 +16,10 @@ import { EditProfileService } from './edit-profile.service';
 })
 export class EditProfileComponent implements OnInit {
     public CustomerProfileForm: FormGroup;
-    public pageHeaderTitle = 'Add new student'
+    public pageHeaderTitle = 'Add new student';
+    public pullDownMenes: ListState = {
+        french_levels: [], purpose: [], languages: [], finded_tools: [], program_code: [], remark: [], client_code: []
+    };
 
     constructor(
         private route: ActivatedRoute,
@@ -26,6 +29,7 @@ export class EditProfileComponent implements OnInit {
     ) { this.initFormGroup() }
 
     ngOnInit() {
+        this.service.getPullDownMenusApi.subscribe((menus: ListState) => this.pullDownMenes = menus);
         this.route.queryParamMap.subscribe((params: ParamMap) => {
             // `id`がある場合は顧客情報の修正、ない場合は新規登録です
             // 修正のときはidから個人情報を取得し、FormGroupオブジェクトに割り当てて描画します
@@ -61,7 +65,7 @@ export class EditProfileComponent implements OnInit {
             birthday: [null, Validators.required],
             skype_name: [
                 '',
-                Validators.compose([Validators.required, Validators.pattern(/^[a-z][a-zA-Z0-9.,-_]*$/)])
+                [Validators.required, Validators.pattern(/^[a-z][a-zA-Z0-9.,-_]*$/)]
             ],
             mail_address: [
                 '',
@@ -91,7 +95,6 @@ export class EditProfileComponent implements OnInit {
     private getProfile(id: number): Observable<CustomerState> { return this.service.getProfileApi(id) }
 
     public onSubmit(form: FormGroup): void {
-        console.log(form);
         console.log(form.value);
     }
 

@@ -9,6 +9,10 @@ export interface MenuState {
     ]
 }
 
+export interface ListState {
+    [key: string]: { [key: string]: string }[];
+}
+
 /**
  * 講師の情報を表すインターフェイス
  * `id`以外は無くてもよいものとしてます(nameとかtime_zoneも必須にしてもよいかもしれません)

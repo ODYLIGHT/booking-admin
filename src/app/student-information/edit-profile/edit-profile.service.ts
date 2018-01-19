@@ -10,9 +10,14 @@ import { CustomerState } from '../../store/types';
 @Injectable()
 export class EditProfileService {
     private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    readonly apiGetPullDownMenusUrl = 'api/config/pull-down';
     readonly apiGetProfileUrl = 'api/student-information/get-profile';
 
     constructor(private http: HttpClient) { }
+
+    public get getPullDownMenusApi(): Observable<any> {
+        return this.http.get(this.apiGetPullDownMenusUrl, { headers: this.headers });
+    }
 
     public getProfileApi(id: number): Observable<CustomerState> {
         const params = new HttpParams().set('id', `${id}`);
