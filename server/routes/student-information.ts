@@ -58,4 +58,26 @@ router.get('/get-profile', (req: Request, res: Response, next: NextFunction) => 
     }
 });
 
+router.post('/insert', (req: Request, res: Response, next: NextFunction) => {
+    debug(`[ ${req.method} ]: ${req.url}`);
+    const params: CustomerState = req.body;
+    if (isDebug) {
+        // 70%で成功　30%でリクエストエラーを発生させる
+        const randumNum = Math.random();
+        if (randumNum <= 0.7) res.status(200).json({ isSuccess: true, data: params });
+        else res.status(501).json({ isSuccess: false });
+    }
+});
+
+router.put('/update', (req: Request, res: Response, next: NextFunction) => {
+    debug(`[ ${req.method} ]: ${req.url}`);
+    const params: CustomerState = req.body;
+    if (isDebug) {
+        // 70%で成功　30%でリクエストエラーを発生させる
+        const randumNum = Math.random();
+        if (randumNum <= 0.7) res.status(200).json({ isSuccess: true, data: params });
+        else res.status(501).json({ isSuccess: false });
+    }
+});
+
 module.exports = router;

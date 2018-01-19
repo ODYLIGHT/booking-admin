@@ -95,7 +95,13 @@ export class EditProfileComponent implements OnInit {
     private getProfile(id: number): Observable<CustomerState> { return this.service.getProfileApi(id) }
 
     public onSubmit(form: FormGroup): void {
-        console.log(form.value);
+        const params: CustomerState = form.value;
+        const confirmMes = params.id ? `${params.name}の情報を更新しますか？` : '新しい講師を登録しますか？';
+        if (window.confirm(confirmMes)) {
+            this.service.upsertProfileApi(params).subscribe(res => {
+                console.log(res);
+            });
+        }
     }
 
 }
