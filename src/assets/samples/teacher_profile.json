@@ -1,7 +1,8 @@
 [
     {
         "id": 1,
-        "name": "Cardenas",
+        "name_first": "Cardenas",
+        "name_last": "lastName",
         "state": true,
         "time_zone": "Europe/Berlin",
         "customers_language": 0,
@@ -28,7 +29,8 @@
     },
     {
         "id": 2,
-        "name": "Leach",
+        "name_first": "Leach",
+        "name_last": "lastName",
         "state": true,
         "time_zone": "Europe/Paris",
         "customers_language": 0,
@@ -55,7 +57,8 @@
     },
     {
         "id": 3,
-        "name": "Noel",
+        "name_first": "Noel",
+        "name_last": "lastName",
         "state": true,
         "time_zone": "America/New_York",
         "customers_language": 0,
@@ -82,7 +85,8 @@
     },
     {
         "id": 4,
-        "name": "Rivas",
+        "name_first": "Rivas",
+        "name_last": "lastName",
         "state": false,
         "time_zone": "Pacific/Honolulu",
         "customers_language": 0,
@@ -109,7 +113,8 @@
     },
     {
         "id": 5,
-        "name": "Mccall",
+        "name_first": "Mccall",
+        "name_last": "lastName",
         "state": true,
         "time_zone": "America/Los_Angeles",
         "customers_language": 0,
@@ -136,7 +141,8 @@
     },
     {
         "id": 6,
-        "name": "Sato",
+        "name_first": "Sato",
+        "name_last": "lastName",
         "state": true,
         "time_zone": "Asia/Tokyo",
         "customers_language": 0,
@@ -163,7 +169,8 @@
     },
     {
         "id": 7,
-        "name": "White",
+        "name_first": "White",
+        "name_last": "lastName",
         "state": true,
         "time_zone": "Europe/London",
         "customers_language": 0,
@@ -190,7 +197,8 @@
     },
     {
         "id": 8,
-        "name": "Velasquez",
+        "name_first": "Velasquez",
+        "name_last": "lastName",
         "state": true,
         "time_zone": "Europe/Minsk",
         "customers_language": 0,
@@ -217,7 +225,8 @@
     },
     {
         "id": 9,
-        "name": "Daphne",
+        "name_first": "Daphne",
+        "name_last": "lastName",
         "state": false,
         "time_zone": "Australia/Brisbane",
         "customers_language": 0,
@@ -244,7 +253,8 @@
     },
     {
         "id": 10,
-        "name": "Ellen",
+        "name_first": "Ellen",
+        "name_last": "lastName",
         "state": true,
         "time_zone": "America/Juneau",
         "customers_language": 0,
@@ -271,7 +281,8 @@
     },
     {
         "id": 11,
-        "name": "Wright",
+        "name_first": "Wright",
+        "name_last": "lastName",
         "state": true,
         "time_zone": "Europe/Madrid",
         "customers_language": 0,
@@ -298,7 +309,8 @@
     },
     {
         "id": 12,
-        "name": "dark",
+        "name_first": "dark",
+        "name_last": "lastName",
         "state": true,
         "time_zone": "Europe/Madrid",
         "customers_language": 0,

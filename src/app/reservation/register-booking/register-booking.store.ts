@@ -2,9 +2,13 @@ import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
 import { TimeState, PersonalInformationState } from '../../store/types';
 
+export interface PersonState extends PersonalInformationState {
+    name: string;
+}
+
 export interface OperationsState {
-    customer: PersonalInformationState;
-    teacher: PersonalInformationState;
+    customer: PersonState;
+    teacher: PersonState;
 }
 
 export interface BookingState {
@@ -14,8 +18,10 @@ export interface BookingState {
     canNotReserve: string[];
 }
 
-export const initOptionsState: PersonalInformationState = {
+export const initOptionsState: PersonState = {
     id: null,
+    name_first: '',
+    name_last: '',
     name: '',
     time_zone: ''
 };

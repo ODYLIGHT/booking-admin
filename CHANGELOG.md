@@ -1,9 +1,16 @@
 # 周知しておきたい変更点をまとめる
 
+## 追加・修正予定について
+講師のプロファイルにおいて、`user_id`を削除方向で進めるのでフォームをコメントアウトする(2018/01/17)
+同プロファイルの`顧客からの感想`も削除、ないしは受講履歴テーブルに移行検討中(2018/01/17)
+トップページを開くと`get/menus`リクエストが2回走る(201/01/19)
+
 ## 2018/01/16
 @angular/cliをアップデートしましたのでモジュールの入れ直しをお願いします
+
+※`yarn.lock`を残したままモジュールを入れ直すと、generateコマンドがエラーになる可能性があります
 ```
-$ rm -rf node_modules (or rmdir /s/q node_modules)
+$ rm -rf node_modules yarn.lock (or rmdir /s/q node_modules yarn.lock)
 $ npm install (or yarn install)
 ```
 

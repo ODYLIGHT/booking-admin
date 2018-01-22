@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { MaterialModule } from '../material.module';
 
+import { StudentInformationComponent } from './student-information.component';
+import { InformationFormComponent } from './information-form/information-form.component';
+import { InformationTableComponent } from './information-table/information-table.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { LessonHistoryComponent } from './lesson-history/lesson-history.component';
 import { CreditInformationComponent } from './credit-information/credit-information.component';
-
-import { OverviewComponent } from './overview/overview.component';
-
-import { StudentInformationComponent } from './student-information/student-information.component';
-import { InformationSearchFormComponent } from './student-information/information-search-form/information-search-form.component';
-import { InformationTableComponent } from './student-information/information-table/information-table.component';
 
 @NgModule({
     imports: [
@@ -19,14 +19,16 @@ import { InformationTableComponent } from './student-information/information-tab
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
-        RouterModule
+        RouterModule,
+        NgbModule
     ],
     declarations: [
-        CreditInformationComponent,
-        OverviewComponent,
         StudentInformationComponent,
-        InformationSearchFormComponent,
-        InformationTableComponent
+        InformationFormComponent,
+        InformationTableComponent,
+        EditProfileComponent,
+        LessonHistoryComponent,
+        CreditInformationComponent
     ]
 })
 export class StudentInformationModule { }

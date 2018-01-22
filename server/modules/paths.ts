@@ -11,6 +11,8 @@ export const paths = {
 
 export const jsons = {
     customers: './src/assets/samples/customer_profile.json',
+    menus: './src/assets/config/menu.config.json',
+    pull_downs: './src/assets/samples/pulldown_menus.json',
     reservations: './src/assets/samples/customer_reservations.json',
     schedules: './src/assets/samples/teacher_schedules.json',
     teachers: './src/assets/samples/teacher_profile.json'

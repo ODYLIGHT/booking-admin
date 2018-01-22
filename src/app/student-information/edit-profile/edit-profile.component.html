@@ -1,0 +1,219 @@
+<div class="page-header">
+    <h5 class="text-center">{{ pageHeaderTitle }}</h5>
+</div>
+<div class="container">
+    <mat-card>
+        <form [formGroup]="CustomerProfileForm" (ngSubmit)="onSubmit(CustomerProfileForm)" novalidate>
+            <div class="form-group">
+                <div class="form-row mb-3 justify-content-md-center">
+                    <div class="col-6 col-md-3">
+                        <mat-form-field class="w-100" [floatLabel]="'always'">
+                            <mat-label>例）Taro</mat-label>
+                            <input matInput type="text" placeholder="名前(First name)" formControlName="name_first" autocomplete="off" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <mat-form-field class="w-100" [floatLabel]="'always'">
+                            <mat-label>例）YAMADA</mat-label>
+                            <input matInput type="text" placeholder="名前(Last name)" formControlName="name_last" autocomplete="off" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-7 col-md-3 text-md-center align-self-center">
+                        <mat-radio-group aria-label="gender" formControlName="gender" required>
+                            <mat-radio-button [value]="+0">男性</mat-radio-button>
+                            <mat-radio-button [value]="+1">女性</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="form-row mb-3 justify-content-md-center">
+                    <div class="col-6 col-md-3">
+                        <mat-form-field class="w-100" [floatLabel]="'never'">
+                            <input matInput [matDatepicker]="picker" placeholder="生年月日" formControlName="birthday" required>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker startView="year"></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6 col-md-3 offset-md-1">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="タイムゾーン" formControlName="time_zone" required>
+                                <mat-option *ngFor="let item of timeZones()" [value]="item">
+                                    {{ item }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-row mb-3 justify-content-md-center">
+                    <div class="col col-md-5">
+                        <mat-form-field class="w-100" [floatLabel]="'always'">
+                            <mat-label>例）yamadataro777@gmail.com</mat-label>
+                            <input matInput type="text" placeholder="メールアドレス" formControlName="mail_address" autocomplete="off" required>
+                            <mat-hint>このメールアドレスがIDとなります。</mat-hint>
+                            <mat-error *ngIf="CustomerProfileForm.hasError('pattern', 'mail_address')">
+                                メールアドレス形式ではありません
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col col-md-5">
+                        <mat-form-field class="w-100" [floatLabel]="'always'">
+                            <mat-label>最初は半角英字、それ以降は半角英数字と一部記号が可</mat-label>
+                            <input matInput type="text" placeholder="Skype名" formControlName="skype_name" autocomplete="off" required>
+                            <mat-hint>
+                                可能記号： (,) (.) (-) (_)
+                            </mat-hint>
+                            <mat-error *ngIf="CustomerProfileForm.hasError('pattern', 'skype_name')">
+                                入力規則違反、またはスペースが入っています
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-row mb-3 justify-content-md-center">
+                    <div class="col col-md-5">
+                        <mat-form-field class="w-100" [floatLabel]="'always'">
+                            <mat-label>6文字以上12文字以内</mat-label>
+                            <input matInput type="password" placeholder="パスワード" formControlName="password" autocomplete="off" required>
+                            <mat-error *ngIf="CustomerProfileForm.hasError('minlength', 'password')">
+                                パスワードは6文字以上です
+                            </mat-error>
+                            <mat-error *ngIf="CustomerProfileForm.hasError('maxlength', 'password')">
+                                パスワードは12文字以内です
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col col-md-5">
+                        <mat-form-field class="w-100" [floatLabel]="'never'">
+                            <input matInput type="password" placeholder="パスワード再入力" formControlName="password" autocomplete="off" required>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-row mb-3 justify-content-md-center">
+                    <div class="col col-md-4">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="現在のフランス語レベル" formControlName="french_level" required>
+                                <mat-option *ngFor="let item of pullDownMenes['french_levels']" [value]="item.value">
+                                    {{ item.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col col-md-6">
+                        <mat-form-field class="w-100">
+                            <textarea matInput placeholder="フランス語修学の経験" [rows]="1" force="true" formControlName="learning_experience">
+                            </textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-row mb-3 justify-content-md-center">
+                    <div class="col col-md-3">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="学習目的" formControlName="purpose" required>
+                                <mat-option *ngFor="let item of pullDownMenes['purpose']" [value]="item.value">
+                                    {{ item.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col col-md-4">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="母国語" formControlName="mother_tongue" required>
+                                <mat-option *ngFor="let item of pullDownMenes['languages']" [value]="item.value">
+                                    {{ item.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col col-md-3">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="当サイトを知ったきっかけ" formControlName="how_finded" required>
+                                <mat-option *ngFor="let item of pullDownMenes['finded_tools']" [value]="item.value">
+                                    {{ item.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-row mb-3 justify-content-md-center">
+                    <div class="col col-md-4">
+                        <div class="form-row">
+                            <div class="col col-md-12">
+                                <mat-form-field class="w-100">
+                                    <mat-select placeholder="他に話せる言語１" formControlName="other_language1">
+                                        <mat-option>---</mat-option>
+                                        <mat-option *ngFor="let item of pullDownMenes['languages']" [value]="item.value">
+                                            {{ item.label }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row" *ngIf="CustomerProfileForm.controls['other_language1'].value">
+                            <div class="col col-md-12 text-md-center">
+                                <mat-radio-group aria-label="other_language1_level" formControlName="other_language1_level">
+                                    <mat-radio-button [value]="+0">初心者</mat-radio-button>
+                                    <mat-radio-button [value]="+1">中級者</mat-radio-button>
+                                    <mat-radio-button [value]="+2">上級者</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-4 offset-md-2">
+                        <div class="form-row">
+                            <div class="col- col-md-12">
+                                <mat-form-field class="w-100">
+                                    <mat-select placeholder="他に話せる言語２" formControlName="other_language2">
+                                        <mat-option>---</mat-option>
+                                        <mat-option *ngFor="let item of pullDownMenes['languages']" [value]="item.value">
+                                            {{ item.label }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row" *ngIf="CustomerProfileForm.controls['other_language2'].value">
+                            <div class="col col-md-12 text-md-center">
+                                <mat-radio-group aria-label="other_language2_level" formControlName="other_language2_level">
+                                    <mat-radio-button [value]="+0">初心者</mat-radio-button>
+                                    <mat-radio-button [value]="+1">中級者</mat-radio-button>
+                                    <mat-radio-button [value]="+2">上級者</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mb-3 justify-content-md-center">
+                    <div class="col col-md-4">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="Program code" formControlName="program_code">
+                                <mat-option *ngFor="let item of pullDownMenes['program_code']" [value]="item.value">
+                                    {{ item.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col col-md-3">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="Remark" formControlName="remark">
+                                <mat-option *ngFor="let item of pullDownMenes['remark']" [value]="item.value">
+                                    {{ item.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col col-md-3">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="Client code" formControlName="client_code">
+                                <mat-option *ngFor="let item of pullDownMenes['client_code']" [value]="item.value">
+                                    {{ item.label }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <!-- <button type="submit" mat-raised-button [disabled]="CustomerProfileForm.invalid">Register</button> -->
+                <button type="submit" mat-raised-button>Register</button>
+            </div>
+        </form>
+    </mat-card>
+</div>

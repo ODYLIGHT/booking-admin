@@ -9,6 +9,10 @@ export interface MenuState {
     ]
 }
 
+export interface ListState {
+    [key: string]: { [key: string]: string }[];
+}
+
 /**
  * 講師の情報を表すインターフェイス
  * `id`以外は無くてもよいものとしてます(nameとかtime_zoneも必須にしてもよいかもしれません)
@@ -16,6 +20,8 @@ export interface MenuState {
 export interface TeacherState {
     id: number;
     name?: string;
+    name_first?: string;
+    name_last?: string;
     state?: number | boolean;
     time_zone?: string;
     customers_language?: number;
@@ -44,8 +50,26 @@ export interface TeacherState {
 // 生徒の個人情報
 export interface CustomerState {
     id: number;
-    name?: string;
+    name_first?: string;
+    name_last?: string;
     time_zone?: string;
+    gender?: number;
+    birthday: Date,
+    skype_name?: string;
+    mail_address?: string;
+    password?: string;
+    french_level?: number;
+    learning_experience?: string;
+    purpose?: string;
+    mother_tongue?: string;
+    how_finded?: string;
+    other_language1?: string;
+    other_language1_level?: number;
+    other_language2?: string;
+    other_language2_level?: number;
+    program_code?: string;
+    remark?: string;
+    client_code?: string;
 }
 
 // タイムテーブルに渡すUTC時間文字列
@@ -58,7 +82,8 @@ export interface TimeState {
 // プルダウンメニュー用など、個人情報を取得する場合の型定義
 export interface PersonalInformationState {
     id: number;
-    name: string;
+    name_first: string;
+    name_last: string;
     time_zone: string;
 }
 
@@ -87,46 +112,57 @@ export interface BookingState {
     reserved_by?: number;
 }
 
+// At `Student information`顧客検索結果
+export interface StudentInformationState {
+    id: number;
+    name_first: string;
+    name_last: string;
+    time_zone: string;
+    gender: number;
+    skype_name: string;
+    mail_address: string;
+}
+
 ///////////////////////////// この上までは間違いなく使っている(2018/01/05現在)
 
-export interface RegisterBookingTeachersState {
-    _id: number;
-    _name: string;
-}
+// export interface RegisterBookingTeachersState {
+//     _id: number;
+//     _name: string;
+// }
 
-export interface SearcherCustomerState {
-    _name: string; // 顧客名(CustomerState.customerName)
-    _teachers: RegisterBookingTeachersState[];
-}
+// export interface SearcherCustomerState {
+//     _name: string; // 顧客名(CustomerState.customerName)
+//     _teachers: RegisterBookingTeachersState[];
+// }
 
-export interface SearchBookingState {
-    customerId: number;
-    reservationId: string;
-    studentName: string;
-    date: string;
-    teacherName: string;
-    reserveBy: string;
-}
+// export interface SearchBookingState {
+//     customerId: number;
+//     reservationId: string;
+//     studentName: string;
+//     date: string;
+//     teacherName: string;
+//     reserveBy: string;
+// }
 
-export interface CheckTeacherScheduleState {
-    schedules?: {
-        _date: Date;
-        _can_reserve: boolean;
-        _reserved_user: number;
-    }[];
-    reservations?: {
-        _id: number;
-        _reserve_date: Date;
-        _teacher_id: number;
-        _status: string;
-    }[];
-}
+// export interface CheckTeacherScheduleState {
+//     schedules?: {
+//         _date: Date;
+//         _can_reserve: boolean;
+//         _reserved_user: number;
+//     }[];
+//     reservations?: {
+//         _id: number;
+//         _reserve_date: Date;
+//         _teacher_id: number;
+//         _status: string;
+//     }[];
+// }
 
-export interface SearchedStudentInformationState {
-    id: number;
-    customerName: string;
-    gender: string;
-    // _country: string; // タイムゾーン　どこで定義するのか不明・・・
-    skypeName: string;
-    mailAddress: string;
-}
+// export interface SearchedStudentInformationState {
+//     id: number;
+//     customerName: string;
+//     gender: string;
+//     // _country: string; // タイムゾーン　どこで定義するのか不明・・・
+//     skypeName: string;
+//     mailAddress: string;
+// }

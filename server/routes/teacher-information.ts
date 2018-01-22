@@ -18,8 +18,13 @@ router.get('/register-teachers', (req: Request, res: Response, next: NextFunctio
         fs.readFile(jsons.teachers)
             .then((result: TeacherState[]) => {
                 const dataAsRequestFormat = result.map(item => {
-                    const { id, name, state } = item;
-                    return { id, name, state };
+                    // const { id, name, state } = item;
+                    // return { id, name, state };
+                    return {
+                        id: item.id,
+                        name: `${item.name_first} ${item.name_last}`,
+                        state: item.state
+                    };
                 });
                 res.status(200).json(dataAsRequestFormat);
             })
@@ -89,8 +94,13 @@ router.get('/teacher-schedule/operations-init', (req: Request, res: Response, ne
         fs.readFile(jsons.teachers)
             .then((result: TeacherState[]) => {
                 const dataAsRequestFormat = result.map(item => {
-                    const { id, name, time_zone } = item;
-                    return { id, name, time_zone };
+                    // const { id, name, time_zone } = item;
+                    // return { id, name, time_zone };
+                    return {
+                        id: item.id,
+                        name: `${item.name_first} ${item.name_last}`,
+                        time_zone: item.time_zone
+                    };
                 });
                 res.status(200).json(dataAsRequestFormat);
             })

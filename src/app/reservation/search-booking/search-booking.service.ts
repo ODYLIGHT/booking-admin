@@ -43,7 +43,7 @@ export class SearchBookingService extends MomentService {
         }
         const searchParams = new HttpParams({ fromString: queryStr });
         // express側でデータ形成していますが、必要であればこちらで形成を行ってStoreを更新する
-        this.http.get < BookingState[]>(this.apiSearchBookingUrl, { headers: this.headers, params: searchParams })
+        this.http.get<BookingState[]>(this.apiSearchBookingUrl, { headers: this.headers, params: searchParams })
             .subscribe(res => this.bookingStore.changeState(res));
     }
 

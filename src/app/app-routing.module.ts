@@ -7,8 +7,9 @@ import { RegisterTeachersComponent } from './teacher-information/register-teache
 import { TeacherScheduleComponent } from './teacher-information/teacher-schedule/teacher-schedule.component';
 import { TeacherFormsComponent } from './teacher-information/register-teachers/teacher-forms/teacher-forms.component';
 
-import { StudentInformationComponent } from './student-information/student-information/student-information.component';
-import { OverviewComponent } from './student-information/overview/overview.component';
+import { StudentInformationComponent } from './student-information/student-information.component';
+import { EditProfileComponent } from './student-information/edit-profile/edit-profile.component';
+import { LessonHistoryComponent } from './student-information/lesson-history/lesson-history.component';
 import { CreditInformationComponent } from './student-information/credit-information/credit-information.component';
 
 import { RegisterBookingComponent } from './reservation/register-booking/register-booking.component';
@@ -55,7 +56,8 @@ const routes: Routes = [
                 path: 'student-information',
                 children: [
                     { path: '', component: StudentInformationComponent },
-                    { path: 'overview/:id', component: OverviewComponent },
+                    { path: 'edit-profile', component: EditProfileComponent },
+                    { path: 'lesson-history/:id', component: LessonHistoryComponent },
                     { path: 'credit-information', component: CreditInformationComponent }
                 ]
             }, // Children will be added
