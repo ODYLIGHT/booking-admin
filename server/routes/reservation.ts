@@ -20,8 +20,13 @@ router.get('/get-teacher', (req: Request, res: Response, next: NextFunction) => 
         fs.readFile(jsons.teachers)
             .then((result: TeacherState[]) => {
                 const dataAsRequestFormat = result.map(item => {
-                    const { id, name, time_zone } = item;
-                    return { id, name, time_zone };
+                    // const { id, name, time_zone } = item;
+                    // return { id, name, time_zone };
+                    return {
+                        id: item.id,
+                        name: `${item.name_first} ${item.name_last}`,
+                        time_zone: item.time_zone
+                    };
                 });
                 res.status(200).json(dataAsRequestFormat);
             })
@@ -109,12 +114,12 @@ router.get('/search-booking/searching', (req: Request, res: Response, next: Next
                 // サーバーサイドで取得した３つのテーブル情報を一つにまとめます
                 // この処理はフロント側で行うべきか要検討
                 const customers = results[0].map((profile: CustomerState) => {
-                    const { id, name, time_zone } = profile;
-                    return { id, name, time_zone };
+                    const { id, name_first, name_last, time_zone } = profile;
+                    return { id, name_first, name_last, time_zone };
                 }).reduce((o, c) => ({ ...o, [c.id]: c }), {});
                 const teachers = results[1].map((profile: CustomerState) => {
-                    const { id, name, time_zone } = profile;
-                    return { id, name, time_zone };
+                    const { id, name_first, name_last, time_zone } = profile;
+                    return { id, name_first, name_last, time_zone };
                 }).reduce((o, c) => ({ ...o, [c.id]: c }), {});
 
                 let bookings: any[];
@@ -125,8 +130,8 @@ router.get('/search-booking/searching', (req: Request, res: Response, next: Next
                             return {
                                 customer_id: item.customer_id,
                                 reserved_id: item.id,
-                                customer_name: customers[item.customer_id].name,
-                                teacher_name: teachers[item.teacher_id].name,
+                                customer_name: `${customers[item.customer_id].name_first} ${customers[item.customer_id].name_last}`,
+                                teacher_name: `${teachers[item.teacher_id].name_first} ${teachers[item.teacher_id].name_last}`,
                                 reserved_date: item.reserved_date,
                                 reserved_by: item.reserved_by
                             };
@@ -138,8 +143,8 @@ router.get('/search-booking/searching', (req: Request, res: Response, next: Next
                             return {
                                 customer_id: item.customer_id,
                                 reserved_id: item.id,
-                                customer_name: customers[item.customer_id].name,
-                                teacher_name: teachers[item.teacher_id].name,
+                                customer_name: `${customers[item.customer_id].name_first} ${customers[item.customer_id].name_last}`,
+                                teacher_name: `${teachers[item.teacher_id].name_first} ${teachers[item.teacher_id].name_last}`,
                                 reserved_date: item.reserved_date,
                                 reserved_by: item.reserved_by
                             };
@@ -187,8 +192,8 @@ router.get('/check-teacher-schedule/get', (req: Request, res: Response, next: Ne
                 });
 
                 const customers = results[2].map((profile: CustomerState) => {
-                    const { id, name, time_zone } = profile;
-                    return { id, name, time_zone };
+                    const { id, name_first, name_last, time_zone } = profile;
+                    return { id, name_first, name_last, time_zone };
                 }).reduce((o, c) => ({ ...o, [c.id]: c }), {});
 
                 const reservations = results[1].filter((reserve: ReservationState) => {

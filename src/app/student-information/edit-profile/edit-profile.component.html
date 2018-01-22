@@ -6,24 +6,41 @@
         <form [formGroup]="CustomerProfileForm" (ngSubmit)="onSubmit(CustomerProfileForm)" novalidate>
             <div class="form-group">
                 <div class="form-row mb-3 justify-content-md-center">
-                    <div class="col col-md-4">
+                    <div class="col-6 col-md-3">
                         <mat-form-field class="w-100" [floatLabel]="'always'">
-                            <mat-label>例）YAMADA Taro</mat-label>
-                            <input matInput type="text" placeholder="氏名（英語） " formControlName="name"  autocomplete="off" required>
+                            <mat-label>例）Taro</mat-label>
+                            <input matInput type="text" placeholder="名前(First name)" formControlName="name_first" autocomplete="off" required>
                         </mat-form-field>
                     </div>
                     <div class="col-6 col-md-3">
-                        <mat-form-field class="w-100"  [floatLabel]="'never'">
+                        <mat-form-field class="w-100" [floatLabel]="'always'">
+                            <mat-label>例）YAMADA</mat-label>
+                            <input matInput type="text" placeholder="名前(Last name)" formControlName="name_last" autocomplete="off" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-7 col-md-3 text-md-center align-self-center">
+                        <mat-radio-group aria-label="gender" formControlName="gender" required>
+                            <mat-radio-button [value]="+0">男性</mat-radio-button>
+                            <mat-radio-button [value]="+1">女性</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="form-row mb-3 justify-content-md-center">
+                    <div class="col-6 col-md-3">
+                        <mat-form-field class="w-100" [floatLabel]="'never'">
                             <input matInput [matDatepicker]="picker" placeholder="生年月日" formControlName="birthday" required>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker startView="year"></mat-datepicker>
                         </mat-form-field>
                     </div>
-                    <div class="col-6 col-md-3 text-md-center align-self-center">
-                        <mat-radio-group aria-label="gender" formControlName="gender" required>
-                            <mat-radio-button [value]="+0">男性</mat-radio-button>
-                            <mat-radio-button [value]="+1">女性</mat-radio-button>
-                        </mat-radio-group>
+                    <div class="col-6 col-md-3 offset-md-1">
+                        <mat-form-field class="w-100">
+                            <mat-select placeholder="タイムゾーン" formControlName="time_zone" required>
+                                <mat-option *ngFor="let item of timeZones()" [value]="item">
+                                    {{ item }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
                 </div>
                 <div class="form-row mb-3 justify-content-md-center">

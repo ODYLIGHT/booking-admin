@@ -20,6 +20,8 @@ export interface ListState {
 export interface TeacherState {
     id: number;
     name?: string;
+    name_first?: string;
+    name_last?: string;
     state?: number | boolean;
     time_zone?: string;
     customers_language?: number;
@@ -48,7 +50,8 @@ export interface TeacherState {
 // 生徒の個人情報
 export interface CustomerState {
     id: number;
-    name?: string;
+    name_first?: string;
+    name_last?: string;
     time_zone?: string;
     gender?: number;
     birthday: Date,
@@ -79,7 +82,8 @@ export interface TimeState {
 // プルダウンメニュー用など、個人情報を取得する場合の型定義
 export interface PersonalInformationState {
     id: number;
-    name: string;
+    name_first: string;
+    name_last: string;
     time_zone: string;
 }
 
@@ -111,7 +115,8 @@ export interface BookingState {
 // At `Student information`顧客検索結果
 export interface StudentInformationState {
     id: number;
-    name: string;
+    name_first: string;
+    name_last: string;
     time_zone: string;
     gender: number;
     skype_name: string;

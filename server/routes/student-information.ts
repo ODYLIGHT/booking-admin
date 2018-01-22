@@ -17,7 +17,7 @@ router.get('/get', (req: Request, res: Response, next: NextFunction) => {
     // { id, name, mail_address, skype_name }
     // 未入力の条件に関してはフロント側で削除するよう制御してます(student-information.service)
     // paramsが空のオブジェクトになる場合は全顧客情報を要求します
-    // Request data: { id, name, gender, time_zone, skype_name, mail_address }
+    // Request data: { id, name_first, name_last, gender, time_zone, skype_name, mail_address }
     const params = req.query;
     if (isDebug) {
         fs.readFile(jsons.customers)
@@ -25,15 +25,20 @@ router.get('/get', (req: Request, res: Response, next: NextFunction) => {
                 const allSelectedCustomers: StudentInformationState[] =
                     customers
                         .map(customer => {
-                            const { id, name, gender, time_zone, skype_name, mail_address } = customer;
-                            return { id, name, gender, time_zone, skype_name, mail_address };
+                            const { id, name_first, name_last, gender, time_zone, skype_name, mail_address } = customer;
+                            return { id, name_first, name_last, gender, time_zone, skype_name, mail_address };
                         })
                         .filter(customer => {
                             let bool = true;
                             if (!!Object.keys(params).length) {
                                 Object.keys(params).forEach(key => {
                                     const regExp = new RegExp(params[key], 'ig');
-                                    if (!!!regExp.test(customer[key])) bool = false;
+                                    if (key === 'name') {
+                                        if (!!!regExp.test(customer[`name_first`]) && !!!regExp.test(customer[`name_last`]))
+                                            bool = false;
+                                    } else {
+                                        if (!!!regExp.test(customer[key])) bool = false;
+                                    }
                                 });
                             }
                             return bool;

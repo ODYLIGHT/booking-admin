@@ -54,7 +54,12 @@ export class RegisterBookingService {
                     const newCustomerState = Object.assign({}, res['customer']);
                     const newTeacherState = _params['teacher'];
                     // OperationStoreの更新
-                    this.operationStore.changeState({ customer: newCustomerState, teacher: newTeacherState });
+                    this.operationStore.changeState(
+                        {
+                            customer: { ...newCustomerState, name: `${newCustomerState['name_first']} ${newCustomerState['name_last']}` },
+                            teacher: newTeacherState
+                        }
+                    );
                     // BookingStoreの更新
                     const allReservations: ReservationState[] = res['reservations'];
                     const current = [];

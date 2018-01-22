@@ -37,7 +37,9 @@ export class OperationsComponent implements OnInit, OnChanges {
 
     private createForm(): void {
         this.operationsForm = this.fb.group({
-            customer: this.fb.group(this.operations.customer),
+            customer: this.fb.group(
+                { ...this.operations.customer, name: `${this.operations.customer.name_first} ${this.operations.customer.name_last}` }
+            ),
             teacherIdx: [null, Validators.required]
         });
     }

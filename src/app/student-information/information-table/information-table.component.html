@@ -18,7 +18,9 @@
             <tr>
                 <td class="text-center">{{ customer.id }}</td>
                 <td>
-                    <a routerLink="./credit-information" [queryParams]="{id: customer.id, name: customer.name}">{{ customer.name }}</a>
+                    <a routerLink="./credit-information" [queryParams]="{id: customer.id, name_first: customer.name_first, name_last: customer.name_last}">
+                        {{ customer.name_first }} {{ customer.name_last }}
+                    </a>
                 </td>
                 <td class="text-center">{{ customer.gender ? 'Male' : 'Female' }}</td>
                 <td>{{ getCountry(customer.time_zone) }}</td>

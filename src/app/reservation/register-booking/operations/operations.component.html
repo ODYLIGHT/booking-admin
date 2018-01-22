@@ -10,7 +10,7 @@
                 <input matInput type="text" placeholder="Customer name(Read only)" formControlName="name" readonly>
             </mat-form-field>
         </div>
-        <div class="col-md-3 offset-md-1 text-center mb-3" *ngIf="operationsForm.value.customer.name">
+        <div class="col-md-3 offset-md-1 text-center mb-3" *ngIf="operationsForm.value.customer.name_first && operationsForm.value.customer.name_last">
             <button mat-raised-button color="primary" type="button" (click)="onRegister()">Register</button>
         </div>
     </div>

@@ -6,16 +6,17 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { CustomerState } from '../../store/types';
+import { MomentService } from '../../services/moment.service';
 
 @Injectable()
-export class EditProfileService {
+export class EditProfileService extends MomentService {
     private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     readonly apiGetPullDownMenusUrl = 'api/config/pull-down';
     readonly apiGetProfileUrl = 'api/student-information/get-profile';
     readonly apiInsertProfileUrl = 'api/student-information/insert';
     readonly apiUpdateProfileUrl = 'api/student-information/update';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { super() }
 
     public get getPullDownMenusApi(): Observable<any> {
         return this.http.get(this.apiGetPullDownMenusUrl, { headers: this.headers });

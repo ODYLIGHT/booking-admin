@@ -29,37 +29,40 @@ export class EditProfileComponent implements OnInit {
     ) { this.initFormGroup() }
 
     ngOnInit() {
-        this.service.getPullDownMenusApi.subscribe((menus: ListState) => this.pullDownMenes = menus);
-        this.route.queryParamMap.subscribe((params: ParamMap) => {
-            // `id`がある場合は顧客情報の修正、ない場合は新規登録です
-            // 修正のときはidから個人情報を取得し、FormGroupオブジェクトに割り当てて描画します
-            const customerId = params.get('id') ? +params.get('id') : null;
-            if (customerId) {
-                this.pageHeaderTitle = 'Overview of Student Information'
-                this.getProfile(customerId).subscribe(
-                    state => {
-                        if (!!!state || !!!Object.keys(state))
-                            return window.alert(`Request id:${customerId}, but there is no target data.`);
-                        this.setFromGroup(state);
-                    },
-                    (err: HttpErrorResponse) => {
-                        const errorMessage =
-                            'There was a problem on the server side.\n'
-                            + 'Please give the administrator the following message / code.\n'
-                            + `[message]: ${err.statusText}\n`
-                            + `[code]: ${err.status}\n`
-                            ;
-                        window.alert(errorMessage);
-                    }
-                )
-            }
+        this.service.getPullDownMenusApi.subscribe((menus: ListState) => {
+            this.pullDownMenes = menus;
+            this.route.queryParamMap.subscribe((params: ParamMap) => {
+                // `id`がある場合は顧客情報の修正、ない場合は新規登録です
+                // 修正のときはidから個人情報を取得し、FormGroupオブジェクトに割り当てて描画します
+                const customerId = params.get('id') ? +params.get('id') : null;
+                if (customerId) {
+                    this.pageHeaderTitle = 'Overview of Student Information'
+                    this.getProfile(customerId).subscribe(
+                        state => {
+                            if (!!!state || !!!Object.keys(state))
+                                return window.alert(`Request id:${customerId}, but there is no target data.`);
+                            this.setFromGroup(state);
+                        },
+                        (err: HttpErrorResponse) => {
+                            const errorMessage =
+                                'There was a problem on the server side.\n'
+                                + 'Please give the administrator the following message / code.\n'
+                                + `[message]: ${err.statusText}\n`
+                                + `[code]: ${err.status}\n`
+                                ;
+                            window.alert(errorMessage);
+                        }
+                    )
+                }
+            });
         });
     }
 
     private initFormGroup(): void {
         this.CustomerProfileForm = this.fb.group({
             id: null,
-            name: ['', Validators.required],
+            name_first: ['', Validators.required],
+            name_last: ['', Validators.required],
             time_zone: ['', Validators.required],
             gender: [null, Validators.required],
             birthday: [null, Validators.required],
@@ -92,11 +95,13 @@ export class EditProfileComponent implements OnInit {
 
     private setFromGroup(state?: CustomerState) { this.CustomerProfileForm.setValue(state) }
 
+    public timeZones() { return this.service.getTimeZones }
+
     private getProfile(id: number): Observable<CustomerState> { return this.service.getProfileApi(id) }
 
     public onSubmit(form: FormGroup): void {
         const params: CustomerState = form.value;
-        const confirmMes = params.id ? `${params.name}の情報を更新しますか？` : '新しい講師を登録しますか？';
+        const confirmMes = params.id ? `${params.name_first} ${params.name_last}の情報を更新しますか？` : '新しい講師を登録しますか？';
         if (window.confirm(confirmMes)) {
             this.service.upsertProfileApi(params).subscribe(res => {
                 console.log(res);
