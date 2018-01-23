@@ -85,4 +85,44 @@ router.put('/update', (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
+////////////////////////////////////////////////// これ以降は受講履歴 ////////////////////////////////////////////////////////
+router.get('/lesson-history/get-init', (req: Request, res: Response, next: NextFunction) => {
+    debug(`[ ${req.method} ]: ${req.url}`);
+    const queryId = +req.query.id;
+    if (isDebug) {
+        // fs.readFile(jsons.customers)
+        //     .then((response: CustomerState[]) => {
+        //         const customer = response.find(value => value.id === id);
+        //         res.status(200).json(customer);
+        //     })
+        //     .catch(err => res.status(501).json(err));
+        const tasks = [
+            fs.readFile(jsons.pull_downs),
+            fs.readFile(jsons.customers)
+        ];
+        Promise.all(tasks)
+            .then((results: any[]) => {
+                const returnResults = {};
+                const { french_levels, status, class_issue, task } = results[0];
+                returnResults['pulldown_menus'] = { french_levels, status, class_issue, task };
+
+                const { id, name_first, name_last, gender, time_zone, french_level, client_code } =
+                    results[1].find(value => value.id === queryId);
+                returnResults['customer'] = { id, name_first, name_last, gender, time_zone, french_level, client_code };
+
+                res.status(200).json(returnResults);
+            })
+            .catch(err => res.status(501).json(err));
+    }
+});
+
+router.put('/lesson-history/update-level', (req: Request, res: Response, next: NextFunction) => {
+    // 顧客IDと新しい`franch_level`の値を受け取って更新します
+    debug(`[ ${req.method} ]: ${req.url}`);
+    const params = req.body;
+    if (isDebug) {
+        res.status(200).json(params);
+    }
+});
+
 module.exports = router;

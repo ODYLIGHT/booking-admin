@@ -15,7 +15,6 @@ export interface ListState {
 
 /**
  * 講師の情報を表すインターフェイス
- * `id`以外は無くてもよいものとしてます(nameとかtime_zoneも必須にしてもよいかもしれません)
  */
 export interface TeacherState {
     id: number;
@@ -58,7 +57,7 @@ export interface CustomerState {
     skype_name?: string;
     mail_address?: string;
     password?: string;
-    french_level?: number;
+    french_level?: string;
     learning_experience?: string;
     purpose?: string;
     mother_tongue?: string;
@@ -123,46 +122,3 @@ export interface StudentInformationState {
     mail_address: string;
 }
 
-///////////////////////////// この上までは間違いなく使っている(2018/01/05現在)
-
-// export interface RegisterBookingTeachersState {
-//     _id: number;
-//     _name: string;
-// }
-
-// export interface SearcherCustomerState {
-//     _name: string; // 顧客名(CustomerState.customerName)
-//     _teachers: RegisterBookingTeachersState[];
-// }
-
-// export interface SearchBookingState {
-//     customerId: number;
-//     reservationId: string;
-//     studentName: string;
-//     date: string;
-//     teacherName: string;
-//     reserveBy: string;
-// }
-
-// export interface CheckTeacherScheduleState {
-//     schedules?: {
-//         _date: Date;
-//         _can_reserve: boolean;
-//         _reserved_user: number;
-//     }[];
-//     reservations?: {
-//         _id: number;
-//         _reserve_date: Date;
-//         _teacher_id: number;
-//         _status: string;
-//     }[];
-// }
-
-// export interface SearchedStudentInformationState {
-//     id: number;
-//     customerName: string;
-//     gender: string;
-//     // _country: string; // タイムゾーン　どこで定義するのか不明・・・
-//     skypeName: string;
-//     mailAddress: string;
-// }

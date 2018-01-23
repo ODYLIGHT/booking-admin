@@ -1,3 +1,29 @@
-<p>
-  lesson-history works!
-</p>
+<div class="page-header">
+    <h5 class="text-center">Lesson history</h5>
+</div>
+<div class="container" *ngIf="historyItemsAsObservable$ | async as Items">
+    <mat-card>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <app-customer-info
+                        [customer]="Items.customer"
+                        [pulldowns]="Items.pulldown_menus"
+                        (changeEvent)="onChange($event)"
+                    ></app-customer-info>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12"></div>
+            </div>
+        </div>
+    </mat-card>
+</div>
+
