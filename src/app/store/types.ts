@@ -123,3 +123,14 @@ export interface StudentInformationState {
     mail_address: string;
 }
 
+export interface LessonHistoryState {
+    id: number; // 管理番号
+    reserved_id: number | string; // 予約テーブルの管理番号
+    status: number; // 受講状況
+    cancelled_reason: string; // 受講しなかった理由
+    task: string; // 受講内容
+    class_details: string;
+    documents_sent: string;
+    next_class: string;
+}
+

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
 
-import { CustomerState, ListState, ReservationState } from '../../store/types';
+import { CustomerState, ListState, ReservationState, LessonHistoryState } from '../../store/types';
 
 export interface HistortyState {
     customer: CustomerState;
     pulldown_menus: ListState;
-    historys: any;
+    historys: LessonHistoryState;
     reservatons: ReservationState;
 }
 

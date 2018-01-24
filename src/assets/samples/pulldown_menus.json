@@ -111,7 +111,7 @@
         { "label": "Cancelled", "value": 1 },
         { "label": "Rescheduled", "value": 2 }
     ],
-    "class_issue": [
+    "cancelled_reason": [
         { "label": "None", "value": "NONE" },
         { "label": "Student Absent", "value": "SA" },
         { "label": "Teacher Absent", "value": "TA" },

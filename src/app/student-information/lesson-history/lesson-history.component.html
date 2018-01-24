@@ -27,7 +27,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <app-history-table></app-history-table>
+                    <app-history-table
+                        [reservations]="selectReservations(Items.reservations, false)"
+                        [historys]="Items.historys"
+                        [timeZone]="Items.customer.time_zone"
+                        [pulldowns]="Items.pulldown_menus"
+                    ></app-history-table>
                 </div>
             </div>
         </div>

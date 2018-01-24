@@ -23,7 +23,7 @@
         </table>
     </div>
     <div class="col-md-6 align-self-end">
-        <ngb-pagination
+        <ngb-pagination *ngIf="reservations.length > itemPerPage"
             [rotate]="true"
             [boundaryLinks]="true"
             [collectionSize]="reservations.length"
