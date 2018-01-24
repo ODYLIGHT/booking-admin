@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
+import { ExtendsMomentService } from './extends.moment.service';
 import { LessonHistoryService } from './lesson-history.service';
 import { LessonHistoryStore, HistortyState } from './lesson-history.store';
 import { ReservationState } from '../../store/types';
@@ -10,18 +11,21 @@ import { ReservationState } from '../../store/types';
     selector: 'app-lesson-history',
     templateUrl: './lesson-history.component.html',
     styleUrls: ['./lesson-history.component.scss'],
-    providers: [LessonHistoryService, LessonHistoryStore],
+    providers: [ExtendsMomentService, LessonHistoryService, LessonHistoryStore],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LessonHistoryComponent implements OnInit {
+    private utcDate;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private exMomentService: ExtendsMomentService,
         private service: LessonHistoryService
     ) { }
 
     ngOnInit() {
+        this.utcDate = this.exMomentService.getUtc;
         this.route.paramMap.subscribe((params: ParamMap) => {
             const id = params.get('id') ? +params.get('id') : null;
             this.service.initApi(id);
@@ -33,8 +37,13 @@ export class LessonHistoryComponent implements OnInit {
      * after === false: 既に受講等が済んだ情報を返す
      */
     public selectReservations(items: ReservationState[], after: boolean) {
-        console.log(items);
-        return items
+        const utcTimeStamp = new Date(this.utcDate).getTime();
+        const selectedAry = items.filter(item => {
+            const isAfterTime = new Date(item.reserved_date).getTime() > utcTimeStamp;
+            if (after) return isAfterTime;
+            else return !!!isAfterTime;
+        });
+        return selectedAry;
     }
 
     public onChange(value: string) { this.service.changeLevelApi(value) }
