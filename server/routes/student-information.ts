@@ -98,7 +98,10 @@ router.get('/lesson-history/get-init', (req: Request, res: Response, next: NextF
         //     .catch(err => res.status(501).json(err));
         const tasks = [
             fs.readFile(jsons.pull_downs),
-            fs.readFile(jsons.customers)
+            fs.readFile(jsons.customers),
+            fs.readFile(jsons.reservations),
+            fs.readFile(jsons.lesson_historys),
+            fs.readFile(jsons.teachers)
         ];
         Promise.all(tasks)
             .then((results: any[]) => {
@@ -109,6 +112,23 @@ router.get('/lesson-history/get-init', (req: Request, res: Response, next: NextF
                 const { id, name_first, name_last, gender, time_zone, french_level, client_code } =
                     results[1].find(value => value.id === queryId);
                 returnResults['customer'] = { id, name_first, name_last, gender, time_zone, french_level, client_code };
+
+                const reservations: any[] = results[2].filter(item => item.customer_id === queryId);
+                returnResults['reservations'] = reservations.map(o => {
+                    return {
+                        id: o.id,
+                        name: results[4].find(v => v.id === o.teacher_id).name_first
+                        + ' '
+                        + results[4].find(v => v.id === o.teacher_id).name_last,
+                        reserved_date: o.reserved_date
+                    };
+                }).sort((a, b) => {
+                    return new Date(a.reserved_date).getTime() - new Date(b.reserved_date).getTime();
+                });
+
+                const reservedIds: string[] = reservations.map(item => item.id);
+                const historys = results[3].filter(item => 0 <= reservedIds.findIndex(v => v === item.reserved_id));
+                returnResults['historys'] = historys;
 
                 res.status(200).json(returnResults);
             })

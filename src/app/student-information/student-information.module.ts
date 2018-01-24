@@ -17,6 +17,8 @@ import { CreditInformationComponent } from './credit-information/credit-informat
 
 import { LessonHistoryComponent } from './lesson-history/lesson-history.component';
 import { CustomerInfoComponent } from './lesson-history/customer-info/customer-info.component';
+import { ReservationsTableComponent } from './lesson-history/reservations-table/reservations-table.component';
+import { HistoryTableComponent } from './lesson-history/history-table/history-table.component';
 
 @NgModule({
     imports: [
@@ -34,7 +36,9 @@ import { CustomerInfoComponent } from './lesson-history/customer-info/customer-i
         EditProfileComponent,
         LessonHistoryComponent,
         CreditInformationComponent,
-        CustomerInfoComponent
+        CustomerInfoComponent,
+        ReservationsTableComponent,
+        HistoryTableComponent
     ]
 })
 export class StudentInformationModule { }

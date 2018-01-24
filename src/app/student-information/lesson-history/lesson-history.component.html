@@ -16,12 +16,19 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-md-12"></div>
+                <div class="col-md-12">
+                    <app-reservations-table
+                        [reservations]="selectReservations(Items.reservations, true)"
+                        [timeZone]="Items.customer.time_zone"
+                    ></app-reservations-table>
+                </div>
             </div>
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-md-12"></div>
+                <div class="col-md-12">
+                    <app-history-table></app-history-table>
+                </div>
             </div>
         </div>
     </mat-card>

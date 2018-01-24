@@ -95,10 +95,11 @@ export interface ScheduleState {
 // 予約情報
 export interface ReservationState {
     id: number | string;
-    customer_id: number;
-    teacher_id: number;
+    customer_id?: number;
+    teacher_id?: number;
+    name?: string;
     reserved_by?: number;
-    reserved_date: Date;
+    reserved_date?: Date;
 }
 
 // search of booking で、検索をしたレスポンス = 一覧に渡す状態

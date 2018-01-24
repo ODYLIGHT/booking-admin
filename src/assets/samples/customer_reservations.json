@@ -32,7 +32,7 @@
         "customer_id": 1,
         "teacher_id": 3,
         "reserved_by": 0,
-        "reserved_date": "2018-01-23T12:00:00Z"
+        "reserved_date": "2018-01-13T12:00:00Z"
     },
     {
         "id": "A00006",
@@ -46,7 +46,7 @@
         "customer_id": 1,
         "teacher_id": 1,
         "reserved_by": 1,
-        "reserved_date": "2018-01-30T08:00:00Z"
+        "reserved_date": "2018-01-14T08:00:00Z"
     },
     {
         "id": "A00008",
