@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ReservationState, ListState, LessonHistoryState } from '../../../store/types';
 import { ExtendsMomentService } from '../extends.moment.service';
@@ -32,14 +33,20 @@ export class HistoryTableComponent implements OnInit {
 
     public currentPage = 1;
     public itemPerPage = 5;
-    public joinItems = {};
+    public innerFormGroup = {};
+    public historyForm: FormGroup;
 
-    constructor(private exMomentService: ExtendsMomentService) { }
+    constructor(
+        private fb: FormBuilder,
+        private exMomentService: ExtendsMomentService
+    ) { }
 
     ngOnInit() {
         this.reservations.forEach(obj => {
-            this.joinItems[obj.id] = this.historys.find(o => o.reserved_id === obj.id);
+            this.innerFormGroup[obj.id] = this.fb.group(this.historys.find(o => o.reserved_id === obj.id));
         });
+        this.historyForm = this.fb.group(this.innerFormGroup);
+        console.log(this.historyForm);
     }
 
     public getTz() {

@@ -106,8 +106,8 @@ router.get('/lesson-history/get-init', (req: Request, res: Response, next: NextF
         Promise.all(tasks)
             .then((results: any[]) => {
                 const returnResults = {};
-                const { french_levels, status, class_issue, task } = results[0];
-                returnResults['pulldown_menus'] = { french_levels, status, class_issue, task };
+                const { french_levels, status, cancelled_reason, task } = results[0];
+                returnResults['pulldown_menus'] = { french_levels, status, cancelled_reason, task };
 
                 const { id, name_first, name_last, gender, time_zone, french_level, client_code } =
                     results[1].find(value => value.id === queryId);
