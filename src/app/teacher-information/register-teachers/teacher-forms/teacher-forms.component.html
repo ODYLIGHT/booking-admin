@@ -60,7 +60,7 @@
                     </div>
                     <div class="col-md-5">
                         <!-- 画像ファイルアップロードは未実装です(2017/12/25) -->
-                        <input hidden="true" id="input-file-id" type="file" accept="image/*" formControlName="picture"  autocomplete="off">
+                        <input hidden="true" id="input-file-id" type="file" accept="image/*" formControlName="profile_image_path"  autocomplete="off">
                         <label for="input-file-id" class="mat-raised-button mat-primary">画像選択</label>
                     </div>
                 </div>
@@ -72,14 +72,14 @@
                     </div>
                     <div class="col-md-3">
                         <mat-form-field class="w-100">
-                            <input matInput type="email" placeholder="メールアドレス" formControlName="mail_address"  autocomplete="off">
+                            <input matInput type="email" placeholder="メールアドレス" formControlName="email"  autocomplete="off">
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <mat-form-field class="w-100">
                             <input matInput type="text" placeholder="User ID" formControlName="user_id"  autocomplete="off">
                         </mat-form-field>
-                    </div>
+                    </div> -->
                     <div class="col-md-3">
                         <mat-form-field class="w-100">
                             <input matInput type="text" placeholder="パスワード" formControlName="password"  autocomplete="off">
@@ -92,35 +92,35 @@
                     <div class="col-md-6">
                         <label>Details</label>
                         <mat-form-field class="w-100">
-                            <mat-select placeholder="Teaches" formControlName="details_teaches">
+                            <mat-select placeholder="Teaches" formControlName="corresponding_level">
                                 <mat-option *ngFor="let teach of teaches" [value]="teach.value">
                                     {{ teach.title.en }}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field class="w-100">
-                            <input matInput type="text" placeholder="Other Language(s)" formControlName="details_other_language"  autocomplete="off">
+                            <input matInput type="text" placeholder="Other Language(s)" formControlName="other_suported_language"  autocomplete="off">
                         </mat-form-field>
                         <mat-form-field class="w-100">
-                            <input matInput type="text" placeholder="Education" formControlName="details_education"  autocomplete="off">
+                            <input matInput type="text" placeholder="Education" formControlName="educational_background"  autocomplete="off">
                         </mat-form-field>
-                        <mat-form-field class="w-100">
+                        <!-- <mat-form-field class="w-100">
                             <input matInput type="text" placeholder="Speciality" formControlName="details_speciality"  autocomplete="off">
+                        </mat-form-field> -->
+                        <mat-form-field class="w-100">
+                            <textarea matInput placeholder="Career" formControlName="career"></textarea>
                         </mat-form-field>
                         <mat-form-field class="w-100">
-                            <textarea matInput placeholder="Career" formControlName="details_career"></textarea>
+                            <textarea matInput placeholder="Comment" formControlName="comment"></textarea>
                         </mat-form-field>
-                        <mat-form-field class="w-100">
-                            <textarea matInput placeholder="Comment" formControlName="details_comment"></textarea>
-                        </mat-form-field>
-                        <mat-form-field class="w-100">
+                        <!-- <mat-form-field class="w-100">
                             <textarea matInput placeholder="Testimonial" formControlName="details_testimonial"></textarea>
-                        </mat-form-field>
+                        </mat-form-field> -->
                     </div>
                     <div class="col-md-6">
                         <label>Details(JPN)</label>
                         <mat-form-field class="w-100">
-                            <mat-select placeholder="対応レベル" formControlName="details_teaches">
+                            <mat-select placeholder="対応レベル" formControlName="corresponding_level">
                                 <mat-option *ngFor="let teach of teaches" [value]="teach.value">
                                     {{ teach.title.jp }}
                                 </mat-option>
