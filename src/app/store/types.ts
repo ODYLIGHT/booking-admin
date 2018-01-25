@@ -26,17 +26,17 @@ export interface TeacherState {
     customers_language?: number;
     priority_number?: number;
     skype_name?: string;
-    mail_address?: string;
-    picture?: string;
+    email?: string;
+    profile_image_path?: string;
     user_id?: string;
     password?: string;
     authority?: number;
-    details_teaches?: number;
-    details_other_language?: string;
-    details_education?: string;
-    details_speciality?: string;
-    details_career?: string;
-    details_comment?: string;
+    corresponding_level?: number;
+    other_suported_language?: string;
+    educational_background?: string;
+    speciality_content?: string; // 廃止だけど一応残しとく2018/01/25
+    career?: string;
+    comment?: string;
     details_testimonial?: string;
     details_jp_other_language?: string;
     details_jp_education?: string;
@@ -55,19 +55,19 @@ export interface CustomerState {
     gender?: number;
     birthday: Date,
     skype_name?: string;
-    mail_address?: string;
+    email?: string;
     password?: string;
     french_level?: string;
     learning_experience?: string;
-    purpose?: string;
-    mother_tongue?: string;
+    learning_purpose?: string;
+    native_language?: string;
     how_finded?: string;
     other_language1?: string;
     other_language1_level?: number;
     other_language2?: string;
     other_language2_level?: number;
     program_code?: string;
-    remark?: string;
+    remarks?: string;
     client_code?: string;
 }
 
@@ -120,7 +120,7 @@ export interface StudentInformationState {
     time_zone: string;
     gender: number;
     skype_name: string;
-    mail_address: string;
+    email: string;
 }
 
 export interface LessonHistoryState {

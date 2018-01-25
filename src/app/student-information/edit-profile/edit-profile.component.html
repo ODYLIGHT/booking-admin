@@ -47,9 +47,9 @@
                     <div class="col col-md-5">
                         <mat-form-field class="w-100" [floatLabel]="'always'">
                             <mat-label>例）yamadataro777@gmail.com</mat-label>
-                            <input matInput type="text" placeholder="メールアドレス" formControlName="mail_address" autocomplete="off" required>
+                            <input matInput type="text" placeholder="メールアドレス" formControlName="email" autocomplete="off" required>
                             <mat-hint>このメールアドレスがIDとなります。</mat-hint>
-                            <mat-error *ngIf="CustomerProfileForm.hasError('pattern', 'mail_address')">
+                            <mat-error *ngIf="CustomerProfileForm.hasError('pattern', 'email')">
                                 メールアドレス形式ではありません
                             </mat-error>
                         </mat-form-field>
@@ -106,7 +106,7 @@
                 <div class="form-row mb-3 justify-content-md-center">
                     <div class="col col-md-3">
                         <mat-form-field class="w-100">
-                            <mat-select placeholder="学習目的" formControlName="purpose" required>
+                            <mat-select placeholder="学習目的" formControlName="learning_purpose" required>
                                 <mat-option *ngFor="let item of pullDownMenes['purpose']" [value]="item.value">
                                     {{ item.label }}
                                 </mat-option>
@@ -115,7 +115,7 @@
                     </div>
                     <div class="col col-md-4">
                         <mat-form-field class="w-100">
-                            <mat-select placeholder="母国語" formControlName="mother_tongue" required>
+                            <mat-select placeholder="母国語" formControlName="native_language" required>
                                 <mat-option *ngFor="let item of pullDownMenes['languages']" [value]="item.value">
                                     {{ item.label }}
                                 </mat-option>
@@ -192,7 +192,7 @@
                     </div>
                     <div class="col col-md-3">
                         <mat-form-field class="w-100">
-                            <mat-select placeholder="Remark" formControlName="remark">
+                            <mat-select placeholder="Remark" formControlName="remarks">
                                 <mat-option *ngFor="let item of pullDownMenes['remark']" [value]="item.value">
                                     {{ item.label }}
                                 </mat-option>
