@@ -14,6 +14,7 @@ import { InformationTableComponent } from './information-table/information-table
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 import { CreditInformationComponent } from './credit-information/credit-information.component';
+import { CreditFormComponent } from './credit-information/credit-form/credit-form.component';
 
 import { LessonHistoryComponent } from './lesson-history/lesson-history.component';
 import { CustomerInfoComponent } from './lesson-history/customer-info/customer-info.component';
@@ -38,7 +39,8 @@ import { HistoryTableComponent } from './lesson-history/history-table/history-ta
         CreditInformationComponent,
         CustomerInfoComponent,
         ReservationsTableComponent,
-        HistoryTableComponent
+        HistoryTableComponent,
+        CreditFormComponent
     ]
 })
 export class StudentInformationModule { }

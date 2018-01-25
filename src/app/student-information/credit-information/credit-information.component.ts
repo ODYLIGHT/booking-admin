@@ -34,6 +34,8 @@ export class CreditInformationComponent implements OnInit {
         });
     }
 
+    onRegister(params) { this.service.insertCreditApi(params) }
+
     public get creditsAsObservable$(): Observable<CreditState[]> { return this.service.getCredits$ }
 
 }

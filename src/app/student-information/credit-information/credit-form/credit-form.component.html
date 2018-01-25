@@ -1,0 +1,47 @@
+<form [formGroup]="creditForm" (ngSubmit)="onClick(creditForm)" novalidate>
+    <div class="form-row">
+        <div class="col-md-7">
+            <div class="form-row">
+                <div class="col-md-5 col-3">
+                    <mat-form-field class="w-100">
+                        <input matInput type="number" placeholder="Customer ID" formControlName="customer_id" readonly required>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-7 col-9">
+                    <mat-form-field class="w-100">
+                        <input matInput type="text" placeholder="Customer Name" value="{{ profiles.name_first }} {{ profiles.name_last }}" readonly>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-7 col-6">
+                    <mat-form-field class="w-100">
+                        <input matInput [matDatepicker]="datePicker" placeholder="Date" formControlName="date" required>
+                        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-5 col-6">
+                    <mat-form-field class="w-100">
+                        <input matInput type="number" placeholder="New Credit(s)" min="1" formControlName="credit_count" autocomplete="off" required>
+                        <mat-error>入力は半角数字のみです</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 align-self-end">
+            <div class="form-row">
+                <div class="col-md-8 col-8">
+                    <mat-form-field class="w-100">
+                        <textarea matInput placeholder="Remark" formControlName="remarks"
+                            matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="3"
+                        ></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-4 align-self-center">
+                    <button type="submit" mat-raised-button>Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

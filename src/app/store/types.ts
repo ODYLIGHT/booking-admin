@@ -137,7 +137,7 @@ export interface LessonHistoryState {
 
 // 顧客のクレジットデータ型
 export interface CreditState {
-    unique_id: number; // クレジット管理番号
+    unique_id?: number; // クレジット管理番号
     customer_id: number; // 対象顧客のId
     date?: Date; // クレジット登録日付
     adjustment: number; // 加算(0)・減算(1)フラグ
