@@ -30,6 +30,9 @@ export class CreditFormComponent implements OnInit {
         });
     }
 
-    public onClick(form: FormGroup) { this.registerEvent.emit(form.value) }
+    public onClick(form: FormGroup) {
+        this.registerEvent.emit(form.value);
+        this.creditForm.patchValue({ date: new Date() });
+    }
 
 }

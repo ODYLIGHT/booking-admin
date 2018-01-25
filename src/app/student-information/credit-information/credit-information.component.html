@@ -4,7 +4,7 @@
 <div class="container">
     <mat-card>
         <div class="container">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-md-12">
                     <ng-container *ngIf="customerProfile as profiles">
                         <app-credit-form
@@ -17,7 +17,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <ng-container *ngIf="creditsAsObservable$ | async as credits">
-                        <pre>{{credits | json}}</pre>
+                        <app-credit-table
+                            [credits]="creditsSorter(credits)"
+                            [timeZone]="customerProfile.time_zone"
+                        ></app-credit-table>
                     </ng-container>
                 </div>
             </div>

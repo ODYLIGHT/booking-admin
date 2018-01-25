@@ -34,7 +34,14 @@ export class CreditInformationComponent implements OnInit {
         });
     }
 
-    onRegister(params) { this.service.insertCreditApi(params) }
+    public onRegister(params) { this.service.insertCreditApi(params) }
+
+    /**
+     * クレジットデータを登録日付で降順する
+     */
+    public creditsSorter(items: CreditState[]): CreditState[] {
+        return items.sort((a: CreditState, b: CreditState) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    }
 
     public get creditsAsObservable$(): Observable<CreditState[]> { return this.service.getCredits$ }
 

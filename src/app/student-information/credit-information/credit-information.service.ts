@@ -29,12 +29,9 @@ export class CreditInformationService {
 
     public insertCreditApi(_params) {
         // const { customer_id, credit_count, date = moment(_params.date).format('YYYY-MM-DD'), remarks } = _params;
-        const params = Object.assign({}, _params, { date: moment(_params.date).utc().format('YYYY-MM-DD') });
+        const params = Object.assign({}, _params, { date: moment(_params.date).utc().format() });
         this.http.post(this.apiInsertCreditUrl, params, { headers: this.headers }).subscribe(
-            res => {
-                if (!!!environment.production) console.log(res);
-                this.snackBar.open('Successfully updated.', null, { duration: 2000 });
-            },
+            res => this.snackBar.open('Successfully updated.', null, { duration: 2000 }),
             (err: HttpErrorResponse) => {
                 const errorMessage =
                     'There was a problem on the server side.\n'
