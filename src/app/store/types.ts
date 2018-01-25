@@ -53,7 +53,7 @@ export interface CustomerState {
     name_last?: string;
     time_zone?: string;
     gender?: number;
-    birthday: Date,
+    birthday?: Date,
     skype_name?: string;
     email?: string;
     password?: string;

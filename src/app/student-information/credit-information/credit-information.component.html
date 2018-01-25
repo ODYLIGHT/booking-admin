@@ -1,3 +1,23 @@
-<p>
-  credit-information works!
-</p>
+<div class="page-header">
+    <h5 class="text-center">Credit information</h5>
+</div>
+<div class="container">
+    <mat-card>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ng-container *ngIf="customerProfile as profiles">
+                        {{ profiles | json }}
+                    </ng-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ng-container *ngIf="creditsAsObservable$ | async as credits">
+                        <pre>{{credits | json}}</pre>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>

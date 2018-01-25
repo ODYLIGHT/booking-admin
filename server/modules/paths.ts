@@ -10,6 +10,7 @@ export const paths = {
 }
 
 export const jsons = {
+    credits: './src/assets/samples/credits.json',
     customers: './src/assets/samples/customer_profile.json',
     lesson_historys: './src/assets/samples/lesson-history.json',
     menus: './src/assets/config/menu.config.json',
