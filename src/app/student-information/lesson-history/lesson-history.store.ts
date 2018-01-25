@@ -6,8 +6,8 @@ import { CustomerState, ListState, ReservationState, LessonHistoryState } from '
 export interface HistortyState {
     customer: CustomerState;
     pulldown_menus: ListState;
-    historys: LessonHistoryState;
-    reservatons: ReservationState;
+    historys: LessonHistoryState[];
+    reservatons: ReservationState[];
 }
 
 @Injectable()

@@ -145,4 +145,15 @@ router.put('/lesson-history/update-level', (req: Request, res: Response, next: N
     }
 });
 
+// 受講履歴テーブルを更新します
+router.put('/lesson-history/update-history', (req: Request, res: Response, next: NextFunction) => {
+    debug(`[ ${req.method} ]: ${req.url}`);
+    // req.bodyには更新不要なデータも含まれるため、分割代入で変更対象カラム値を抽出
+    const { id, status, cancelled_reason, task, class_details, documents_sent, next_class } = req.body;
+    const params = { id, status, cancelled_reason, task, class_details, documents_sent, next_class };
+    if (isDebug) {
+        res.status(200).json(params);
+    }
+});
+
 module.exports = router;

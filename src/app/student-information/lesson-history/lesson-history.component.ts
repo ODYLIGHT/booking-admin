@@ -48,6 +48,8 @@ export class LessonHistoryComponent implements OnInit {
 
     public onChange(value: string) { this.service.changeLevelApi(value) }
 
+    public onRegister(params) { this.service.registerApi(params.value) }
+
     public get historyItemsAsObservable$(): Observable<HistortyState> { return this.service.getHistoryItems$ }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ReservationState, ListState, LessonHistoryState } from '../../../store/types';
@@ -31,6 +31,8 @@ export class HistoryTableComponent implements OnInit {
     set pulldowns(items) { this._pulldowns = items }
     get pulldowns() { return this._pulldowns }
 
+    @Output() registerEvent = new EventEmitter();
+
     public currentPage = 1;
     public itemPerPage = 5;
     public innerFormGroup = {};
@@ -46,7 +48,6 @@ export class HistoryTableComponent implements OnInit {
             this.innerFormGroup[obj.id] = this.fb.group(this.historys.find(o => o.reserved_id === obj.id));
         });
         this.historyForm = this.fb.group(this.innerFormGroup);
-        console.log(this.historyForm);
     }
 
     public getTz() {
@@ -55,9 +56,7 @@ export class HistoryTableComponent implements OnInit {
 
     public endTime(date: Date) { return this.exMomentService.addTime(date) }
 
-    public onClick(item) {
-        console.log(item);
-    }
+    public onClick(item) { this.registerEvent.emit(item) }
 
     public selectItems(allData: ReservationState[]): ReservationState[] {
         return allData.slice((this.currentPage - 1) * this.itemPerPage, this.currentPage * this.itemPerPage)
