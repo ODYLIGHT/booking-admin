@@ -1,0 +1,156 @@
+[
+    {
+        "unique_id": 1,
+        "customer_id": 1,
+        "date": "2017-10-24",
+        "adjustment": 0,
+        "remarks": "Trial"
+    },
+    {
+        "unique_id": 2,
+        "customer_id": 1,
+        "date": "2017-10-26",
+        "adjustment": 1,
+        "remarks": "Regular booking"
+    },
+    {
+        "unique_id": 3,
+        "customer_id": 1,
+        "date": "2017-11-01",
+        "adjustment": 0,
+        "remarks": "5h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 4,
+        "customer_id": 1,
+        "date": "2017-11-01",
+        "adjustment": 0,
+        "remarks": "5h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 5,
+        "customer_id": 1,
+        "date": "2017-11-01",
+        "adjustment": 0,
+        "remarks": "5h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 6,
+        "customer_id": 1,
+        "date": "2017-11-01",
+        "adjustment": 0,
+        "remarks": "5h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 7,
+        "customer_id": 1,
+        "date": "2017-11-01",
+        "adjustment": 0,
+        "remarks": "5h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 8,
+        "customer_id": 1,
+        "date": "2017-11-07",
+        "adjustment": 1,
+        "remarks": "Regular booking"
+    },
+    {
+        "unique_id": 9,
+        "customer_id": 1,
+        "date": "2017-11-21",
+        "adjustment": 1,
+        "remarks": "Regular booking"
+    },
+    {
+        "unique_id": 10,
+        "customer_id": 1,
+        "date": "2017-11-26",
+        "adjustment": 1,
+        "remarks": "Regular booking"
+    },
+    {
+        "unique_id": 11,
+        "customer_id": 1,
+        "date": "2017-12-01",
+        "adjustment": 0,
+        "remarks": "10h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 12,
+        "customer_id": 1,
+        "date": "2017-12-01",
+        "adjustment": 0,
+        "remarks": "10h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 13,
+        "customer_id": 1,
+        "date": "2017-12-01",
+        "adjustment": 0,
+        "remarks": "10h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 14,
+        "customer_id": 1,
+        "date": "2017-12-01",
+        "adjustment": 0,
+        "remarks": "10h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 15,
+        "customer_id": 1,
+        "date": "2017-12-01",
+        "adjustment": 0,
+        "remarks": "10h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 16,
+        "customer_id": 1,
+        "date": "2017-12-01",
+        "adjustment": 0,
+        "remarks": "10h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 17,
+        "customer_id": 1,
+        "date": "2017-12-01",
+        "adjustment": 0,
+        "remarks": "10h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 18,
+        "customer_id": 1,
+        "date": "2017-12-01",
+        "adjustment": 0,
+        "remarks": "10h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 19,
+        "customer_id": 1,
+        "date": "2017-12-01",
+        "adjustment": 0,
+        "remarks": "10h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 20,
+        "customer_id": 1,
+        "date": "2017-12-01",
+        "adjustment": 0,
+        "remarks": "10h Lesson/ Bank transfer"
+    },
+    {
+        "unique_id": 21,
+        "customer_id": 1,
+        "date": "2017-12-05",
+        "adjustment": 1,
+        "remarks": "Regular booking"
+    },
+    {
+        "unique_id": 22,
+        "customer_id": 1,
+        "date": "2017-12-05",
+        "adjustment": 0,
+        "remarks": "Teacher Absent"
+    }
+]
