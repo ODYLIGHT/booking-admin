@@ -1,0 +1,104 @@
+<h5>Taken Lesson</h5>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered text-center">
+
+                <thead>
+                    <tr class="u-mat-primary">
+                        <th>Date</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Status</th>
+                        <th>Class Issue</th>
+                        <th>Task</th>
+                        <th>Class Details</th>
+                        <th>Documents sent</th>
+                        <th>Next Class</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody [formGroup]="historyForm">
+                    <ng-container *ngFor="let items of selectItems(reservations)">
+                        <tr formGroupName="{{ items.id }}">
+                            <td>{{ items.reserved_date | date: 'dd.MMM.yyyy.EEE': getTz() }}</td>
+                            <td>{{ items.reserved_date | date: 'HH:mm': getTz() }}</td>
+                            <td>{{ endTime(items.reserved_date) | date: 'HH:mm': getTz() }}</td>
+                            <td>
+                                <mat-form-field class="w-100">
+                                    <!-- <mat-select [value]="joinItems[items.id].status"> -->
+                                    <mat-select formControlName="status">
+                                        <mat-option *ngFor="let item of pulldowns['status']" [value]="item.value">
+                                            {{ item.label }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="w-100">
+                                    <!-- <mat-select [value]="joinItems[items.id].cancelled_reason"> -->
+                                    <mat-select formControlName="cancelled_reason">
+                                        <mat-option [value]="">Blank</mat-option>
+                                        <mat-option *ngFor="let item of pulldowns['cancelled_reason']" [value]="item.value">
+                                            {{ item.label }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="w-100">
+                                    <!-- <mat-select [value]="joinItems[items.id].task"> -->
+                                    <mat-select formControlName="task">
+                                        <mat-option [value]="">Blank</mat-option>
+                                        <mat-option *ngFor="let item of pulldowns['task']" [value]="item.value">
+                                            {{ item.label }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="w-100">
+                                    <!-- <textarea matInput [value]="joinItems[items.id].class_details" -->
+                                    <textarea matInput formControlName="class_details"
+                                        matTextareaAutosize matAutosizeMinRows="1"
+                                        matAutosizeMaxRows="1"
+                                    ></textarea>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="w-100">
+                                    <!-- <textarea matInput [value]="joinItems[items.id].documents_sent" -->
+                                    <textarea matInput formControlName="documents_sent"
+                                        matTextareaAutosize matAutosizeMinRows="1"
+                                        matAutosizeMaxRows="1"
+                                    ></textarea>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="w-100">
+                                    <!-- <textarea matInput [value]="joinItems[items.id].next_class" -->
+                                    <textarea matInput formControlName="next_class"
+                                        matTextareaAutosize matAutosizeMinRows="1"
+                                        matAutosizeMaxRows="1"
+                                    ></textarea>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <button mat-raised-button color="primary" (click)="onClick(historyForm.controls[items.id])">Register</button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+
+            </table>
+            <ngb-pagination *ngIf="reservations.length > itemPerPage"
+                [rotate]="true"
+                [boundaryLinks]="true"
+                [collectionSize]="reservations.length"
+                [pageSize]="itemPerPage"
+                [(page)]="currentPage"
+            ></ngb-pagination>
+        </div>
+    </div>
+</div>

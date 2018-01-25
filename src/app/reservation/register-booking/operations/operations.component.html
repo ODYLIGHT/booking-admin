@@ -19,7 +19,7 @@
             <mat-form-field class="w-100">
                 <mat-select placeholder="Select the instructor name to register" formControlName="teacherIdx" required>
                     <mat-option *ngFor="let teacher of teachers; let i = index" [value]="i">
-                        {{ teacher.name }}
+                        {{ teacher['name'] }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

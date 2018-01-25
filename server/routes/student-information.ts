@@ -85,4 +85,75 @@ router.put('/update', (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
+////////////////////////////////////////////////// これ以降は受講履歴 ////////////////////////////////////////////////////////
+router.get('/lesson-history/get-init', (req: Request, res: Response, next: NextFunction) => {
+    debug(`[ ${req.method} ]: ${req.url}`);
+    const queryId = +req.query.id;
+    if (isDebug) {
+        // fs.readFile(jsons.customers)
+        //     .then((response: CustomerState[]) => {
+        //         const customer = response.find(value => value.id === id);
+        //         res.status(200).json(customer);
+        //     })
+        //     .catch(err => res.status(501).json(err));
+        const tasks = [
+            fs.readFile(jsons.pull_downs),
+            fs.readFile(jsons.customers),
+            fs.readFile(jsons.reservations),
+            fs.readFile(jsons.lesson_historys),
+            fs.readFile(jsons.teachers)
+        ];
+        Promise.all(tasks)
+            .then((results: any[]) => {
+                const returnResults = {};
+                const { french_levels, status, cancelled_reason, task } = results[0];
+                returnResults['pulldown_menus'] = { french_levels, status, cancelled_reason, task };
+
+                const { id, name_first, name_last, gender, time_zone, french_level, client_code } =
+                    results[1].find(value => value.id === queryId);
+                returnResults['customer'] = { id, name_first, name_last, gender, time_zone, french_level, client_code };
+
+                const reservations: any[] = results[2].filter(item => item.customer_id === queryId);
+                returnResults['reservations'] = reservations.map(o => {
+                    return {
+                        id: o.id,
+                        name: results[4].find(v => v.id === o.teacher_id).name_first
+                        + ' '
+                        + results[4].find(v => v.id === o.teacher_id).name_last,
+                        reserved_date: o.reserved_date
+                    };
+                }).sort((a, b) => {
+                    return new Date(a.reserved_date).getTime() - new Date(b.reserved_date).getTime();
+                });
+
+                const reservedIds: string[] = reservations.map(item => item.id);
+                const historys = results[3].filter(item => 0 <= reservedIds.findIndex(v => v === item.reserved_id));
+                returnResults['historys'] = historys;
+
+                res.status(200).json(returnResults);
+            })
+            .catch(err => res.status(501).json(err));
+    }
+});
+
+router.put('/lesson-history/update-level', (req: Request, res: Response, next: NextFunction) => {
+    // 顧客IDと新しい`franch_level`の値を受け取って更新します
+    debug(`[ ${req.method} ]: ${req.url}`);
+    const params = req.body;
+    if (isDebug) {
+        res.status(200).json(params);
+    }
+});
+
+// 受講履歴テーブルを更新します
+router.put('/lesson-history/update-history', (req: Request, res: Response, next: NextFunction) => {
+    debug(`[ ${req.method} ]: ${req.url}`);
+    // req.bodyには更新不要なデータも含まれるため、分割代入で変更対象カラム値を抽出
+    const { id, status, cancelled_reason, task, class_details, documents_sent, next_class } = req.body;
+    const params = { id, status, cancelled_reason, task, class_details, documents_sent, next_class };
+    if (isDebug) {
+        res.status(200).json(params);
+    }
+});
+
 module.exports = router;

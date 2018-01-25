@@ -22,6 +22,8 @@ export class MomentService {
 
     constructor() { }
 
+    protected get utcDate() { return this._moment.utc() }
+
     /**
      * 全てのタイムゾーンを返す
      */

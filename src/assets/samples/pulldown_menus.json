@@ -105,5 +105,35 @@
         { "label": "BEE", "value": "BEE" },
         { "label": "FFJP", "value": "FFJP" },
         { "label": "XEN", "value": "XEN" }
+    ],
+    "status": [
+        { "label": "Done", "value": 0 },
+        { "label": "Cancelled", "value": 1 },
+        { "label": "Rescheduled", "value": 2 }
+    ],
+    "cancelled_reason": [
+        { "label": "None", "value": "NONE" },
+        { "label": "Student Absent", "value": "SA" },
+        { "label": "Teacher Absent", "value": "TA" },
+        { "label": "Student Internet Program", "value": "SIP" },
+        { "label": "Teacher Internet Program", "value": "TIP" },
+        { "label": "No Teacher", "value": "NT" },
+        { "label": "Scheduling Issue", "value": "SI" },
+        { "label": "Time Confusion", "value": "TC" },
+        { "label": "Miscommunication", "value": "MC" },
+        { "label": "Sickness/Lateness", "value": "SL" },
+        { "label": "Other", "value": "OTHER" }
+    ],
+    "task": [
+        { "label": "Trial", "value": "TRIAL" },
+        { "label": "Topic", "value": "TOPIC" },
+        { "label": "Class work", "value": "CW" },
+        { "label": "Revision", "value": "REVIDION" },
+        { "label": "Speaking", "value": "SPEAK" },
+        { "label": "Listening", "value": "LISTEN" },
+        { "label": "None", "value": "NONE" },
+        { "label": "Reading", "value": "READ" },
+        { "label": "Writing", "value": "WRITE" },
+        { "label": "Other", "value": "OTHER" }
     ]
 }

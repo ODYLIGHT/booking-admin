@@ -15,7 +15,6 @@ export interface ListState {
 
 /**
  * 講師の情報を表すインターフェイス
- * `id`以外は無くてもよいものとしてます(nameとかtime_zoneも必須にしてもよいかもしれません)
  */
 export interface TeacherState {
     id: number;
@@ -58,7 +57,7 @@ export interface CustomerState {
     skype_name?: string;
     mail_address?: string;
     password?: string;
-    french_level?: number;
+    french_level?: string;
     learning_experience?: string;
     purpose?: string;
     mother_tongue?: string;
@@ -96,10 +95,11 @@ export interface ScheduleState {
 // 予約情報
 export interface ReservationState {
     id: number | string;
-    customer_id: number;
-    teacher_id: number;
+    customer_id?: number;
+    teacher_id?: number;
+    name?: string;
     reserved_by?: number;
-    reserved_date: Date;
+    reserved_date?: Date;
 }
 
 // search of booking で、検索をしたレスポンス = 一覧に渡す状態
@@ -123,46 +123,14 @@ export interface StudentInformationState {
     mail_address: string;
 }
 
-///////////////////////////// この上までは間違いなく使っている(2018/01/05現在)
+export interface LessonHistoryState {
+    id: number; // 管理番号
+    reserved_id: number | string; // 予約テーブルの管理番号
+    status: number; // 受講状況
+    cancelled_reason: string; // 受講しなかった理由
+    task: string; // 受講内容
+    class_details: string;
+    documents_sent: string;
+    next_class: string;
+}
 
-// export interface RegisterBookingTeachersState {
-//     _id: number;
-//     _name: string;
-// }
-
-// export interface SearcherCustomerState {
-//     _name: string; // 顧客名(CustomerState.customerName)
-//     _teachers: RegisterBookingTeachersState[];
-// }
-
-// export interface SearchBookingState {
-//     customerId: number;
-//     reservationId: string;
-//     studentName: string;
-//     date: string;
-//     teacherName: string;
-//     reserveBy: string;
-// }
-
-// export interface CheckTeacherScheduleState {
-//     schedules?: {
-//         _date: Date;
-//         _can_reserve: boolean;
-//         _reserved_user: number;
-//     }[];
-//     reservations?: {
-//         _id: number;
-//         _reserve_date: Date;
-//         _teacher_id: number;
-//         _status: string;
-//     }[];
-// }
-
-// export interface SearchedStudentInformationState {
-//     id: number;
-//     customerName: string;
-//     gender: string;
-//     // _country: string; // タイムゾーン　どこで定義するのか不明・・・
-//     skypeName: string;
-//     mailAddress: string;
-// }
