@@ -21,7 +21,7 @@ export class InformationFormComponent implements OnInit {
         this.searchForm = this.fb.group({
             id: null,
             name: '',
-            mail_address: '',
+            email: '',
             skype_name: ''
         });
     }

@@ -55,19 +55,19 @@ export interface CustomerState {
     gender?: number;
     birthday: Date,
     skype_name?: string;
-    mail_address?: string;
+    email?: string;
     password?: string;
     french_level?: string;
     learning_experience?: string;
-    purpose?: string;
-    mother_tongue?: string;
+    learning_purpose?: string;
+    native_language?: string;
     how_finded?: string;
     other_language1?: string;
     other_language1_level?: number;
     other_language2?: string;
     other_language2_level?: number;
     program_code?: string;
-    remark?: string;
+    remarks?: string;
     client_code?: string;
 }
 
@@ -120,7 +120,7 @@ export interface StudentInformationState {
     time_zone: string;
     gender: number;
     skype_name: string;
-    mail_address: string;
+    email: string;
 }
 
 export interface LessonHistoryState {

@@ -70,7 +70,7 @@ export class EditProfileComponent implements OnInit {
                 '',
                 [Validators.required, Validators.pattern(/^[a-z][a-zA-Z0-9.,-_]*$/)]
             ],
-            mail_address: [
+            email: [
                 '',
                 [Validators.required, Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)]
             ],
@@ -80,15 +80,15 @@ export class EditProfileComponent implements OnInit {
             ],
             french_level: [null, Validators.required],
             learning_experience: '',
-            purpose: ['', Validators.required],
-            mother_tongue: ['', Validators.required],
+            learning_purpose: ['', Validators.required],
+            native_language: ['', Validators.required],
             how_finded: ['', Validators.required],
             other_language1: '',
             other_language1_level: null,
             other_language2: '',
             other_language2_level: null,
             program_code: '',
-            remark: '',
+            remarks: '',
             client_code: ''
         });
     }

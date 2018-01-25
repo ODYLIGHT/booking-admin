@@ -14,10 +14,10 @@ const isDebug = debug.enabled;
 router.get('/get', (req: Request, res: Response, next: NextFunction) => {
     debug(`[ ${req.method} ]: ${req.url}`);
     // paramsには顧客検索条件が入ります キーはすべてDBのカラム名と同じです
-    // { id, name, mail_address, skype_name }
+    // { id, name, email, skype_name }
     // 未入力の条件に関してはフロント側で削除するよう制御してます(student-information.service)
     // paramsが空のオブジェクトになる場合は全顧客情報を要求します
-    // Request data: { id, name_first, name_last, gender, time_zone, skype_name, mail_address }
+    // Request data: { id, name_first, name_last, gender, time_zone, skype_name, email }
     const params = req.query;
     if (isDebug) {
         fs.readFile(jsons.customers)
@@ -25,8 +25,8 @@ router.get('/get', (req: Request, res: Response, next: NextFunction) => {
                 const allSelectedCustomers: StudentInformationState[] =
                     customers
                         .map(customer => {
-                            const { id, name_first, name_last, gender, time_zone, skype_name, mail_address } = customer;
-                            return { id, name_first, name_last, gender, time_zone, skype_name, mail_address };
+                            const { id, name_first, name_last, gender, time_zone, skype_name, email } = customer;
+                            return { id, name_first, name_last, gender, time_zone, skype_name, email };
                         })
                         .filter(customer => {
                             let bool = true;
