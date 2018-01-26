@@ -53,7 +53,7 @@ export interface CustomerState {
     name_last?: string;
     time_zone?: string;
     gender?: number;
-    birthday: Date,
+    birthday?: Date,
     skype_name?: string;
     email?: string;
     password?: string;
@@ -123,6 +123,7 @@ export interface StudentInformationState {
     email: string;
 }
 
+// 受講履歴
 export interface LessonHistoryState {
     id: number; // 管理番号
     reserved_id: number | string; // 予約テーブルの管理番号
@@ -134,3 +135,11 @@ export interface LessonHistoryState {
     next_class: string;
 }
 
+// 顧客のクレジットデータ型
+export interface CreditState {
+    unique_id?: number; // クレジット管理番号
+    customer_id: number; // 対象顧客のId
+    date?: Date; // クレジット登録日付
+    adjustment: number; // 加算(0)・減算(1)フラグ
+    remarks: string; // 備考
+}

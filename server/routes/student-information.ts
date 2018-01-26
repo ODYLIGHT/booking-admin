@@ -4,7 +4,7 @@ import { FsService } from '../modules/fs.modules';
 import * as Debug from 'debug';
 import { jsons } from '../modules/paths';
 
-import { CustomerState, StudentInformationState } from '../../src/app/store/types';
+import { CustomerState, StudentInformationState, CreditState } from '../../src/app/store/types';
 
 const router: Router = Router();
 const fs: FsService = FsService.instance;
@@ -153,6 +153,45 @@ router.put('/lesson-history/update-history', (req: Request, res: Response, next:
     const params = { id, status, cancelled_reason, task, class_details, documents_sent, next_class };
     if (isDebug) {
         res.status(200).json(params);
+    }
+});
+
+//////////////////////////////////////////////// これ以降はクレジットインフォメーション /////////////////////////////////////////////////////
+router.get('/get-credits', (req: Request, res: Response, next: NextFunction) => {
+    debug(`[ ${req.method} ]: ${req.url}`);
+    const queryId = +req.query.id;
+    if (isDebug) {
+        fs.readFile(jsons.credits)
+            .then((result: CreditState[]) => {
+                const credits = result.filter(credit => credit.customer_id === queryId).map(data => {
+                    const { customer_id, date, adjustment, remarks } = data;
+                    return { customer_id, date, adjustment, remarks };
+                })
+                res.status(200).json(credits);
+            })
+            .catch(err => res.status(501).json(err));
+    }
+});
+
+router.post('/insert-credit', (req: Request, res: Response, next: NextFunction) => {
+    debug(`[ ${req.method} ]: ${req.url}`);
+    /**
+     * params = {
+     *      customer_id: 生徒のIｄ for customer_credits.customer_id
+     *      credit_count: 登録するレコード数 この数だけInsertする
+     *      date: 登録日付 for customer_credits.date
+     *      remarks: 備考 for customer_credits.remarks
+     * }
+     */
+    const params = req.body;
+    if (isDebug) {
+        // Insert parametorを配列で作ってみる
+        const queryParamAry = [];
+        for (let i = 0; i < params.credit_count; i++) {
+            const { customer_id, date, adjustment = 0, remarks } = params;
+            queryParamAry.push({ customer_id, date, adjustment, remarks });
+        };
+        res.status(200).json(queryParamAry);
     }
 });
 

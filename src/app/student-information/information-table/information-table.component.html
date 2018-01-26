@@ -18,7 +18,9 @@
             <tr>
                 <td class="text-center">{{ customer.id }}</td>
                 <td>
-                    <a routerLink="./credit-information" [queryParams]="{id: customer.id, name_first: customer.name_first, name_last: customer.name_last}">
+                    <a routerLink="./credit-information"
+                        [queryParams]="{id: customer.id, name_first: customer.name_first, name_last: customer.name_last, time_zone: customer.time_zone}"
+                    >
                         {{ customer.name_first }} {{ customer.name_last }}
                     </a>
                 </td>
@@ -27,7 +29,6 @@
                 <td>{{ customer.skype_name }}</td>
                 <td>{{ customer.email }}</td>
                 <td>
-                    <!-- <a mat-raised-button color="primary" [routerLink]="['./edit-profile', customer.id]">Overview</a> -->
                     <a mat-raised-button color="primary"
                         routerLink="./edit-profile"
                         [queryParams]="{id: customer.id}"
