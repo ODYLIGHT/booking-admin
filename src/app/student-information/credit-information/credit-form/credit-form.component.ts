@@ -24,15 +24,22 @@ export class CreditFormComponent implements OnInit {
     ngOnInit() {
         this.creditForm = this.fb.group({
             customer_id: [this.profiles.id, Validators.required],
-            credit_count: [ 1, [ Validators.required, Validators.pattern(/[0-9]+/) ] ],
-            date: [new Date()],
+            credit_count: [
+                1,
+                Validators.compose([Validators.required, Validators.pattern(/^\d+$/), Validators.min(1)])
+            ],
+            date: [new Date(), Validators.required],
             remarks: ['']
         });
     }
 
     public onClick(form: FormGroup) {
-        this.registerEvent.emit(form.value);
-        this.creditForm.patchValue({ date: new Date() });
+        if (window.confirm('Do you want to register credit information?')) {
+            this.registerEvent.emit(form.value);
+            this.creditForm.patchValue({ date: new Date(), credit_count: 1, remarks: '' });
+        } else {
+            return;
+        }
     }
 
 }
