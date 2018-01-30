@@ -1,0 +1,39 @@
+<h5>Customer Information</h5>
+<table class="w-100 table-responsive-lg">
+    <tbody>
+
+        <tr>
+            <td>
+                <mat-form-field class="w-100">
+                    <input matInput type="text" placeholder="顧客名" value="{{ customer.name_first }} {{ customer.name_last }}" readonly>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="w-100">
+                    <input matInput type="text" placeholder="性別" value="{{ customer.gender ? 'Male' : 'Female' }}" readonly>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="w-100">
+                    <input matInput type="text" placeholder="地域" value="{{ getCountry(customer.time_zone) }}" readonly>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="w-100">
+                    <input matInput type="text" placeholder="コード" value="{{ customer.client_code }}" readonly>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="w-100">
+                    <mat-select placeholder="フランス語レベル" value="{{ customer.french_level }}" (change)="onChange($event)">
+                        <mat-option *ngFor="let item of pulldowns['french_levels']" [value]="item.value">
+                            {{ item.label }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint>レベルは変更できます</mat-hint>
+                </mat-form-field>
+            </td>
+        </tr>
+
+    </tbody>
+</table>

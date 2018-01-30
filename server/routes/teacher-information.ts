@@ -2,8 +2,7 @@
 import { Router, Response, Request, NextFunction } from 'express';
 import { FsService } from '../modules/fs.modules';
 import * as Debug from 'debug';
-// jsonsに新しいテストデータを作っていきます（2017/12以降）
-import { paths, jsons } from '../modules/paths';
+import { jsons } from '../modules/paths';
 import { TeacherState, ScheduleState } from '../../src/app/store/types';
 
 const router: Router = Router();
@@ -13,14 +12,19 @@ const isDebug = debug.enabled;
 
 // init - register-teachers
 router.get('/register-teachers', (req: Request, res: Response, next: NextFunction) => {
-    // このリクエストは、講師情報の`id`, `name`, `name_jp`, `state`を要求します
+    // このリクエストは、講師情報の`id`, `name`, `state`を要求します
     debug(`[ GET ] from register-teachers`);
     if (isDebug) {
         fs.readFile(jsons.teachers)
             .then((result: TeacherState[]) => {
                 const dataAsRequestFormat = result.map(item => {
-                    const { id, name, name_jp, state } = item;
-                    return { id, name, name_jp, state };
+                    // const { id, name, state } = item;
+                    // return { id, name, state };
+                    return {
+                        id: item.id,
+                        name: `${item.name_first} ${item.name_last}`,
+                        state: item.state
+                    };
                 });
                 res.status(200).json(dataAsRequestFormat);
             })
@@ -90,8 +94,13 @@ router.get('/teacher-schedule/operations-init', (req: Request, res: Response, ne
         fs.readFile(jsons.teachers)
             .then((result: TeacherState[]) => {
                 const dataAsRequestFormat = result.map(item => {
-                    const { id, name, time_zone } = item;
-                    return { id, name, time_zone };
+                    // const { id, name, time_zone } = item;
+                    // return { id, name, time_zone };
+                    return {
+                        id: item.id,
+                        name: `${item.name_first} ${item.name_last}`,
+                        time_zone: item.time_zone
+                    };
                 });
                 res.status(200).json(dataAsRequestFormat);
             })
@@ -115,12 +124,17 @@ router.get('/teacher-schedule/get-schedule', (req: Request, res: Response, next:
 
 // PUT teacher-schedule update
 router.put('/teacher-schedule/update', (req: Request, res: Response, next: NextFunction) => {
-    debug(`[ PUT ] from teacher-schedule`);
-    const params = req.body;
-    // console.log(params);
-    res.json({
-        put: true
-    });
+    // このリクエストは、講師のIDと、新規登録用、更新用それぞれの日付文字列の配列を受け取ります
+    // スケジュールの更新は、新しいスケジュールの追加と、既存のスケジュールの修正（削除）です
+    // そのため、SQLクエリは`INSERT`と`DELETE`の２つを実行してください
+    const params: { id: number, insert: string[], delete: string[] } = req.body;
+    debug(`[ PUT ] from teacher-schedule. target id = ${params.id}`);
+    if (isDebug) {
+        // 70%で成功　30%でリクエストエラーを発生させる
+        const randumNum = Math.random();
+        if (randumNum <= 0.7) res.status(200).json({ isSuccess: true });
+        else res.status(501).json({ isSuccess: false });
+    }
 });
 
 module.exports = router;

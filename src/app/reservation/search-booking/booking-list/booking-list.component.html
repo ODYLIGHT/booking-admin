@@ -1,0 +1,36 @@
+<table class="table table-sm table-bordered table-responsive-lg">
+
+    <thead>
+        <tr class="u-mat-primary">
+            <th>Customer ID</th>
+            <th>Reservation ID</th>
+            <th>Student name</th>
+            <th>Date</th>
+            <th>Teacher</th>
+            <th>By</th>
+            <th>Cancel</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let booking of sliceItems(bookings)">
+            <td>{{ booking.customer_id }}</td>
+            <td>{{ booking.reserved_id }}</td>
+            <td>{{ booking.customer_name }}</td>
+            <td>{{ booking.reserved_date | date: 'dd.MMM.yyyy.EEE HH:mm' }}</td>
+            <td>{{ booking.teacher_name }}</td>
+            <td>{{ !!!booking.reserved_by ? 'Admin' : 'Student' }}</td>
+            <td>
+                <button mat-raised-button color="warn" (click)="openDialog(booking)">Cancel</button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+<ngb-pagination
+    [rotate]="true"
+    [boundaryLinks]="true"
+    [maxSize]="10"
+    [collectionSize]="bookings.length"
+    [(page)]="currentPage"
+></ngb-pagination>

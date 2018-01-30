@@ -4,7 +4,8 @@
     "ext": "ts",
     "ignore": [
         ".git",
-        "./node_modules/*"
+        "./node_modules/*",
+        "src"
     ],
     "script": "server/dist/app.js",
     "exec": "npm run webpack:server && node ./server/dist/api.server.bundle.js",

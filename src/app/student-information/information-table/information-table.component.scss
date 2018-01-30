@@ -1,0 +1,23 @@
+table.table {
+    thead {
+        tr {
+            th {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+        }
+    }
+    tbody {
+        tr {
+            td {
+                font-size: 0.8rem;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+.mat-raised-button {
+    line-height: 28px;
+    text-decoration: none;
+}

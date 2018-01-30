@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 import { TopMenuService } from './top-menu.service';
 import { TopMenuStore } from './top-menu.store';
 import { MenuState } from '../store/types';
@@ -17,6 +18,6 @@ export class TopMenuComponent implements OnInit {
 
     ngOnInit() { this.service.getInit() }
 
-    public get getMenusAsObservable$(): Observable<MenuState[]> { return this.service.getItems$.map(s => s) }
+    public get getMenusAsObservable$(): Observable<MenuState[]> { return this.service.getItems$ }
 
 }

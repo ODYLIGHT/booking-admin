@@ -1,0 +1,32 @@
+<p class="font-weight-light mb-0 pl-3 pr-3">
+    <small>※いずれかの情報を入れて検索をすると一致する顧客情報が、何も入力せずに検索をすると全顧客情報がリストアップされます。</small>
+</p>
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm)" novalidate>
+    <div class="form-row">
+        <div class="col-md-3">
+            <mat-form-field class="w-100">
+                <input matInput type="number" placeholder="Customer ID" formControlName="id" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-4 offset-md-1">
+            <mat-form-field class="w-100">
+                <input matInput type="text" placeholder="Customer Name" formControlName="name" autocomplete="off">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-4">
+            <mat-form-field class="w-100">
+                <input matInput type="text" placeholder="E-mail address" formControlName="email" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="w-100">
+                <input matInput type="text" placeholder="Skype Name" formControlName="skype_name" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2 offset-md-1 mb-3">
+            <button mat-raised-button>Search</button>
+        </div>
+    </div>
+</form>

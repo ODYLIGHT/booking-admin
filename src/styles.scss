@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/_theming';
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 button {
@@ -24,11 +24,14 @@ input[type=number]::-webkit-inner-spin-button {
 @mixin my-theme($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
 
     .u-mat-primary {
         background-color: mat-color($accent);
         color: mat-color($accent, default-contrast);
-
+    }
+    .fa-minus {
+        color: mat-color($warn);
     }
 }
 

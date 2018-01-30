@@ -1,0 +1,42 @@
+<div class="page-header">
+    <h5 class="text-center">Lesson history</h5>
+</div>
+<div class="container" *ngIf="historyItemsAsObservable$ | async as Items">
+    <mat-card>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <app-customer-info
+                        [customer]="Items.customer"
+                        [pulldowns]="Items.pulldown_menus"
+                        (changeEvent)="onChange($event)"
+                    ></app-customer-info>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <app-reservations-table
+                        [reservations]="selectReservations(Items.reservations, true)"
+                        [timeZone]="Items.customer.time_zone"
+                    ></app-reservations-table>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <app-history-table
+                        [reservations]="selectReservations(Items.reservations, false)"
+                        [historys]="Items.historys"
+                        [timeZone]="Items.customer.time_zone"
+                        [pulldowns]="Items.pulldown_menus"
+                        (registerEvent)="onRegister($event)"
+                    ></app-history-table>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>
+

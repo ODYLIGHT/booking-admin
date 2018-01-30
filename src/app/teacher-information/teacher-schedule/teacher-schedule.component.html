@@ -4,36 +4,19 @@
 <div class="container">
     <mat-card>
         <ng-container *ngIf="optionsAsObservable$ | async as options">
-            <app-operations [options]="options" (selectEvent)="onSelect($event)"></app-operations>
+            <app-operations
+                [options]="options"
+                (selectEvent)="onSelect($event)"
+                (submitEvent)="onSubmit($event)"
+            ></app-operations>
         </ng-container>
         <ng-container *ngIf="scheduleAsObsevable$ | async as schedues">
-            <app-schedule-table *ngIf="schedues.current.length"
+            <app-schedule-table *ngIf="teacher"
                 [teacher]="teacher"
                 [schedules]="schedues"
                 (clickEventProvider)="clickEventObserver($event)"
             ></app-schedule-table>
         </ng-container>
     </mat-card>
-    <!-- <div class="row">
-        <div class="col-md-10 col-sm-10 offset-md-1 offset-sm-1">
-            <ng-container *ngIf="optionsAsObservable$ | async as options">
-                <app-operations [options]="options" (selectEvent)="onSelect($event)"></app-operations>
-            </ng-container>
-            <ng-container *ngIf="teacher | async">
-                <app-schedule-table [teacher]="teacher"></app-schedule-table>
-            </ng-container>
-        </div> -->
-
-        <!-- <div class="col-md-10 col-sm-10 offset-md-1 offset-sm-1" *ngIf="getScheduleAsObservable$ | async as schedules">
-            <app-schedule-table
-                [schedules]="schedules"
-                [showsWeeks]="showsWeeks"
-                (switchWeek)="switchWeek($event)"
-                (copyPrev)="copyPrev($event)"
-                (post)="post($event)"
-            ></app-schedule-table>
-        </div> -->
-
-    <!-- </div> -->
 </div>
 

@@ -1,6 +1,6 @@
 'use strict';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 export type Action<T> = (current: Readonly<T>) => Partial<T>;
 

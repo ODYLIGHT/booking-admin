@@ -1,0 +1,32 @@
+<div class="page-header">
+    <h5 class="text-center">Student information</h5>
+</div>
+<div class="container">
+    <mat-card>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <h6 class="mr-5 d-inline-block">1.Register New Student Information.</h6>
+                    <a mat-raised-button routerLink="./edit-profile">Add New Student</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <h6>2.Search Student Information.</h6>
+                    <app-information-form
+                        (searchEvent)="onSearch($event)"
+                    ></app-information-form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ng-container *ngIf="informationsAsObservable$ | async as customers">
+                        <app-information-table *ngIf="customers.length"
+                            [customers]="customers"
+                        ></app-information-table>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>

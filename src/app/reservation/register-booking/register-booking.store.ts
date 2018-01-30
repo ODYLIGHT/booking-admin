@@ -1,12 +1,70 @@
 import { Injectable } from '@angular/core';
 import { Store } from '../../store/abstract.store';
-import { RegisterBookingTeachersState } from '../../store/types';
+import { TimeState, PersonalInformationState } from '../../store/types';
+
+export interface PersonState extends PersonalInformationState {
+    name: string;
+}
+
+export interface OperationsState {
+    customer: PersonState;
+    teacher: PersonState;
+}
+
+export interface BookingState {
+    customerId: number;
+    teacherId: number;
+    reservations: TimeState;
+    canNotReserve: string[];
+}
+
+export const initOptionsState: PersonState = {
+    id: null,
+    name_first: '',
+    name_last: '',
+    name: '',
+    time_zone: ''
+};
+
+export const initOperation: OperationsState = {
+    customer: initOptionsState,
+    teacher: initOptionsState
+};
+
+export const initBookingState: BookingState = {
+    customerId: null,
+    teacherId: null,
+    reservations: { insert: [], current: [], delete: [] },
+    canNotReserve: []
+}
+
+// 全講師情報ストア
+@Injectable()
+export class TeacherStore extends Store<PersonalInformationState[]> {
+    constructor() { super(<PersonalInformationState[]>[]) }
+    private _changeState(items: PersonalInformationState[]) {
+        return (current: Readonly<PersonalInformationState[]>): Partial<PersonalInformationState[]> => items;
+    }
+    public changeState(items: PersonalInformationState[]): void { this.dispatch(this._changeState(items)) }
+    public get getCurrent(): Readonly<PersonalInformationState[]> { return this.current() }
+}
 
 @Injectable()
-export class RegisterBookingStore extends Store<RegisterBookingTeachersState[]> {
-    constructor() { super(<RegisterBookingTeachersState[]>{}) }
-    private _changeData(items: RegisterBookingTeachersState[]) {
-        return (c: Readonly<RegisterBookingTeachersState[]>): Partial<RegisterBookingTeachersState[]> => items;
+export class OperationsStore extends Store<OperationsState> {
+    constructor() { super(<OperationsState>initOperation) }
+    private _changeState(items: OperationsState) {
+        return (current: Readonly<OperationsState>): Partial<OperationsState> => items;
     }
-    public changeState(items: RegisterBookingTeachersState[]): void { this.dispatch(this._changeData(items)) }
+    public changeState(items: OperationsState): void { this.dispatch(this._changeState(items)) }
+    public get getCurrent(): Readonly<OperationsState> { return this.current() }
+}
+
+@Injectable()
+export class BookingStore extends Store<BookingState> {
+    constructor() { super(<BookingState>undefined) }
+    private _changeState(items: BookingState) {
+        return (current: Readonly<BookingState>): Partial<BookingState> => items;
+    }
+    public changeState(items: BookingState): void { this.dispatch(this._changeState(items)) }
+    public get getCurrent(): Readonly<BookingState> { return this.current() }
 }

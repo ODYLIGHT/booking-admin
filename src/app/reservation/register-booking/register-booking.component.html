@@ -1,20 +1,32 @@
 <div class="page-header">
-    <h5 class="text-center">Register of Booking</h5>
+    <h5 class="text-center">Register of booking</h5>
 </div>
 <div class="container">
-    <div class="row">
-        <div class="col-md-10 col-sm-10 offset-md-1 offset-sm-1">
-             <app-search-customer (search)="search($event)" (post)="post($event)"></app-search-customer>
+    <mat-card>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ng-container *ngIf="teacherAsObservable$ | async as teachers">
+                        <app-operations
+                            [teachers]="teachers"
+                            [operations]="operationsAsObservable$ | async"
+                            (searchEvent)="onSearch($event)"
+                            (registerEvent)="register()"
+                        ></app-operations>
+                    </ng-container>
+                </div>
+                <div class="col-md-12">
+                    <ng-container *ngIf="bookingAsObservable$ | async as booking">
+                        <ng-container *ngIf="booking.customerId">
+                            <app-booking-table
+                                [customer]="(operationsAsObservable$ | async).customer"
+                                [booking]="booking"
+                                (clickEventProvider)="clickEventObserver($event)"
+                            ></app-booking-table>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
         </div>
-        <div class="col-md-12 col-sm-12">
-            <app-register-table
-                [teachers]="teachersAsObservable$ | async"
-                [schedule]="convertSchedule(scheduleAsObservable$ | async)"
-                [showsWeeks]="showWeeks"
-                [userId]="userId"
-                (switchWeek)="switchWeek($event)"
-                (selectTeacher)="selectTeacher($event)"
-            ></app-register-table>
-        </div>
-    </div>
+    </mat-card>
 </div>

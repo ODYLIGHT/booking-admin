@@ -9,32 +9,35 @@ export interface MenuState {
     ]
 }
 
+export interface ListState {
+    [key: string]: { [key: string]: string }[];
+}
+
 /**
  * 講師の情報を表すインターフェイス
- * `id`以外は無くてもよいものとしてます(nameとかtime_zoneも必須にしてもよいかもしれません)
  */
 export interface TeacherState {
     id: number;
     name?: string;
-    name_jp?: string;
+    name_first?: string;
+    name_last?: string;
     state?: number | boolean;
     time_zone?: string;
     customers_language?: number;
     priority_number?: number;
     skype_name?: string;
     email?: string;
-    picture?: string;
+    profile_image_path?: string;
     user_id?: string;
     password?: string;
     authority?: number;
-    details_teaches?: number;
-    details_other_language?: string;
-    details_education?: string;
-    details_speciality?: string;
-    details_career?: string;
-    details_comment?: string;
+    corresponding_level?: number;
+    other_suported_language?: string;
+    educational_background?: string;
+    speciality_content?: string; // 廃止だけど一応残しとく2018/01/25
+    career?: string;
+    comment?: string;
     details_testimonial?: string;
-    details_jp_teaches?: number;
     details_jp_other_language?: string;
     details_jp_education?: string;
     details_jp_speciality?: string;
@@ -43,97 +46,100 @@ export interface TeacherState {
     details_jp_testimonial?: string;
 }
 
+// 生徒の個人情報
+export interface CustomerState {
+    id: number;
+    name_first?: string;
+    name_last?: string;
+    time_zone?: string;
+    gender?: number;
+    birthday?: Date,
+    skype_name?: string;
+    email?: string;
+    password?: string;
+    french_level?: string;
+    learning_experience?: string;
+    learning_purpose?: string;
+    native_language?: string;
+    how_finded?: string;
+    other_language1?: string;
+    other_language1_level?: number;
+    other_language2?: string;
+    other_language2_level?: number;
+    program_code?: string;
+    remarks?: string;
+    client_code?: string;
+}
+
+// タイムテーブルに渡すUTC時間文字列
+export interface TimeState {
+    current: string[]; // DB取得したもの（講師スケジュールor生徒の予約）
+    insert: string[]; // タイムテーブル上で新規に選択した時間
+    delete: string[]; // currentに含まれている時間をタイムテーブルで選択した場合に格納される
+}
+
+// プルダウンメニュー用など、個人情報を取得する場合の型定義
+export interface PersonalInformationState {
+    id: number;
+    name_first: string;
+    name_last: string;
+    time_zone: string;
+}
+
 // DBから取得する講師のスケジュール情報
 export interface ScheduleState {
     teacher_id: number;
     schedule_date: Date;
 }
 
-// タイムテーブルに渡すために講師スケジュールの情報を変換したもの
-export interface TeacherSchedulesState {
-    current: string[];
-    insert: string[];
-    delete: string[];
-}
-
-export interface CustomerState {
-    id: number;
-    customerName: string;
-    nickName: string;
-    jpName: string;
-    gender: string; // male or female
-    birth: Date; // データ格納時はDate型にして、利用時に別途分解する
-    skypeName: string;
-    mailAddress: string;
-    password: string;
-    frenchLevel: string;
-    learningExperience: string; // 学習経験
-    purpose: string;
-    motherTongue: string; // 母国語
-    howFinded: string; // このサイトを知ったきっかけ
-    otherLanguage1: string;
-    otherLanguage1_level: number;
-    otherLanguage2: string;
-    otherLanguage2_level: number;
-    programCode: string;
-    remark: string;
-    clientCode: string;
-}
-
+// 予約情報
 export interface ReservationState {
-    _id: number;
-    _reserve_date: Date;
-    _teacher_id: number;
-    _status: string;
+    id: number | string;
+    customer_id?: number;
+    teacher_id?: number;
+    name?: string;
+    reserved_by?: number;
+    reserved_date?: Date;
 }
 
-// タイムテーブルに渡すために生徒の予約情報を変換したもの
-export interface CustomerReservationState {
-    current: string[];
-    insert: string[];
-    delete: string[];
+// search of booking で、検索をしたレスポンス = 一覧に渡す状態
+export interface BookingState {
+    customer_id?: number;
+    reserved_id?: number | string;
+    customer_name?: string;
+    teacher_name?: string;
+    reserved_date?: Date;
+    reserved_by?: number;
 }
 
-// ここまではDBのテーブル構造のまんま
-
-export interface RegisterBookingTeachersState {
-    _id: number;
-    _name: string;
-}
-
-export interface SearcherCustomerState {
-    _name: string; // 顧客名(CustomerState.customerName)
-    _teachers: RegisterBookingTeachersState[];
-}
-
-export interface SearchBookingState {
-    customerId: number;
-    reservationId: string;
-    studentName: string;
-    date: string;
-    teacherName: string;
-    reserveBy: string;
-}
-
-export interface CheckTeacherScheduleState {
-    schedules?: {
-        _date: Date;
-        _can_reserve: boolean;
-        _reserved_user: number;
-    }[];
-    reservations?: {
-        _id: number;
-        _reserve_date: Date;
-        _teacher_id: number;
-        _status: string;
-    }[];
-}
-
-export interface SearchedStudentInformationState {
+// At `Student information`顧客検索結果
+export interface StudentInformationState {
     id: number;
-    customerName: string;
-    gender: string;
-    // _country: string; // タイムゾーン　どこで定義するのか不明・・・
-    skypeName: string;
-    mailAddress: string;
+    name_first: string;
+    name_last: string;
+    time_zone: string;
+    gender: number;
+    skype_name: string;
+    email: string;
+}
+
+// 受講履歴
+export interface LessonHistoryState {
+    id: number; // 管理番号
+    reserved_id: number | string; // 予約テーブルの管理番号
+    status: number; // 受講状況
+    cancelled_reason: string; // 受講しなかった理由
+    task: string; // 受講内容
+    class_details: string;
+    documents_sent: string;
+    next_class: string;
+}
+
+// 顧客のクレジットデータ型
+export interface CreditState {
+    unique_id?: number; // クレジット管理番号
+    customer_id: number; // 対象顧客のId
+    date?: Date; // クレジット登録日付
+    adjustment: number; // 加算(0)・減算(1)フラグ
+    remarks: string; // 備考
 }

@@ -7,7 +7,7 @@ import 'rxjs/add/observable/fromPromise';
 import { map} from 'rxjs/operators';
 import { TimeTableService } from './time-table.service';
 import { Moment } from 'moment-timezone';
-import { TeacherSchedulesState, CustomerReservationState } from '../../store/types';
+import { TimeState } from '../../store/types';
 
 /**
  *
@@ -26,30 +26,42 @@ import { TeacherSchedulesState, CustomerReservationState } from '../../store/typ
 export class TimeTableComponent implements OnInit, OnChanges {
     private _timeZone: string;
     @Input()
-    set timeZone(tz: string) { this._timeZone = tz || '' }
-    get timeZone() { return this._timeZone }
+    set timeZone(tz: string) { this._timeZone = tz || '' };
+    get timeZone() { return this._timeZone };
+
+    private _onlyViewItems: { teacher: any[], schedules: any[], reservations: any[], dateAsUTC: string };
+    @Input()
+    set onlyViewItems(str) { this._onlyViewItems = str }
+    get onlyViewItems() { return this._onlyViewItems }
+
     private _isOnlyView: boolean;
     @Input()
-    set isOnlyView(bool: boolean) { this._isOnlyView = bool }
-    get isOnlyView() { return this._isOnlyView }
-    private _schedules: TeacherSchedulesState = { current: [], insert: [], delete: [] };
+    set isOnlyView(bool: boolean) { this._isOnlyView = bool };
+    get isOnlyView() { return this._isOnlyView };
+
+    private _timeState: TimeState = { current: [], insert: [], delete: [] };
     @Input()
-    set schedules(sc: TeacherSchedulesState) { this._schedules = sc }
-    get schedules() { return this._schedules }
-    private _reservations: CustomerReservationState = { current: [], insert: [], delete: [] };
+    set timeState(ts: TimeState) { this._timeState = ts };
+    get timeState() { return this._timeState };
+
+    private _canNotReserve: string[];
     @Input()
-    set reservation(rv: CustomerReservationState) { this._reservations = rv };
-    get reservation() { return this._reservations }
+    set canNotReserve(cnr: string[]) { this._canNotReserve = cnr };
+    get canNotReserve() { return this._canNotReserve || [] };
+
     private _additionalNumber: number;
     @Input()
     set additionalNumber(n: number) { this._additionalNumber = n || 0 };
-    get additionalNumber() { return this._additionalNumber }
+    get additionalNumber() { return this._additionalNumber };
+
     @Output() datePropagator = new EventEmitter<Date[]>();
     @Output() clickHandler = new EventEmitter<{ targetColumn: string; action: string; value: string; }>();
 
     // 仮変数を定義しておく
     dayOfWeek: Date[];
     leftColumns: string[];
+    all_schedules: any[];
+    all_reservations: any[];
 
     constructor(private service: TimeTableService) { }
 
@@ -68,6 +80,13 @@ export class TimeTableComponent implements OnInit, OnChanges {
                 } else if (propName === 'additionalNumber' && !!!changes[propName].firstChange) {
                     this.dayOfWeek = this.service.getAddedWeek(this.dayOfWeek, changes[propName]);
                     this.datePropagator.emit(this.dayOfWeek);
+                } else if (propName === 'onlyViewItems') {
+                    // 予約状況チェックコンポーネントからの利用
+                    const _items = changes[propName].currentValue;
+                    this.dayOfWeek = this.service.getHeaderDates(_items.teacher.time_zone, _items.dateAsUTC);
+                    this.all_schedules = this.onlyViewItems.schedules.map(obj => obj.schedule_date);
+                    this.all_reservations = this.onlyViewItems.reservations.map(obj => obj.reserved_date);
+                    console.log(_items);
                 }
             }
         }
@@ -86,45 +105,37 @@ export class TimeTableComponent implements OnInit, OnChanges {
 
     public convertDateForUTC(date: Date, time: string) { return this.service.convertDate(date, time) }
 
-    /**
-     * ここのチェックは予約登録時のタイムテーブルで拡張が必要です
-     * 現状は講師のスケジュールのみで判別していますが、拡張時は生徒の予約も合わせて判別する必要があります
-     */
+
     public isChecked(utcTimeStr: string) {
-        /**
-         * deleteに含まていてもこのままじゃチェックが入ってしまう気がする
-         */
-        ///////////////////////////////////////////////// スケジュールのチェック ///////////////////////////////////////////////////////
-        // `currentSchedule`,`insertSchedule`の配列を結合
-        const concatSchedules = this.schedules.current.concat(this.schedules.insert);
+        ///////////////////////////////////////////////// timeStateのチェック ///////////////////////////////////////////////////////
+        // `current`,`insert`の配列を結合
+        const concatTimeState = this.timeState.current.concat(this.timeState.insert);
         // 重複の削除したうえで存在のチェック
-        const isIncludedInSchedule: boolean =
-            (Array.from(new Set(concatSchedules))).includes(utcTimeStr) && !!!this.schedules.delete.includes(utcTimeStr);
+        const isIncludedInTimeState: boolean =
+            (Array.from(new Set(concatTimeState))).includes(utcTimeStr) && !!!this.timeState.delete.includes(utcTimeStr);
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////// 予約のチェック ///////////////////////////////////////////////////////////////
-        let isIncludedInReservation: boolean;
-        if (this.reservation) { /* 予約情報更新時の処理 */ }
-        else isIncludedInReservation = false;
+        ///////////////////////////////////////////////// canNotReserveのチェック //////////////////////////////////////////////////////
+        const isIncludedInCanNotReserve: boolean = this.canNotReserve.includes(utcTimeStr);
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if (!!!isIncludedInSchedule && !!!isIncludedInReservation) return false;
-        else if (isIncludedInSchedule) return 'scheduled';
+        if (!!!isIncludedInTimeState && !!!isIncludedInCanNotReserve) return false;
+        else if (isIncludedInTimeState) return 'scheduled';
         else return 'reserved';
     }
 
     /**
-     * 選択した時間がスケジュール・予約に含まれているかどうか判別し、親コンポーネントにイベントを通知する
+     * 選択した時間がtimeState・canNotReserveに含まれているかどうか判別し、親コンポーネントにイベントを通知する
      * @param utcTimeStr 選択されたタイムテーブルのUTC時間
      * @return { targetColumn: string, action: 'add' or 'del', value: time string for UTC }
      */
     public onScheduledSigleTime(utcTimeStr: string) {
-        const isCurrent = this.schedules.current.includes(utcTimeStr) || this.reservation.current.includes(utcTimeStr);
+        const isCurrent = this.timeState.current.includes(utcTimeStr);
         // isCurrent === true: DB取得データ内に存在する場合は、`delete`カラムを操作する
         // isCurrent === false: DB取得データには存在しない場合は、`insert`カラムを操作する
         const requestObj: { targetColumn: string; action: string; value: string; } = {
             targetColumn: isCurrent ? 'delete' : 'insert',
             action: isCurrent
-                ? this.schedules.delete.includes(utcTimeStr) || this.reservation.delete.includes(utcTimeStr) ? 'del' : 'add'
-                : this.schedules.insert.includes(utcTimeStr) || this.reservation.insert.includes(utcTimeStr) ? 'del' : 'add',
+                ? this.timeState.delete.includes(utcTimeStr) ? 'del' : 'add'
+                : this.timeState.insert.includes(utcTimeStr) ? 'del' : 'add',
             value: utcTimeStr
         }
         this.clickHandler.emit(requestObj);
@@ -140,6 +151,16 @@ export class TimeTableComponent implements OnInit, OnChanges {
             allTimes = date.map(_date => this.convertDateForUTC(_date, time));
         }
         allTimes.forEach(utcTimeStr => this.onScheduledSigleTime(utcTimeStr));
+    }
+
+    public reservationCheck(dateStr: string): string {
+        const isSdk = this.all_schedules.includes(dateStr);
+        const isRvt = this.all_reservations.includes(dateStr);
+        return (isSdk) ? '' : (isRvt) ? 'reserved' : 'Available';
+    }
+
+    public reserver(dateStr: string): string {
+        return this.onlyViewItems.reservations[this.onlyViewItems.reservations.findIndex(o => o.reserved_date === dateStr)].customer_name;
     }
 
 }

@@ -1,0 +1,50 @@
+<form [formGroup]="creditForm" (ngSubmit)="onClick(creditForm)" novalidate>
+    <div class="form-row">
+        <div class="col-md-7">
+            <div class="form-row">
+                <div class="col-md-5 col-3">
+                    <mat-form-field class="w-100">
+                        <input matInput type="number" placeholder="Customer ID" formControlName="customer_id" readonly required>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-7 col-9">
+                    <mat-form-field class="w-100">
+                        <input matInput type="text" placeholder="Customer Name" value="{{ profiles.name_first }} {{ profiles.name_last }}" readonly>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-7 col-6">
+                    <mat-form-field class="w-100">
+                        <input matInput [matDatepicker]="datePicker" placeholder="Date" formControlName="date" autocomplete="off" required>
+                        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datePicker></mat-datepicker>
+                        <mat-error *ngIf="creditForm.hasError('required', 'date')">登録日付を設定してください</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-5 col-6">
+                    <mat-form-field class="w-100">
+                        <input matInput type="text" placeholder="New Credit(s)" min="1" formControlName="credit_count" autocomplete="off" required>
+                        <mat-error *ngIf="creditForm.hasError('pattern', 'credit_count')">値が不正です</mat-error>
+                        <mat-error *ngIf="creditForm.hasError('required', 'credit_count')">クレジット数を入力してください</mat-error>
+                        <mat-error *ngIf="creditForm.hasError('min', 'credit_count')">0は登録できません</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 align-self-end">
+            <div class="form-row">
+                <div class="col-md-8 col-8">
+                    <mat-form-field class="w-100">
+                        <textarea matInput placeholder="Remark" formControlName="remarks"
+                            matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="3"
+                        ></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-4 align-self-center">
+                    <button type="submit" mat-raised-button [disabled]="creditForm.invalid">Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
