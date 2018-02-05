@@ -15,10 +15,11 @@
 
 
 ## アプリケーションに影響を与える変更事案
-### @angular/cliをVer.1.6.4にアップデートしました。
-※`yarn.lock`を残したままモジュールを入れ直すと、generateコマンドがエラーになる可能性があります
+### @angular/cliをVer.1.6.7にアップデートしました。
 ```
 $ rm -rf node_modules yarn.lock (or rmdir /s/q node_modules yarn.lock)
 $ npm install (or yarn install)
+or
+$ yarn upgrade
 ```
 
